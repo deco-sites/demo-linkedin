@@ -61,7 +61,7 @@
   "commerce": {
     "platform": "other"
   },
-  "platform": "shopify",
+  "platform": "vtex",
   "__resolveType": "site/apps/site.ts",
   "firstByteThresholdMS": false,
   "abTesting": {
