@@ -1,11 +1,10 @@
 {
-  "data": {
-    "slug": {
-      "param": "slug",
-      "__resolveType": "website/functions/requestToParam.ts"
-    },
-    "__resolveType": "shopify/loaders/ProductDetailsPage.ts"
+  "__resolveType": "vtex/loaders/legacy/productDetailsPage.ts",
+  "advancedConfigs": {
+    "includeOriginalAttributes": []
   },
-  "extensions": [],
-  "__resolveType": "commerce/loaders/product/extensions/detailsPage.ts"
+  "slug": {
+    "__resolveType": "website/functions/requestToParam.ts",
+    "param": "slug"
+  }
 }

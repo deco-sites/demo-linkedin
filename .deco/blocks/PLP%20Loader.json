@@ -1,8 +1,8 @@
 {
-  "data": {
-    "__resolveType": "shopify/loaders/ProductListingPage.ts",
-    "count": 12
+  "__resolveType": "vtex/loaders/legacy/productListingPage.ts",
+  "sort": "",
+  "advancedConfigs": {
+    "includeOriginalAttributes": []
   },
-  "extensions": [],
-  "__resolveType": "commerce/loaders/product/extensions/listingPage.ts"
+  "count": 12
 }
