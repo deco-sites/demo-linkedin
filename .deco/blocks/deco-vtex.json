@@ -1,6 +1,6 @@
 {
-    "__resolveType": "site/apps/deco/vtex.ts",
-    "platform": "vtex",
-    "publicUrl": "https://brmotorolanew.myvtex.com/",
-    "account": "brmotorolanew"
-  }
+  "__resolveType": "site/apps/deco/vtex.ts",
+  "platform": "vtex",
+  "publicUrl": "https://cea.myvtex.com/",
+  "account": "cea"
+}
