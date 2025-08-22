@@ -1,10 +1,6 @@
 {
-  "__resolveType": "site/apps/deco/vtex.ts",
-  "setRefreshToken": false,
-  "defaultSegment": {
-    "channelPrivacy": "public"
-  },
-  "platform": "vtex",
-  "account": "cea",
-  "publicUrl": "https://cea.myvtex.com/"
-}
+    "__resolveType": "site/apps/deco/vtex.ts",
+    "platform": "vtex",
+    "publicUrl": "https://brmotorolanew.myvtex.com/",
+    "account": "brmotorolanew"
+  }
