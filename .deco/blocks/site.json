@@ -36,10 +36,17 @@
   ],
   "routes": [
     {
-      "__resolveType": "shopify/loaders/proxy.ts",
+      "__resolveType": "vtex/loaders/proxy.ts",
       "extraPathsToProxy": [],
       "includeSiteMap": [],
-      "excludePathsFromDecoSiteMap": []
+      "includePathToDecoSitemap": [],
+      "excludePathsFromDecoSiteMap": [],
+      "includeScriptsToHead": {
+        "includes": []
+      },
+      "includeScriptsToBody": {
+        "includes": []
+      }
     },
     {
       "__resolveType": "website/loaders/pages.ts"
@@ -68,5 +75,7 @@
   },
   "flavor": {
     "framework": "htmx"
-  }
+  },
+  "whilelistURLs": [],
+  "whitelistPatterns": []
 }
