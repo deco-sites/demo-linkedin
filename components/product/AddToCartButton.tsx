@@ -3,12 +3,13 @@ import { JSX } from "preact";
 import { clx } from "../../sdk/clx.ts";
 import { useId } from "../../sdk/useId.ts";
 import { usePlatform } from "../../sdk/usePlatform.tsx";
-import QuantitySelector from "../ui/QuantitySelector.tsx";
+
 import { useScript } from "@deco/deco/hooks";
 export interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
   product: Product;
   seller: string;
   item: AnalyticsItem;
+  children?: JSX.Element;
 }
 const onClick = () => {
   event?.stopPropagation();
@@ -19,43 +20,7 @@ const onClick = () => {
   );
   window.STOREFRONT.CART.addToCart(item, platformProps);
 };
-const onChange = () => {
-  const input = event!.currentTarget as HTMLInputElement;
-  const productID = input!
-    .closest("div[data-cart-item]")!
-    .getAttribute("data-item-id")!;
-  const quantity = Number(input.value);
-  if (!input.validity.valid) {
-    return;
-  }
-  window.STOREFRONT.CART.setQuantity(productID, quantity);
-};
-// Copy cart form values into AddToCartButton
-const onLoad = (id: string) => {
-  window.STOREFRONT.CART.subscribe((sdk) => {
-    const container = document.getElementById(id);
-    const checkbox = container?.querySelector<HTMLInputElement>(
-      'input[type="checkbox"]',
-    );
-    const input = container?.querySelector<HTMLInputElement>(
-      'input[type="number"]',
-    );
-    const itemID = container?.getAttribute("data-item-id")!;
-    const quantity = sdk.getQuantity(itemID) || 0;
-    if (!input || !checkbox) {
-      return;
-    }
-    input.value = quantity.toString();
-    checkbox.checked = quantity > 0;
-    // enable interactivity
-    container?.querySelectorAll<HTMLButtonElement>("button").forEach((node) =>
-      node.disabled = false
-    );
-    container?.querySelectorAll<HTMLButtonElement>("input").forEach((node) =>
-      node.disabled = false
-    );
-  });
-};
+
 const useAddToCart = ({ product, seller }: Props) => {
   const platform = usePlatform();
   const { additionalProperty = [], isVariantOf, productID } = product;
@@ -104,7 +69,7 @@ const useAddToCart = ({ product, seller }: Props) => {
   return null;
 };
 function AddToCartButton(props: Props) {
-  const { product, item, class: _class } = props;
+  const { product, item, class: _class, children } = props;
   const platformProps = useAddToCart(props);
   const id = useId();
   return (
@@ -116,30 +81,15 @@ function AddToCartButton(props: Props) {
         JSON.stringify({ item, platformProps }),
       )}
     >
-      <input type="checkbox" class="hidden peer" />
 
       <button
-        disabled
-        class={clx("flex-grow peer-checked:hidden", _class?.toString())}
+        type="button"
+        class={clx("flex-grow", _class?.toString())}
         hx-on:click={useScript(onClick)}
       >
-        Add to Cart
+        {children}
       </button>
 
-      {/* Quantity Input */}
-      <div class="flex-grow hidden peer-checked:flex">
-        <QuantitySelector
-          disabled
-          min={0}
-          max={100}
-          hx-on:change={useScript(onChange)}
-        />
-      </div>
-
-      <script
-        type="module"
-        dangerouslySetInnerHTML={{ __html: useScript(onLoad, id) }}
-      />
     </div>
   );
 }

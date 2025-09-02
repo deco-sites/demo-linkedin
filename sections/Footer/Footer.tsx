@@ -40,8 +40,7 @@ function Footer({
 }: Props) {
   return (
     <footer
-      class="px-5 sm:px-0 mt-5 sm:mt-10"
-      style={{ backgroundColor: "#EFF0F0" }}
+      class="background-menu px-5 sm:px-0 mt-5 sm:mt-10"
     >
       <div class="container flex flex-col gap-5 sm:gap-10 py-10">
         <ul class="grid grid-flow-row sm:grid-flow-col gap-6 ">

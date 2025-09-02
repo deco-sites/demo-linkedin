@@ -84,23 +84,20 @@ function ProductInfo({ page }: Props) {
       </span>
 
       {/* Product Name */}
-      <span class={clx("text-3xl font-semibold", "pt-4")}>
+      <span class={clx("text-lg", "pt-4")}>
         {title}
       </span>
 
       {/* Prices */}
       <div class="flex gap-3 pt-1">
-        <span class="text-3xl font-semibold text-base-400">
+        <span class="text-sm text-base-400">
           {formatPrice(price, offers?.priceCurrency)}
-        </span>
-        <span class="line-through text-sm font-medium text-gray-400">
-          {formatPrice(listPrice, offers?.priceCurrency)}
         </span>
       </div>
 
       {/* Sku Selector */}
       {hasValidVariants && (
-        <div className="mt-4 sm:mt-8">
+        <div className="hidden mt-4 sm:mt-8">
           <ProductSelector product={product} />
         </div>
       )}
@@ -116,7 +113,11 @@ function ProductInfo({ page }: Props) {
                 product={product}
                 class="btn btn-primary no-animation"
                 disabled={false}
-              />
+              >
+                <span>
+                  Adicionar a sacola
+                </span>
+              </AddToCartButton>
               <WishlistButton item={item} />
             </>
           )

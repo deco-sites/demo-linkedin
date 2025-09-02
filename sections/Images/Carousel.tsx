@@ -10,21 +10,39 @@ import { useSendEvent } from "../../sdk/useSendEvent.ts";
  * @titleBy alt
  */
 export interface Banner {
-  /** @description desktop otimized image */
-  desktop: ImageWidget;
+  /** @description Media type */
+  type: "image" | "video";
 
-  /** @description mobile otimized image */
-  mobile: ImageWidget;
+  /** @description desktop optimized image */
+  desktop?: ImageWidget;
 
-  /** @description Image's alt text */
+  /** @description mobile optimized image */
+  mobile?: ImageWidget;
+
+  /** @description video source */
+  video?: VideoWidget;
+
+  /** @description Image's/Video's alt text or description */
   alt: string;
 
+  /** @description Video poster image (thumbnail) */
+  poster?: ImageWidget;
+
+  /** @description Auto-play video (default: false) */
+  autoplay?: boolean;
+
+  /** @description Mute video (default: true) */
+  muted?: boolean;
+
+  /** @description Loop video (default: true) */
+  loop?: boolean;
+
   action?: {
-    /** @description when user clicks on the image, go to this link */
+    /** @description when user clicks on the media, go to this link */
     href: string;
-    /** @description Image text title */
+    /** @description Media text title */
     title: string;
-    /** @description Image text subtitle */
+    /** @description Media text subtitle */
     subTitle: string;
     /** @description Button label */
     label: string;
@@ -32,7 +50,7 @@ export interface Banner {
 }
 
 export interface Props {
-  images?: Banner[];
+  items?: Banner[];
 
   /**
    * @description Check this option when this banner is the biggest image on the screen for image optimizations
@@ -46,25 +64,89 @@ export interface Props {
   interval?: number;
 }
 
-function BannerItem(
-  { image, lcp }: { image: Banner; lcp?: boolean },
+function MediaItem(
+  { item, lcp }: { item: Banner; lcp?: boolean },
 ) {
   const {
+    type,
     alt,
     mobile,
     desktop,
-    action,
-  } = image;
-  const params = { promotion_name: image.alt };
+    video,
+    poster,
+    autoplay = false,
+    muted = true,
+    loop = true,
+  } = item;
+
+  const viewPromotionEvent = useSendEvent({
+    on: "view",
+    event: { name: "view_promotion", params: { promotion_name: alt } },
+  });
+
+  if (type === "video" && video) {
+    return (
+      <video
+        class="object-cover w-full h-[50vw]"
+        autoplay={autoplay}
+        muted={muted}
+        loop={loop}
+        playsInline
+        poster={poster}
+        preload={lcp ? "auto" : "metadata"}
+        {...viewPromotionEvent}
+      >
+        <source src={video} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    );
+  }
+
+  // Default to image - ensure we have at least one image source
+  const imageSrc = desktop || mobile;
+  if (!imageSrc) {
+    return (
+      <div class="object-cover w-full h-full bg-gray-200 flex items-center justify-center">
+        <span class="text-gray-500">No image available</span>
+      </div>
+    );
+  }
+
+  return (
+    <Picture preload={lcp} {...viewPromotionEvent}>
+      <Source
+        media="(max-width: 767px)"
+        fetchPriority={lcp ? "high" : "auto"}
+        src={mobile || desktop!}
+        width={412}
+        height={660}
+      />
+      <Source
+        media="(min-width: 768px)"
+        fetchPriority={lcp ? "high" : "auto"}
+        src={desktop || mobile!}
+        width={1440}
+        height={600}
+      />
+      <img
+        class="object-cover w-full h-full"
+        loading={lcp ? "eager" : "lazy"}
+        src={imageSrc}
+        alt={alt}
+      />
+    </Picture>
+  );
+}
+
+function BannerItem(
+  { item, lcp }: { item: Banner; lcp?: boolean },
+) {
+  const { action } = item;
+  const params = { promotion_name: item.alt };
 
   const selectPromotionEvent = useSendEvent({
     on: "click",
     event: { name: "select_promotion", params },
-  });
-
-  const viewPromotionEvent = useSendEvent({
-    on: "view",
-    event: { name: "view_promotion", params },
   });
 
   return (
@@ -74,56 +156,12 @@ function BannerItem(
       aria-label={action?.label}
       class="relative block overflow-y-hidden w-full"
     >
-      {action && (
-        <div
-          class={clx(
-            "absolute h-full w-full top-0 left-0",
-            "flex flex-col justify-center items-center",
-            "px-5 sm:px-0",
-            "sm:left-40 sm:items-start sm:max-w-96",
-          )}
-        >
-          <span class="text-7xl font-bold text-base-100">
-            {action.title}
-          </span>
-          <span class="font-normal text-base text-base-100 pt-4 pb-12">
-            {action.subTitle}
-          </span>
-          <button
-            class="btn btn-primary btn-outline border-0 bg-base-100 min-w-[180px]"
-            aria-label={action.label}
-          >
-            {action.label}
-          </button>
-        </div>
-      )}
-      <Picture preload={lcp} {...viewPromotionEvent}>
-        <Source
-          media="(max-width: 767px)"
-          fetchPriority={lcp ? "high" : "auto"}
-          src={mobile}
-          width={412}
-          height={660}
-        />
-        <Source
-          media="(min-width: 768px)"
-          fetchPriority={lcp ? "high" : "auto"}
-          src={desktop}
-          width={1440}
-          height={600}
-        />
-        <img
-          class="object-cover w-full h-full"
-          loading={lcp ? "eager" : "lazy"}
-          src={desktop}
-          alt={alt}
-        />
-      </Picture>
+      <MediaItem item={item} lcp={lcp} />
     </a>
   );
 }
 
-function Carousel({ images = [], preload, interval }: Props) {
+function Carousel({ items = [], preload, interval }: Props) {
   const id = useId();
 
   return (
@@ -132,22 +170,22 @@ function Carousel({ images = [], preload, interval }: Props) {
       class={clx(
         "grid",
         "grid-rows-[1fr_32px_1fr_64px]",
-        "grid-cols-[32px_1fr_32px] min-h-[660px]",
+        "grid-cols-[32px_1fr_32px]",
         "sm:grid-cols-[112px_1fr_112px] sm:min-h-min",
         "w-full px-4",
       )}
     >
       <div class="col-span-full row-span-full">
         <Slider class="carousel carousel-center w-full gap-6">
-          {images.map((image, index) => (
+          {items.map((item, index) => (
             <Slider.Item index={index} class="carousel-item w-full rounded-lg overflow-hidden">
-              <BannerItem image={image} lcp={index === 0 && preload} />
+              <BannerItem item={item} lcp={index === 0 && preload} />
             </Slider.Item>
           ))}
         </Slider>
       </div>
 
-      <div class="hidden sm:flex items-center justify-center z-10 col-start-1 row-start-2">
+      <div class="hidden items-center justify-center z-10 col-start-1 row-start-2">
         <Slider.PrevButton
           class="btn btn-neutral btn-outline btn-circle no-animation btn-sm"
           disabled={false}
@@ -156,7 +194,7 @@ function Carousel({ images = [], preload, interval }: Props) {
         </Slider.PrevButton>
       </div>
 
-      <div class="hidden sm:flex items-center justify-center z-10 col-start-3 row-start-2">
+      <div class="hidden items-center justify-center z-10 col-start-3 row-start-2">
         <Slider.NextButton
           class="btn btn-neutral btn-outline btn-circle no-animation btn-sm"
           disabled={false}
@@ -167,11 +205,11 @@ function Carousel({ images = [], preload, interval }: Props) {
 
       <ul
         class={clx(
-          "col-span-full row-start-4 z-10",
+          "col-span-full row-start-4 z-10 hidden",
           "carousel justify-center gap-3",
         )}
       >
-        {images.map((_, index) => (
+        {items.map((_, index) => (
           <li class="carousel-item">
             <Slider.Dot
               index={index}

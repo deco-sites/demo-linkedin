@@ -28,22 +28,22 @@ export default function ProductDetails({ page }: Props) {
   }
 
   return (
-    <div class="container flex flex-col gap-4 sm:gap-5 w-full py-4 sm:py-5 px-5 sm:px-0">
-      <Breadcrumb itemListElement={page.breadcrumbList.itemListElement} />
-
+    <div class="flex flex-col gap-4 sm:gap-5 w-full py-4 sm:py-5 px-5 sm:px-0">
+      <div class="hidden">
+        <Breadcrumb itemListElement={page.breadcrumbList.itemListElement} />
+      </div>
       <div
         class={clx(
-          "container grid",
-          "grid-cols-1 gap-2 py-0",
-          "sm:grid-cols-5 sm:gap-6",
+          "relative",
         )}
       >
-        <div class="sm:col-span-3">
-          <ImageGallerySlider page={page} />
-        </div>
-        <div class="sm:col-span-2">
+        <div class="sm:col-span-2 absolute top-0 left-0 z-10 bg-white h-screen px-10">
           <ProductInfo page={page} />
         </div>
+        <div class="w-full">
+          <ImageGallerySlider page={page} />
+        </div>
+
       </div>
     </div>
   );

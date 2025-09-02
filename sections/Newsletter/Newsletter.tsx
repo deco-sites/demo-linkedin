@@ -2,7 +2,7 @@ import { AppContext } from "../../apps/site.ts";
 import Icon from "../../components/ui/Icon.tsx";
 import Section from "../../components/ui/Section.tsx";
 import { clx } from "../../sdk/clx.ts";
-import { usePlatform } from "../../sdk/usePlatform.tsx";
+
 import { useComponent } from "../Component.tsx";
 import { type SectionProps } from "@deco/deco";
 interface NoticeProps {
@@ -21,15 +21,22 @@ export interface Props {
   status?: "success" | "failed";
 }
 export async function action(props: Props, req: Request, ctx: AppContext) {
-  const platform = usePlatform();
   const form = await req.formData();
   const email = `${form.get("email") ?? ""}`;
-  if (platform === "vtex") {
-    // deno-lint-ignore no-explicit-any
-    await (ctx as any).invoke("vtex/actions/newsletter/subscribe.ts", {
-      email,
-    });
-    return { ...props, status: "success" };
+  const name = `${form.get("name") ?? ""}`;
+
+  // Check if we have a vtex context
+  if (ctx && typeof ctx.invoke === "function") {
+    try {
+      // deno-lint-ignore no-explicit-any
+      await (ctx as any).invoke("vtex/actions/newsletter/subscribe.ts", {
+        email,
+        name,
+      });
+      return { ...props, status: "success" };
+    } catch {
+      return { ...props, status: "failed" };
+    }
   }
   return { ...props, status: "failed" };
 }
@@ -41,11 +48,11 @@ function Notice({ title, description }: {
   description?: string;
 }) {
   return (
-    <div class="flex flex-col justify-center items-center sm:items-start gap-4">
-      <span class="text-3xl font-semibold text-center sm:text-start">
+    <div class="flex flex-col justify-center items-center gap-4">
+      <span class="text-3xl font-semibold text-center">
         {title}
       </span>
-      <span class="text-sm font-normal text-base-400 text-center sm:text-start">
+      <span class="text-sm font-normal text-gray-600 text-center">
         {description}
       </span>
     </div>
@@ -53,65 +60,93 @@ function Notice({ title, description }: {
 }
 function Newsletter({
   empty = {
-    title: "Get top deals, latest trends, and more.",
-    description:
-      "Receive our news and promotions in advance. Enjoy and get 10% off your first purchase. For more information click here.",
+    title: "Get our offers, launches and promotions",
+    description: "",
   },
   success = {
     title: "Thank you for subscribing!",
     description:
-      "You’re now signed up to receive the latest news, trends, and exclusive promotions directly to your inbox. Stay tuned!",
+      "You'll now receive the latest news, trends, and exclusive promotions directly in your inbox. Stay tuned!",
   },
   failed = {
     title: "Oops. Something went wrong!",
     description:
       "Something went wrong. Please try again. If the problem persists, please contact us.",
   },
-  label = "Sign up",
-  placeholder = "Enter your email address",
+  placeholder = "Your email",
   status,
 }: SectionProps<typeof loader, typeof action>) {
+  const componentUrl = useComponent(import.meta.url);
   if (status === "success" || status === "failed") {
     return (
-      <Section.Container class="bg-base-200">
-        <div class="p-14 flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10">
-          <Icon
-            size={80}
-            class={clx(status === "success" ? "text-success" : "text-error")}
-            id={status === "success" ? "check-circle" : "error"}
-          />
-          <Notice {...status === "success" ? success : failed} />
-        </div>
-      </Section.Container>
+      <div class="py-16 px-4 flex flex-col items-center justify-center max-w-2xl mx-auto gap-8">
+        <Icon
+          size={80}
+          class={clx(status === "success" ? "text-green-500" : "text-red-500")}
+          id={status === "success" ? "check-circle" : "error"}
+        />
+        <Notice {...status === "success" ? success : failed} />
+      </div>
     );
   }
   return (
-    <Section.Container class="bg-base-200">
-      <div class="p-14 grid grid-flow-row sm:grid-cols-2 gap-10 sm:gap-20 place-items-center">
-        <Notice {...empty} />
+    <div class="w-full flex justify-center items-center p-64">
+      <div class="background-menu rounded-lg w-[525px] p-4 flex flex-col items-start justify-center gap-4 max-w-2xl mx-auto">
+        {/* Title */}
+        <h2 class="text-sm">
+          {empty.title}
+        </h2>
 
+        {/* Form */}
         <form
           hx-target="closest section"
           hx-swap="outerHTML"
-          hx-post={useComponent(import.meta.url)}
-          class="flex flex-col sm:flex-row gap-4 w-full"
+          hx-post={componentUrl}
+          class="w-full flex flex-col gap-4"
         >
-          <input
-            name="email"
-            class="input input-bordered flex-grow"
-            type="text"
-            placeholder={placeholder}
-          />
+          {/* Input fields */}
+          <div class="flex gap-1">
+            <input
+              name="name"
+              class="flex-1 h-8 rounded-lg outline-none px-2 text-xs"
+              type="text"
+              placeholder="Your name"
+            />
+            <input
+              name="email"
+              class="flex-1 h-8 rounded-lg outline-none px-2 text-xs"
+              type="email"
+              placeholder={placeholder}
+            />
+            <button
+              class="bg-white h-8 w-8 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+              type="submit"
+            >
+              <Icon
+                id="chevron-right"
+                size={16}
+                class="[.htmx-request_&]:hidden"
+              />
+              <span class="[.htmx-request_&]:inline hidden loading loading-spinner" />
+            </button>
+          </div>
 
-          <button class="btn btn-primary" type="submit">
-            <span class="[.htmx-request_&]:hidden inline">
-              {label}
-            </span>
-            <span class="[.htmx-request_&]:inline hidden loading loading-spinner" />
-          </button>
+          {/* Consent checkbox */}
+          <div class="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="consent"
+              class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              required
+            />
+            <label for="consent" class="text-[10px] text-gray-600 leading-relaxed truncate text-nowrap">
+              I agree to receive information about products and special
+              promotional offers.
+            </label>
+          </div>
         </form>
       </div>
-    </Section.Container>
+    </div>
   );
 }
 export const LoadingFallback = () => <Section.Placeholder height="412px" />;

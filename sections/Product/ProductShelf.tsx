@@ -31,18 +31,18 @@ export default function ProductShelf({ products, title, cta }: Props) {
     },
   });
   return (
-    <Section.Container {...viewItemListEvent}>
+    <div class="px-4 py-2">
       <Section.Header title={title} cta={cta} />
 
       <ProductSlider products={products} itemListName={title} />
-    </Section.Container>
+    </div>
   );
 }
 export const LoadingFallback = (
   { title, cta }: LoadingFallbackProps<Props>,
 ) => (
-  <Section.Container>
+  <div class="px-4 py-2">
     <Section.Header title={title} cta={cta} />
     <Section.Placeholder height="471px" />;
-  </Section.Container>
+  </div>
 );

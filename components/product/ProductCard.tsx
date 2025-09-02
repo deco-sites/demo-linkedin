@@ -11,6 +11,7 @@ import WishlistButton from "../wishlist/WishlistButton.tsx";
 import AddToCartButton from "./AddToCartButton.tsx";
 import { Ring } from "./ProductVariantSelector.tsx";
 import { useId } from "../../sdk/useId.ts";
+import Icon from "../ui/Icon.tsx";
 
 interface Props {
   product: Product;
@@ -75,13 +76,14 @@ function ProductCard({
   return (
     <div
       {...event}
-      class={clx("card card-compact group text-sm", _class)}
+      class={clx(
+        "rounded-lg bg-[#EEEEEE] group text-sm p-4 pt-20 pb-32 relative",
+        _class,
+      )}
     >
       <figure
         class={clx(
-          "relative bg-base-200",
           "rounded border border-transparent",
-          "group-hover:border-primary",
         )}
         style={{ aspectRatio: ASPECT_RATIO }}
       >
@@ -90,7 +92,7 @@ function ProductCard({
           href={relativeUrl}
           aria-label="view product"
           class={clx(
-            "absolute top-0 left-0",
+            "top-0 left-0",
             "grid grid-cols-1 grid-rows-1",
             "w-full",
             !inStock && "opacity-70",
@@ -112,40 +114,14 @@ function ProductCard({
             loading={preload ? "eager" : "lazy"}
             decoding="async"
           />
-          <Image
-            src={back?.url ?? front.url!}
-            alt={back?.alternateName ?? front.alternateName}
-            width={WIDTH}
-            height={HEIGHT}
-            style={{ aspectRatio: ASPECT_RATIO }}
-            class={clx(
-              "object-cover",
-              "rounded w-full",
-              "col-span-full row-span-full",
-              "transition-opacity opacity-0 lg:group-hover:opacity-100",
-            )}
-            sizes="(max-width: 640px) 50vw, 20vw"
-            loading="lazy"
-            decoding="async"
-          />
         </a>
 
         {/* Wishlist button */}
-        <div class="absolute top-0 left-0 w-full flex items-center justify-between">
-          {/* Notify Me */}
-          <span
-            class={clx(
-              "text-sm/4 font-normal text-black bg-error bg-opacity-15 text-center rounded-badge px-2 py-1",
-              inStock && "opacity-0",
-            )}
-          >
-            Notify me
-          </span>
-
+        <div class="absolute top-4 left-4 w-full flex items-center justify-between">
           {/* Discounts */}
           <span
             class={clx(
-              "text-sm/4 font-normal text-black bg-primary bg-opacity-15 text-center rounded-badge px-2 py-1",
+              "bg-[#A6A6A699] text-xs font-normal text-white text-center rounded-lg px-2 py-1",
               (percent < 1 || !inStock) && "opacity-0",
             )}
           >
@@ -153,80 +129,60 @@ function ProductCard({
           </span>
         </div>
 
-        <div class="absolute bottom-0 right-0">
+        <div class="hidden absolute bottom-0 right-0">
           <WishlistButton item={item} variant="icon" />
         </div>
       </figure>
 
-      <a href={relativeUrl} class="pt-5">
-        <span class="font-medium">
-          {title}
-        </span>
-
-        <div class="flex gap-2 pt-2">
-          {listPrice && (
-            <span class="line-through font-normal text-gray-400">
-              {formatPrice(listPrice, offers?.priceCurrency)}
-            </span>
-          )}
-          <span class="font-medium text-base-400">
-            {formatPrice(price, offers?.priceCurrency)}
+      <div class="absolute bottom-0 left-0 w-full flex items-end justify-between p-4">
+        <div class="pt-5">
+          <span class="font-medium text-sm">
+            {title}
           </span>
+
+          <div class="flex gap-2 pt-2">
+            <span class="font-medium text-base-400 text-sm">
+              {formatPrice(price, offers?.priceCurrency)}
+            </span>
+          </div>
         </div>
-      </a>
 
-      {/* SKU Selector */}
-      {variants.length > 1 && firstVariantName !== shoeSizeVariant && (
-        <ul class="flex items-center justify-start gap-2 pt-4 pb-1 pl-1 overflow-x-auto">
-          {variants.map(([value, link]) => [value, relative(link)] as const)
-            .map(([value, link]) => (
-              <li>
-                <a href={link} class="cursor-pointer">
-                  <input
-                    class="hidden peer"
-                    type="radio"
-                    name={`${id}-${firstSkuVariations?.[0]}`}
-                    checked={link === relativeUrl}
-                  />
-                  <Ring value={value} checked={link === relativeUrl} />
-                </a>
-              </li>
-            ))}
-        </ul>
-      )}
-
-      <div class="flex-grow" />
-
-      <div>
-        {inStock
-          ? (
+        <div class="flex gap-2 items-center justify-between">
+          {/* SKU Selector */}
+          {variants.length > 1 && firstVariantName !== shoeSizeVariant && (
+            <ul class="flex items-center justify-start gap-2 overflow-x-auto">
+              {variants.map(([value, link]) => [value, relative(link)] as const)
+                .map(([value, link]) => (
+                  <li>
+                    <a href={link} class="cursor-pointer">
+                      <input
+                        class="hidden peer"
+                        type="radio"
+                        name={`${id}-${firstSkuVariations?.[0]}`}
+                        checked={link === relativeUrl}
+                      />
+                      <Ring value={value} checked={link === relativeUrl} />
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          )}
+          <div>
             <AddToCartButton
               product={product}
               seller={seller}
               item={item}
               class={clx(
-                "btn",
-                "btn-outline justify-start border-none !text-sm !font-medium px-0 no-animation w-full",
-                "hover:!bg-transparent",
-                "disabled:!bg-transparent disabled:!opacity-50",
-                "btn-primary hover:!text-primary disabled:!text-primary",
-              )}
-            />
-          )
-          : (
-            <a
-              href={relativeUrl}
-              class={clx(
-                "btn",
-                "btn-outline justify-start border-none !text-sm !font-medium px-0 no-animation w-full",
-                "hover:!bg-transparent",
-                "disabled:!bg-transparent disabled:!opacity-75",
-                "btn-error hover:!text-error disabled:!text-error",
+                "flex justify-center items-center border-none !text-sm !font-medium px-0 no-animation w-full",
               )}
             >
-              Sold out
-            </a>
-          )}
+
+              <span class="w-[17px] h-[17px] bg-[#fff] rounded-full flex items-center justify-center">
+                +
+              </span>
+            </AddToCartButton>
+          </div>
+        </div>
       </div>
     </div>
   );

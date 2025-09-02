@@ -20,21 +20,25 @@ const colors: Record<string, string | undefined> = {
   "LightGreen": "#aad1b5",
   "DarkYellow": "#c6b343",
   "LightYellow": "#F1E8B0",
+  "Cinza": "#C9CFCF",
+  "Azul": "#87CEFA",
+  "Rosa": "#FFB6C1",
+  "Laranja": "#FFA500",
+  "Vermelho": "#FF0000",
+  "Verde": "#00FF00",
+  "Amarelo": "#FFFF00",
+  "Violeta": "#800080",
+  "Preto": "#000000",
+  "Roxo": "#800080",
 };
 const useStyles = (value: string, checked: boolean) => {
   if (colors[value]) {
     return clx(
-      "border border-base-300 rounded-full",
-      "w-12 h-12 block",
-      "border border-[#C9CFCF] rounded-full",
-      "ring-2 ring-offset-2",
-      checked ? "ring-primary" : "ring-transparent",
+      "w-2.5 h-2.5 block rounded-full",
     );
   }
   return clx(
-    "btn btn-ghost border-[#C9CFCF] hover:bg-base-200 hover:border-[#C9CFCF] w-12 h-12",
-    "ring-2 ring-offset-2",
-    checked ? "ring-primary" : "ring-transparent border-[#C9CFCF]",
+    "btn btn-ghost w-2.5 h-2.5 rounded-full",
   );
 };
 export const Ring = ({ value, checked = false, class: _class }: {

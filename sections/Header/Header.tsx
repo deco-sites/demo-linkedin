@@ -69,16 +69,21 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
 
         <label
           for={SEARCHBAR_POPUP_ID}
-          class="flex items-center gap-2 background-menu w-[253px] h-[40px] rounded-lg"
+          class="flex items-center gap-2.5 px-2 justify-between background-menu w-[253px] h-[40px] rounded-lg"
           aria-label="search icon button"
         >
-          <Icon id="search" />
-          <span class="text-base-400 truncate">
-            Search products, brands...
+          <span class="bg-[#fff] px-2.5 py-1 rounded-full text-sm">
+            Search
           </span>
+          <span class="text-base-400 truncate text-sm text-[#40404099]">
+            Products, categories...
+          </span>
+          <div class="flex items-center justify-center">
+            <Icon id="search" size={16} />  
+          </div>
         </label>
 
-        <div class="flex background-menu-item items-center w-[543px] h-[40px] justify-between gap-16 p-1 px-2 rounded-lg relative">
+        <div class="flex background-menu-before items-center w-[543px] h-[40px] justify-between gap-16 p-1 px-2 rounded-lg relative">
           <a href="/" aria-label="Store logo" class="z-20">
             <Image
               src={logo.src}
