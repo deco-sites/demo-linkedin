@@ -11,58 +11,329 @@
     "<p>Get 10% off today: <strong>NEW10</strong></p>"
   ],
   "logo": {
-    "src": "https://assets.decocache.com/storefront/0d91c3c0-1062-4b5c-9b77-19c2b6c13bfb/1742560193760-ed9f7e80-86a8-4b72-9809-2e4e2e5f0e53",
+    "src": "https://brmotorolanew.vtexassets.com/arquivos/logo-menu-shine-v2.png",
     "alt": "Deco Storefront",
-    "width": 160,
+    "width": 110,
     "height": 40
   },
   "navItems": [
     {
+      "@type": "SiteNavigationElement",
+      "url": "/shop",
+      "name": "Shop",
       "children": [
         {
           "image": [],
-          "children": [],
-          "name": "Hello"
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "Blouses & Shirts",
+              "url": "/shop/women/clothing/blouses"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Dresses",
+              "url": "/shop/women/clothing/dresses"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Jeans & Pants",
+              "url": "/shop/women/clothing/pants"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Jackets & Coats",
+              "url": "/shop/women/clothing/outerwear"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Shoes & Accessories",
+              "url": "/shop/women/accessories"
+            }
+          ],
+          "name": "Women",
+          "url": "/shop/women"
         },
         {
           "image": [],
-          "children": [],
-          "name": "World"
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "T-Shirts & Polos",
+              "url": "/shop/men/clothing/tshirts"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Shirts & Dress Shirts",
+              "url": "/shop/men/clothing/shirts"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Jeans & Pants",
+              "url": "/shop/men/clothing/pants"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Suits & Blazers",
+              "url": "/shop/men/clothing/suits"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Shoes & Accessories",
+              "url": "/shop/men/accessories"
+            }
+          ],
+          "name": "Men",
+          "url": "/shop/men"
+        },
+        {
+          "image": [],
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "Smartphones & Mobile",
+              "url": "/shop/electronics/phones"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Audio & Headphones",
+              "url": "/shop/electronics/audio"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Laptops & Tablets",
+              "url": "/shop/electronics/computers"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Smart Home",
+              "url": "/shop/electronics/smart-home"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Gaming",
+              "url": "/shop/electronics/gaming"
+            }
+          ],
+          "name": "Electronics",
+          "url": "/shop/electronics"
         }
-      ],
-      "@type": "SiteNavigationElement",
-      "url": "/deals",
-      "name": "Deals"
+      ]
     },
     {
       "@type": "SiteNavigationElement",
-      "url": "/valentines-day",
-      "name": "Valentine's Day",
-      "children": []
+      "url": "/collections",
+      "name": "Collections",
+      "children": [
+        {
+          "image": [],
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "Latest Drops",
+              "url": "/collections/new-arrivals/latest"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Trending Now",
+              "url": "/collections/new-arrivals/trending"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Pre-Orders",
+              "url": "/collections/new-arrivals/pre-orders"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Editor's Picks",
+              "url": "/collections/new-arrivals/editors-picks"
+            }
+          ],
+          "name": "New Arrivals",
+          "url": "/collections/new-arrivals"
+        },
+        {
+          "image": [],
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "Spring Collection",
+              "url": "/collections/seasonal/spring"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Summer Essentials",
+              "url": "/collections/seasonal/summer"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Holiday Specials",
+              "url": "/collections/seasonal/holiday"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Limited Edition",
+              "url": "/collections/seasonal/limited"
+            }
+          ],
+          "name": "Seasonal",
+          "url": "/collections/seasonal"
+        },
+        {
+          "image": [],
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "Premium Collection",
+              "url": "/collections/featured/premium"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Best Sellers",
+              "url": "/collections/featured/bestsellers"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Exclusive Brands",
+              "url": "/collections/featured/exclusive"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Collaborations",
+              "url": "/collections/featured/collaborations"
+            }
+          ],
+          "name": "Featured",
+          "url": "/collections/featured"
+        }
+      ]
     },
     {
       "@type": "SiteNavigationElement",
-      "url": "/women",
-      "name": "Women",
-      "children": []
-    },
-    {
-      "@type": "SiteNavigationElement",
-      "url": "/men",
-      "name": "Men",
-      "children": []
-    },
-    {
-      "@type": "SiteNavigationElement",
-      "url": "/clearance",
-      "name": "Clearance",
-      "children": []
-    },
-    {
-      "@type": "SiteNavigationElement",
-      "url": "/activities",
-      "name": "Activities",
-      "children": []
+      "url": "/sale",
+      "name": "Sale",
+      "children": [
+        {
+          "image": [],
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "Up to 70% Off",
+              "url": "/sale/deals/70-off"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Flash Sale",
+              "url": "/sale/deals/flash"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Daily Deals",
+              "url": "/sale/deals/daily"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Bundle Offers",
+              "url": "/sale/deals/bundles"
+            }
+          ],
+          "name": "Best Deals",
+          "url": "/sale/deals"
+        },
+        {
+          "image": [],
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "Women's Sale",
+              "url": "/sale/categories/women"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Men's Sale",
+              "url": "/sale/categories/men"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Electronics Sale",
+              "url": "/sale/categories/electronics"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Home Sale",
+              "url": "/sale/categories/home"
+            }
+          ],
+          "name": "By Category",
+          "url": "/sale/categories"
+        },
+        {
+          "image": [],
+          "children": [
+            {
+              "image": [],
+              "children": [],
+              "name": "Final Clearance",
+              "url": "/sale/clearance/final"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Last Chance",
+              "url": "/sale/clearance/last-chance"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "End of Season",
+              "url": "/sale/clearance/end-season"
+            },
+            {
+              "image": [],
+              "children": [],
+              "name": "Outlet",
+              "url": "/sale/clearance/outlet"
+            }
+          ],
+          "name": "Clearance",
+          "url": "/sale/clearance"
+        }
+      ]
     }
   ],
   "loading": "eager"

@@ -19,33 +19,37 @@
     },
     {
       "@type": "SiteNavigationElement",
-      "url": "/valentines-day",
-      "name": "Valentine's Day",
-      "children": []
-    },
-    {
-      "@type": "SiteNavigationElement",
       "url": "/women",
       "name": "Women",
-      "children": []
+      "children": [
+        {
+          "image": [],
+          "children": [],
+          "name": "Hello"
+        },
+        {
+          "image": [],
+          "children": [],
+          "name": "World"
+        }
+      ]
     },
     {
       "@type": "SiteNavigationElement",
       "url": "/men",
       "name": "Men",
-      "children": []
-    },
-    {
-      "@type": "SiteNavigationElement",
-      "url": "/clearance",
-      "name": "Clearance",
-      "children": []
-    },
-    {
-      "@type": "SiteNavigationElement",
-      "url": "/activities",
-      "name": "Activities",
-      "children": []
+      "children": [
+        {
+          "image": [],
+          "children": [],
+          "name": "Hello"
+        },
+        {
+          "image": [],
+          "children": [],
+          "name": "World"
+        }
+      ]
     }
   ],
   "__resolveType": "commerce/loaders/navbar.ts"

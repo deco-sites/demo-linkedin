@@ -1,7 +1,6 @@
 import type { HTMLWidget, ImageWidget } from "apps/admin/widgets.ts";
 import type { SiteNavigationElement } from "apps/commerce/types.ts";
 import Image from "apps/website/components/Image.tsx";
-import Alert from "../../components/header/Alert.tsx";
 import Bag from "../../components/header/Bag.tsx";
 import Menu from "../../components/header/Menu.tsx";
 import NavItem from "../../components/header/NavItem.tsx";
@@ -65,22 +64,12 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
       </div>
     </Modal>
 
-    <div class="flex flex-col gap-4 pt-5 container border-b border-gray-300">
-      <div class="grid grid-cols-3 place-items-center">
-        <div class="place-self-start">
-          <a href="/" aria-label="Store logo">
-            <Image
-              src={logo.src}
-              alt={logo.alt}
-              width={logo.width || 100}
-              height={logo.height || 23}
-            />
-          </a>
-        </div>
+    <div class="flex flex-col gap-4 py-3 px-4">
+      <div class="grid grid-cols-3">
 
         <label
           for={SEARCHBAR_POPUP_ID}
-          class="input input-bordered flex items-center gap-2 w-full"
+          class="flex items-center gap-2 background-menu w-[253px] h-[40px] rounded-lg"
           aria-label="search icon button"
         >
           <Icon id="search" />
@@ -89,17 +78,24 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
           </span>
         </label>
 
-        <div class="flex gap-4 place-self-end">
-          <Bag />
+        <div class="flex background-menu-item items-center w-[543px] h-[40px] justify-between gap-16 p-1 px-2 rounded-lg relative">
+          <a href="/" aria-label="Store logo" class="z-20">
+            <Image
+              src={logo.src}
+              alt={logo.alt}
+              width={logo.width || 100}
+            />
+          </a>
+          <ul class="flex gap-2">
+          {navItems?.slice(0, 10).map((item) => <NavItem key={item.name} item={item} />)}
+          </ul>
         </div>
-      </div>
 
-      <div class="flex justify-between items-center">
-        <ul class="flex">
-          {navItems?.slice(0, 10).map((item) => <NavItem item={item} />)}
-        </ul>
-        <div>
-          {/* ship to */}
+        <div class="flex gap-4 place-self-end">
+          <a href="/account" class="background-menu text-[14px] flex justify-center items-center h-[40px] px-3 rounded-lg">
+            Account
+          </a>
+          <Bag />
         </div>
       </div>
     </div>
@@ -205,8 +201,7 @@ function Header({
           : HEADER_HEIGHT_MOBILE,
       }}
     >
-      <div class="bg-base-100 fixed w-full z-40">
-        {alerts.length > 0 && <Alert alerts={alerts} />}
+      <div class="fixed w-full z-40">
         {device === "desktop"
           ? <Desktop logo={logo} {...props} />
           : <Mobile logo={logo} {...props} />}

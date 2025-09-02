@@ -37,3 +37,20 @@
     --dot-progress: 100%
   }
 }
+
+.background-menu {
+  background-color: #F0F0F060;
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+}
+
+.background-menu-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #F0F0F060;
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  z-index: 15;
+  border-radius: 0.5rem
+}

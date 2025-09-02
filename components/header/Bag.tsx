@@ -27,8 +27,8 @@ function Bag() {
           class="hidden indicator-item badge badge-primary badge-sm font-thin"
         />
 
-        <span class="btn btn-square btn-sm btn-ghost no-animation">
-          <Icon id="shopping_bag" />
+        <span class="background-menu text-[14px] flex justify-center items-center h-[40px] px-3 rounded-lg">
+          Bag
         </span>
       </label>
       <script

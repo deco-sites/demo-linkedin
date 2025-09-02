@@ -1,4 +1,4 @@
-import type { ImageWidget } from "apps/admin/widgets.ts";
+import type { ImageWidget, VideoWidget } from "apps/admin/widgets.ts";
 import { Picture, Source } from "apps/website/components/Picture.tsx";
 import Icon from "../../components/ui/Icon.tsx";
 import Slider from "../../components/ui/Slider.tsx";
@@ -134,13 +134,13 @@ function Carousel({ images = [], preload, interval }: Props) {
         "grid-rows-[1fr_32px_1fr_64px]",
         "grid-cols-[32px_1fr_32px] min-h-[660px]",
         "sm:grid-cols-[112px_1fr_112px] sm:min-h-min",
-        "w-screen",
+        "w-full px-4",
       )}
     >
       <div class="col-span-full row-span-full">
         <Slider class="carousel carousel-center w-full gap-6">
           {images.map((image, index) => (
-            <Slider.Item index={index} class="carousel-item w-full">
+            <Slider.Item index={index} class="carousel-item w-full rounded-lg overflow-hidden">
               <BannerItem image={image} lcp={index === 0 && preload} />
             </Slider.Item>
           ))}
