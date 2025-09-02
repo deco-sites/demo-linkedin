@@ -71,7 +71,7 @@ function ProductInfo({ page }: Props) {
   ) ?? false;
 
   return (
-    <div {...viewItemEvent} class="flex flex-col" id={id}>
+    <div {...viewItemEvent} class="flex flex-col background-pdp rounded-2xl p-4" id={id}>
       {/* Price tag */}
       <span
         class={clx(
@@ -125,7 +125,7 @@ function ProductInfo({ page }: Props) {
       </div>
 
       {/* Shipping Simulation */}
-      <div class="mt-8">
+      <div class="mt-8 hidden">
         <ShippingSimulationForm
           items={[{ id: Number(product.sku), quantity: 1, seller: seller }]}
         />

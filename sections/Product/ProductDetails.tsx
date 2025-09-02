@@ -37,7 +37,7 @@ export default function ProductDetails({ page }: Props) {
           "relative",
         )}
       >
-        <div class="sm:col-span-2 absolute top-0 left-0 z-10 bg-white h-screen px-10">
+        <div class="sm:col-span-2 absolute flex items-center top-0 left-0 z-10 bg-gradient-to-r from-white to-transparent h-[885px] px-10">
           <ProductInfo page={page} />
         </div>
         <div class="w-full">

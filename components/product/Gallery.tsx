@@ -49,9 +49,9 @@ export default function GallerySlider(props: Props) {
           <div class="overflow-x-auto overflow-y-hidden w-full max-w-[100vw]">
             <div class="flex gap-4 pl-[calc(33.333vw+5px)]" style="width: max-content;">
               {images.map((img, index) => (
-                <div class="flex-shrink-0 w-[543px]">
+                <div class="flex items-center w-[543px] px-20 bg-[#EEEEEE] rounded-lg h-[885px]">
                   <Image
-                    class="bg-[#EEEEEE] w-full rounded-lg"
+                    class="w-full"
                     sizes="(max-width: 640px) 100vw, 40vw"
                     style={{ aspectRatio: ASPECT_RATIO }}
                     src={img.url!}

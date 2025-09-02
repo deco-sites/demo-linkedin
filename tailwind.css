@@ -54,3 +54,9 @@
   z-index: 15;
   border-radius: 0.5rem
 }
+
+.background-pdp{
+  background-color: #FFFFFF66;
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+}
