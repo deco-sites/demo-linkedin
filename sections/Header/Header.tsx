@@ -51,7 +51,7 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
   <>
     <Modal id={SEARCHBAR_POPUP_ID}>
       <div
-        class="absolute top-0 bg-base-100 container"
+        class="absolute top-0 container"
         style={{ marginTop: HEADER_HEIGHT_MOBILE }}
       >
         {loading === "lazy"
@@ -69,7 +69,7 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
 
         <label
           for={SEARCHBAR_POPUP_ID}
-          class="flex items-center gap-2.5 px-2 justify-between background-menu w-[253px] h-[40px] rounded-lg"
+          class="flex items-center gap-2.5 px-2 justify-between background w-[253px] h-[40px] rounded-lg cursor-pointer"
           aria-label="search icon button"
         >
           <span class="bg-[#fff] px-2.5 py-1 rounded-full text-sm">
@@ -97,7 +97,7 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
         </div>
 
         <div class="flex gap-4 place-self-end">
-          <a href="/account" class="background-menu text-[14px] flex justify-center items-center h-[40px] px-3 rounded-lg">
+          <a href="/account" class="background text-[14px] flex justify-center items-center h-[40px] px-3 rounded-lg">
             Account
           </a>
           <Bag />

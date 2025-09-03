@@ -47,7 +47,7 @@ export default function GallerySlider(props: Props) {
         {/* Image Slider */}
         <div class="col-start-1 col-span-1 sm:col-start-2">
           <div class="overflow-x-auto overflow-y-hidden w-full max-w-[100vw]">
-            <div class="flex gap-4 pl-[calc(33.333vw+5px)]" style="width: max-content;">
+            <div class="flex gap-4 pl-[calc(33.333333vw)] w-max">
               {images.map((img, index) => (
                 <div class="flex items-center w-[543px] px-20 bg-[#EEEEEE] rounded-lg h-[885px]">
                   <Image
@@ -66,7 +66,7 @@ export default function GallerySlider(props: Props) {
               ))}
             </div>
 
-            <div class="absolute top-2 right-2 bg-base-100 rounded-full">
+            <div class="absolute top-2 right-2 bg-base-100 rounded-full hidden">
               <label class="btn btn-ghost hidden sm:inline-flex" for={zoomId}>
                 <Icon id="pan_zoom" />
               </label>
@@ -87,7 +87,7 @@ export default function GallerySlider(props: Props) {
           >
             {images.map((img, index) => (
               <li class="w-16 h-16">
-                <button class="w-full h-full">
+                <button type="button" class="w-full h-full">
                   <Image
                     style={{ aspectRatio: "1 / 1" }}
                     class="border rounded object-cover w-full h-full hover:border-base-400"

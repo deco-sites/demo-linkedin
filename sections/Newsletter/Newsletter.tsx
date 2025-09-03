@@ -91,7 +91,7 @@ function Newsletter({
   }
   return (
     <div class="w-full flex justify-center items-center p-64">
-      <div class="background-menu rounded-lg w-[525px] p-4 flex flex-col items-start justify-center gap-4 max-w-2xl mx-auto">
+      <div class="background rounded-lg w-[525px] p-4 flex flex-col items-start justify-center gap-4 max-w-2xl mx-auto">
         {/* Title */}
         <h2 class="text-sm">
           {empty.title}

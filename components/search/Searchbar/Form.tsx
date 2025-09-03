@@ -66,24 +66,14 @@ export default function Searchbar(
   const slot = useId();
   return (
     <div
-      class="w-full grid gap-8 px-4 py-6"
+      class="w-full grid gap-8 px-4 py-6 background rounded-lg"
       style={{ gridTemplateRows: "min-content auto" }}
     >
       <form id={SEARCHBAR_INPUT_FORM_ID} action={ACTION} class="join">
-        <button
-          type="submit"
-          class="btn join-item btn-square no-animation"
-          aria-label="Search"
-          for={SEARCHBAR_INPUT_FORM_ID}
-          tabIndex={-1}
-        >
-          <span class="loading loading-spinner loading-xs hidden [.htmx-request_&]:inline" />
-          <Icon id="search" class="inline [.htmx-request_&]:hidden" />
-        </button>
         <input
           autoFocus
           tabIndex={0}
-          class="input input-bordered join-item flex-grow"
+          class="input flex-grow rounded-lg"
           name={NAME}
           placeholder={placeholder}
           autocomplete="off"

@@ -4,7 +4,13 @@
     "placeholder": "What are you looking for?",
     "loader": {
       "__resolveType": "resolved",
-      "data": null
+      "data": {
+        "__resolveType": "vtex/loaders/intelligentSearch/suggestions.ts",
+        "count": 4,
+        "advancedConfigs": {
+          "includeOriginalAttributes": []
+        }
+      }
     }
   },
   "alerts": [

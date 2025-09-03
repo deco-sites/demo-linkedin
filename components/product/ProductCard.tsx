@@ -95,7 +95,6 @@ function ProductCard({
             "top-0 left-0",
             "grid grid-cols-1 grid-rows-1",
             "w-full",
-            !inStock && "opacity-70",
           )}
         >
           <Image
@@ -136,12 +135,12 @@ function ProductCard({
 
       <div class="absolute bottom-0 left-0 w-full flex items-end justify-between p-4">
         <div class="pt-5">
-          <span class="font-medium text-sm">
+          <span class="font-medium text-sm text-[#737373]">
             {title}
           </span>
 
-          <div class="flex gap-2 pt-2">
-            <span class="font-medium text-base-400 text-sm">
+          <div class="flex gap-2 pt-1">
+            <span class="text-base-400 text-sm text-[#737373]">
               {formatPrice(price, offers?.priceCurrency)}
             </span>
           </div>

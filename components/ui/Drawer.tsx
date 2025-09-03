@@ -68,12 +68,12 @@ function Aside({ title, drawer, children }: {
   return (
     <div
       data-aside
-      class="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y"
+      class="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y max-h-[98%] m-auto mr-0 rounded-lg overflow-hidden"
       style={{ maxWidth: "100vw" }}
     >
       <div class="flex justify-between items-center">
         <h1 class="px-4 py-3">
-          <span class="font-medium text-2xl">{title}</span>
+          <span class="text-xs">{title}</span>
         </h1>
         <label for={drawer} aria-label="X" class="btn btn-ghost">
           <Icon id="close" />

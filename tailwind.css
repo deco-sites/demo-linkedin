@@ -38,7 +38,7 @@
   }
 }
 
-.background-menu {
+.background {
   background-color: #F0F0F060;
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
@@ -59,4 +59,13 @@
   background-color: #FFFFFF66;
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
+}
+
+.drawer-end .drawer-toggle:checked ~ .drawer-side > *:not(.drawer-overlay){
+  margin-right: 8px;
+}
+
+.checkbox{
+  width: 16px !important;
+  height: 16px !important;
 }

@@ -40,17 +40,17 @@ function Footer({
 }: Props) {
   return (
     <footer
-      class="background-menu px-5 sm:px-0 mt-5 sm:mt-10"
+      class="background px-5 sm:px-0 mt-5 sm:mt-10"
     >
       <div class="container flex flex-col gap-5 sm:gap-10 py-10">
         <ul class="grid grid-flow-row sm:grid-flow-col gap-6 ">
           {links.map(({ title, href, children }) => (
             <li class="flex flex-col gap-4">
-              <a class="text-base font-semibold" href={href}>{title}</a>
+              <a class="text-base" href={href}>{title}</a>
               <ul class="flex flex-col gap-2">
                 {children.map(({ title, href }) => (
                   <li>
-                    <a class="text-sm font-medium text-base-400" href={href}>
+                    <a class="text-sm text-base-400" href={href}>
                       {title}
                     </a>
                   </li>
@@ -97,7 +97,7 @@ function Footer({
           <ul class="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-center">
             {policies.map(({ title, href }) => (
               <li>
-                <a class="text-xs font-medium" href={href}>
+                <a class="text-xs" href={href}>
                   {title}
                 </a>
               </li>

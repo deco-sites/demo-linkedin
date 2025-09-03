@@ -31,8 +31,8 @@ interface Props {
 function ImageItem({ image }: { image: Item }) { 
     return (
         <div style={{ width: image.width, height: image.height }}>
-            <Image class="w-full h-full block sm:hidden rounded-lg" src={image.mobileImage} alt={image.alt} width={100} height={100} />
-            <Image class="w-full h-full hidden sm:block rounded-lg" src={image.image} alt={image.alt} width={100} height={100} />
+            <Image class="w-full h-full block sm:hidden rounded-lg" src={image.mobileImage} alt={image.alt} width={image.width} height={image.height} />
+            <Image class="w-full h-full hidden sm:block rounded-lg" src={image.image} alt={image.alt} width={image.width} height={image.height} />
         </div>
     )
 }

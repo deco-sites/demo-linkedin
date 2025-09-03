@@ -22,8 +22,8 @@ function ValueItem(
   return (
     <a href={url} rel="nofollow" class="flex items-center gap-2">
       <div aria-checked={selected} class="checkbox" />
-      <span class="text-sm">{label}</span>
-      {quantity > 0 && <span class="text-sm text-base-400">({quantity})</span>}
+      <span class="text-xs max-w-[120px] truncate text-[#737373]">{label}</span>
+      {quantity > 0 && <span class="text-xs text-base-400 text-[#737373]">({quantity})</span>}
     </a>
   );
 }
@@ -72,7 +72,7 @@ function Filters({ filters }: Props) {
         .filter(isToggle)
         .map((filter) => (
           <li class="flex flex-col gap-4">
-            <span>{filter.label}</span>
+            <span class="text-sm text-[#737373] font-medium">{filter.label}</span>
             <FilterValues {...filter} />
           </li>
         ))}

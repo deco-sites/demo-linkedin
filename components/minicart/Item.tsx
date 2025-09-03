@@ -36,20 +36,22 @@ function CartItem({ item, index, locale, currency }: Props) {
       class="grid grid-rows-1 gap-2"
       style={{ gridTemplateColumns: "auto 1fr" }}
     >
-      <Image
-        alt={name}
-        src={image}
-        style={{ aspectRatio: "108 / 150" }}
-        width={108}
-        height={150}
-        class="h-full object-contain"
-      />
+      <div class="p-4 background rounded-lg w-24">
+        <Image
+          alt={name}
+          src={image}
+          style={{ aspectRatio: "108 / 150" }}
+          width={150}
+          height={150}
+          class="h-full object-contain"
+        />
+      </div>
 
       {/* Info */}
       <div class="flex flex-col gap-2">
         {/* Name and Remove button */}
         <div class="flex justify-between items-center">
-          <legend>{name}</legend>
+          <legend class="text-xs">{name}</legend>
           <button
             class={clx(
               isGift && "hidden",
@@ -63,10 +65,7 @@ function CartItem({ item, index, locale, currency }: Props) {
 
         {/* Price Block */}
         <div class="flex items-center gap-2">
-          <span class="line-through text-sm">
-            {formatPrice(listPrice, currency, locale)}
-          </span>
-          <span class="text-sm text-secondary">
+          <span class="text-sm">
             {isGift ? "Grátis" : formatPrice(price, currency, locale)}
           </span>
         </div>

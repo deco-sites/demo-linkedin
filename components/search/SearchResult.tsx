@@ -92,7 +92,7 @@ function PageResult(props: SectionProps<typeof loader>) {
         class={clx(
           "grid items-center",
           "grid-cols-2 gap-2",
-          "sm:grid-cols-4 sm:gap-10",
+          "sm:grid-cols-4",
           "w-full",
         )}
       >
@@ -102,7 +102,7 @@ function PageResult(props: SectionProps<typeof loader>) {
             product={product}
             preload={index === 0}
             index={offset + index}
-            class="h-full min-w-[160px] max-w-[300px]"
+            class="h-full min-w-[160px] w-full"
           />
         ))}
       </div>
@@ -222,7 +222,7 @@ function Result(props: SectionProps<typeof loader>) {
         {partial
           ? <PageResult {...props} />
           : (
-            <div class="container flex flex-col gap-4 sm:gap-5 w-full py-4 sm:py-5 px-5 sm:px-0">
+            <div class="px-4 flex flex-col gap-4 sm:gap-5 w-full py-4 sm:py-5">
               <Breadcrumb itemListElement={breadcrumb?.itemListElement} />
 
               {device === "mobile" && (
@@ -257,18 +257,19 @@ function Result(props: SectionProps<typeof loader>) {
                 </Drawer>
               )}
 
-              <div class="grid grid-cols-1 sm:grid-cols-[250px_1fr]">
+              <div class="grid grid-cols-1 sm:grid-cols-[250px_1fr] gap-2">
                 {device === "desktop" && (
-                  <aside class="place-self-start flex flex-col gap-9">
-                    <span class="text-base font-semibold h-12 flex items-center">
+                  <aside class="place-self-start flex flex-col gap-2 w-full">
+                    <span class="text-base h-12 flex items-center">
                       Filters
                     </span>
-
-                    <Filters filters={filters} />
+                    <div class="background rounded-lg p-4">
+                      <Filters filters={filters} />
+                    </div>
                   </aside>
                 )}
 
-                <div class="flex flex-col gap-9">
+                <div class="flex flex-col gap-2">
                   {device === "desktop" && (
                     <div class="flex justify-between items-center">
                       {results}

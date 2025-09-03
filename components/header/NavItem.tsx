@@ -24,7 +24,7 @@ function NavItem({ item }: { item: SiteNavigationElement }) {
       {children && children.length > 0 &&
         (
           <div
-            class="absolute background-menu pt-4 max-w-full hidden p-3 hover:flex group-hover:flex z-10 items-start justify-center gap-6 w-full rounded-lg"
+            class="absolute background pt-4 max-w-full hidden p-3 hover:flex group-hover:flex z-10 items-start justify-center gap-6 w-full rounded-lg"
             style={{
               top: "calc(100% - 16px)",
               left: "0px",

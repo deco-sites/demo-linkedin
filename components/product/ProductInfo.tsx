@@ -71,26 +71,25 @@ function ProductInfo({ page }: Props) {
   ) ?? false;
 
   return (
-    <div {...viewItemEvent} class="flex flex-col background-pdp rounded-2xl p-4" id={id}>
-      {/* Price tag */}
-      <span
-        class={clx(
-          "text-sm/4 font-normal text-black bg-primary bg-opacity-15 text-center rounded-badge px-2 py-1",
-          percent < 1 && "opacity-0",
-          "w-fit",
+    <div
+      {...viewItemEvent}
+      class="flex flex-col background-pdp rounded-2xl p-4"
+      id={id}
+    >
+      <div class="flex flex-col gap-2 max-w-[300px]">
+        {/* Product Name */}
+        <span class="font-medium">
+          {title}
+        </span>
+
+        {description && (
+          <div
+            class="text-xs"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
         )}
-      >
-        {percent} % off
-      </span>
 
-      {/* Product Name */}
-      <span class={clx("text-lg", "pt-4")}>
-        {title}
-      </span>
-
-      {/* Prices */}
-      <div class="flex gap-3 pt-1">
-        <span class="text-sm text-base-400">
+        <span class="text-sm text-base-400 font-medium">
           {formatPrice(price, offers?.priceCurrency)}
         </span>
       </div>
@@ -106,20 +105,20 @@ function ProductInfo({ page }: Props) {
       <div class="mt-4 sm:mt-10 flex flex-col gap-2">
         {availability === "https://schema.org/InStock"
           ? (
-            <>
+            <div class="flex flex-nowrap gap-2">
+              <WishlistButton item={item} variant="icon" />
               <AddToCartButton
                 item={item}
                 seller={seller}
                 product={product}
-                class="btn btn-primary no-animation"
                 disabled={false}
+                class="background rounded-lg h-8 px-3"
               >
-                <span>
+                <span class="text-xs">
                   Adicionar a sacola
                 </span>
               </AddToCartButton>
-              <WishlistButton item={item} />
-            </>
+            </div>
           )
           : <OutOfStock productID={productID} />}
       </div>
@@ -129,21 +128,6 @@ function ProductInfo({ page }: Props) {
         <ShippingSimulationForm
           items={[{ id: Number(product.sku), quantity: 1, seller: seller }]}
         />
-      </div>
-
-      {/* Description card */}
-      <div class="mt-4 sm:mt-6">
-        <span class="text-sm">
-          {description && (
-            <details>
-              <summary class="cursor-pointer">Description</summary>
-              <div
-                class="ml-2 mt-2"
-                dangerouslySetInnerHTML={{ __html: description }}
-              />
-            </details>
-          )}
-        </span>
       </div>
     </div>
   );
