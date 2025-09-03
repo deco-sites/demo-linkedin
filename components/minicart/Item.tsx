@@ -48,7 +48,7 @@ function CartItem({ item, index, locale, currency }: Props) {
       </div>
 
       {/* Info */}
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col justify-between gap-2">
         {/* Name and Remove button */}
         <div class="flex justify-between items-center">
           <legend class="text-xs">{name}</legend>
@@ -64,20 +64,19 @@ function CartItem({ item, index, locale, currency }: Props) {
         </div>
 
         {/* Price Block */}
-        <div class="flex items-center gap-2">
+        <div class="flex items-center justify-between gap-2">
           <span class="text-sm">
             {isGift ? "Grátis" : formatPrice(price, currency, locale)}
           </span>
-        </div>
-
-        {/* Quantity Selector */}
-        <div class={clx(isGift && "hidden")}>
-          <QuantitySelector
-            min={0}
-            max={QUANTITY_MAX_VALUE}
-            value={quantity}
-            name={`item::${index}`}
-          />
+          {/* Quantity Selector */}
+          <div class={clx(isGift && "hidden")}>
+            <QuantitySelector
+              min={0}
+              max={QUANTITY_MAX_VALUE}
+              value={quantity}
+              name={`item::${index}`}
+            />
+          </div>
         </div>
       </div>
     </fieldset>

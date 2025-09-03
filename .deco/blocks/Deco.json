@@ -1,10 +1,10 @@
 {
   "__resolveType": "site/sections/Theme/Theme.tsx",
   "buttonStyle": {
-    "--border-btn": "1px",
-    "--rounded-btn": "99999px",
+    "--rounded-btn": "0.4rem",
     "--btn-focus-scale": "1",
-    "--animation-btn": "0.25s"
+    "--animation-btn": "0.25s",
+    "--border-btn": "0px"
   },
   "font": {
     "__resolveType": "website/loaders/fonts/googleFonts.ts",
@@ -38,20 +38,21 @@
   },
   "mode": "dark",
   "mainColors": {
-    "primary": "#27AE6B",
+    "primary": "#F0F0F0",
     "base-100": "#ffffff",
     "secondary": "#FAEABC",
     "success": "#219259",
     "warning": "#a39e0f",
     "error": "#d10a0a",
     "info": "#3c4cc8",
-    "neutral": "#000000"
+    "neutral": "#000000",
+    "tertiary": "#000000"
   },
   "complementaryColors": {
-    "primary-content": "#ffffff",
-    "base-200": "#FAFAFA",
-    "base-300": "#5C5C5C",
-    "base-400": "#C9CFCF",
+    "primary-content": "#000000",
+    "base-200": "#737373",
+    "base-300": "#A6A6A6",
+    "base-400": "#404040",
     "base-500": "#616B6B",
     "base-content": "#000000"
   }

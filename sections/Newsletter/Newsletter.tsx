@@ -119,7 +119,7 @@ function Newsletter({
               placeholder={placeholder}
             />
             <button
-              class="bg-white h-8 w-8 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+              class="bg-base-100 h-8 w-8 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
               type="submit"
             >
               <Icon

@@ -193,7 +193,7 @@ function Links(props: Props) {
                   target="_blank"
                   href={link.href}
                   title={link.label}
-                  class="text-white block rounded"
+                  class="text-base-100 block rounded"
                 >
                   <Icon
                     size={20}

@@ -84,7 +84,7 @@ function ProductInfo({ page }: Props) {
 
         {description && (
           <div
-            class="text-xs"
+            class="text-xs text-base-200"
             dangerouslySetInnerHTML={{ __html: description }}
           />
         )}
@@ -112,10 +112,10 @@ function ProductInfo({ page }: Props) {
                 seller={seller}
                 product={product}
                 disabled={false}
-                class="background rounded-lg h-8 px-3"
+                class="background btn btn-primary btn-sm !max-h-8 px-3"
               >
-                <span class="text-xs">
-                  Adicionar a sacola
+                <span class="text-xs font-normal">
+                  Add to cart
                 </span>
               </AddToCartButton>
             </div>

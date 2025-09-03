@@ -46,7 +46,7 @@ function Suggestions(
       class={clx(`overflow-y-scroll`, !hasProducts && !hasTerms && "hidden")}
     >
       <div class="gap-4 grid grid-cols-1 sm:grid-rows-1 sm:grid-cols-[150px_1fr]">
-        <div class="flex flex-col gap-6 text-white">
+        <div class="flex flex-col gap-6 text-base-100">
           <span class="font-medium text-xl" role="heading" aria-level={3}>
             Sugestões
           </span>
@@ -68,7 +68,7 @@ function Suggestions(
           </ul>
         </div>
         <div class="flex flex-col pt-6 md:pt-0 gap-6 overflow-x-hidden">
-          <span class="font-medium text-xl text-white" role="heading" aria-level={3}>
+          <span class="font-medium text-xl text-base-100" role="heading" aria-level={3}>
             Produtos sugeridos
           </span>
           <Slider class="carousel gap-2">

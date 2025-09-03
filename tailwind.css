@@ -39,7 +39,7 @@
 }
 
 .background {
-  background-color: #F0F0F060;
+  background-color: var(--fallback-p,oklch(var(--p)/0.6));
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
 }
@@ -48,7 +48,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #F0F0F060;
+  background: var(--fallback-p,oklch(var(--p)/0.6));
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
   z-index: 15;

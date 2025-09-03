@@ -20,7 +20,7 @@ function QuantitySelector(
     <div class="join border rounded w-full">
       <button
         type="button"
-        class="btn btn-square btn-ghost no-animation"
+        class="btn btn-square btn-sm btn-ghost no-animation"
         hx-on:click={useScript(onClick, -1)}
         disabled={disabled}
       >
@@ -37,7 +37,7 @@ function QuantitySelector(
         <input
           id={id}
           class={clx(
-            "input text-center flex-grow [appearance:textfield]",
+            "input input-sm text-center flex-grow [appearance:textfield]",
             "invalid:input-error",
           )}
           disabled={disabled}
@@ -48,7 +48,7 @@ function QuantitySelector(
       </div>
       <button
         type="button"
-        class="btn btn-square btn-ghost no-animation"
+        class="btn btn-square btn-sm btn-ghost no-animation"
         hx-on:click={useScript(onClick, 1)}
         disabled={disabled}
       >

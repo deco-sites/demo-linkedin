@@ -120,7 +120,7 @@ function ProductCard({
           {/* Discounts */}
           <span
             class={clx(
-              "bg-[#A6A6A699] text-xs font-normal text-white text-center rounded-lg px-2 py-1",
+              "bg-base-300 text-xs font-normal text-base-100 text-center rounded-lg px-2 py-1",
               (percent < 1 || !inStock) && "opacity-0",
             )}
           >
@@ -135,12 +135,12 @@ function ProductCard({
 
       <div class="absolute bottom-0 left-0 w-full flex items-end justify-between p-4">
         <div class="pt-5">
-          <span class="font-medium text-sm text-[#737373]">
+          <span class="font-medium text-sm text-base-200">
             {title}
           </span>
 
           <div class="flex gap-2 pt-1">
-            <span class="text-base-400 text-sm text-[#737373]">
+            <span class="text-base-400 text-sm text-base-200">
               {formatPrice(price, offers?.priceCurrency)}
             </span>
           </div>

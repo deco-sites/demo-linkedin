@@ -12,7 +12,7 @@ import { clx } from "../../sdk/clx.ts";
 export interface ThemeColors {
   /**
    * @format color-input
-   * @title Base
+   * @title Base - base-100
    */
   "base-100"?: string;
   /** @format color-input */
@@ -37,13 +37,13 @@ export interface ThemeColors {
 
 export interface ComplementaryColors {
   /** @format color-input */
+  "base-content"?: string;
+  /** @format color-input */
   "base-200"?: string;
   /** @format color-input */
   "base-300"?: string;
   /** @format color-input */
   "base-400"?: string;
-  /** @format color-input */
-  "base-content"?: string;
   /** @format color-input */
   "primary-content"?: string;
   /** @format color-input */
@@ -69,7 +69,7 @@ export interface Button {
    * @default 1px
    * @title Border width
    */
-  "--border-btn": "1px" | "2px" | "3px" | "4px" | "5px" | "6px" | "7px" | "8px";
+  "--border-btn": "0px" | "1px" | "2px" | "3px" | "4px" | "5px" | "6px" | "7px" | "8px";
   /**
    * @default 0.2rem
    * @title Radius
@@ -123,21 +123,12 @@ export interface Miscellaneous {
 }
 
 export interface Props {
-  /**
-   * @description Set the prefers-color-scheme media query. To support dark mode, create two instances of this block and set this option to light/dark in each instance
-   * @default light
-   */
-  colorScheme?: "light" | "dark" | "any";
   mainColors?: ThemeColors;
   /** @description These will be auto-generated to a readable color if not set */
   complementaryColors?: ComplementaryColors;
   buttonStyle?: Button;
   otherStyles?: Miscellaneous;
   font?: Font;
-  /**
-   * @description This is the admin's color-scheme mode
-   */
-  mode?: "dark" | "light";
 }
 
 type Theme =
@@ -250,7 +241,6 @@ function Section({
   buttonStyle,
   otherStyles,
   font,
-  colorScheme,
 }: Props) {
   const theme = {
     ...defaultTheme,
@@ -274,38 +264,21 @@ function Section({
     <SiteTheme
       fonts={font ? [font] : undefined}
       variables={variables}
-      colorScheme={colorScheme === "any" ? undefined : colorScheme}
     />
   );
 }
 
 export function Preview(props: Props) {
-  const adminColorMode = props.mode === "dark" ? "dark" : "light";
   return (
     <>
-      {
-        /* This stylesheet is used to simulate the colors from the admin's color schema (admin's light or dark mode), which are not accessible in the site's color schema.
-        * This is a temporary solution until the admin's color schema is accessible.
-        * TODO(@carol): Change this temporary solution.
-       */
-      }
       <style>
         {`
           :root {
-            --admin-color-dark-bg: #0d1717;
             --admin-color-light-bg: #ffffff;
-            --admin-text-color-dark: #e4e7e7;
             --admin-text-color-light: #162222;
             --admin-border-color-light: #c9cfcf;
-            --admin-border-color-dark: #2f3c3c;
             --admin-border-hover-color-light: #819292;
-            --admin-border-hover-color-dark: #949e9e;
             --admin-hover-bg-color: #fafafa;
-          }
-
-          .dark {
-            background-color: var(--admin-color-dark-bg);
-            color: var(--admin-text-color-dark);
           }
 
           .light {
@@ -313,7 +286,7 @@ export function Preview(props: Props) {
             color: var(--admin-text-color-light);
           }
 
-          .btn-outline-light, .btn-outline-dark {
+          .btn-outline-light {
             background-color: transparent;
             display: inline-flex;
             flex-wrap: nowrap;
@@ -323,20 +296,12 @@ export function Preview(props: Props) {
             white-space: nowrap;
             border: 1px solid;
             border-radius: 0.5rem;
-          }
-
-          .btn-outline-light {
             color: var(--admin-text-color-light);
             border-color: var(--admin-border-color-light);
           }
 
-          .btn-outline-dark {
-            color: var(--admin-text-color-dark);
-            border-color: var(--admin-border-color-dark);
-          }
-
-          .btn-outline-light:hover, .btn-outline-dark:hover {
-            background-color: transparent);
+          .btn-outline-light:hover {
+            background-color: transparent;
             display: inline-flex;
             flex-wrap: nowrap;
             align-items: center;
@@ -344,18 +309,7 @@ export function Preview(props: Props) {
             gap: 0.5rem;
             white-space: nowrap;
             border-radius: 0.5rem;
-          }
-
-          .btn-outline-light:hover {
             border-color: var(--admin-border-hover-color-light);
-          }
-
-          .btn-outline-dark:hover {
-            border-color: var(--admin-border-hover-color-dark);
-          }
-
-          .border-color-dark {
-            border-color: var(--admin-border-color-dark);
           }
 
           .border-color-light {
@@ -364,33 +318,29 @@ export function Preview(props: Props) {
         `}
       </style>
       <Section {...props} />
-      <div class={`flex flex-col gap-4 text-base w-full ${adminColorMode}`}>
+      <div class="flex flex-col gap-4 text-base w-full light">
         <div>Components and styles</div>
         <div class="flex flex-col w-full gap-2">
           <PreviewContainer
             title="Text colors"
-            mode={adminColorMode}
             codeString={snippets.textColors}
           >
             <TextColorsPreview />
           </PreviewContainer>
           <PreviewContainer
             title="Button styles"
-            mode={adminColorMode}
             codeString={snippets.buttonStyles}
           >
             <ButtonStylesPreview />
           </PreviewContainer>
           <PreviewContainer
             title="Button colors"
-            mode={adminColorMode}
             codeString={snippets.buttonColors}
           >
             <ButtonColorsPreview />
           </PreviewContainer>
           <PreviewContainer
             title="Button sizes"
-            mode={adminColorMode}
             codeString={snippets.buttonSizes}
           >
             <ButtonSizesPreview />
@@ -420,6 +370,7 @@ const ButtonSizesPreview = () => {
     <div class="flex flex-row gap-2 items-center">
       {Object.entries(buttonSizes).map(([sizeCode, sizeText]) => (
         <button
+          type="button"
           class={`btn capitalize btn-${sizeCode} ${
             style ? `btn-${style}` : ""
           }`}
@@ -449,7 +400,7 @@ const ButtonColorsPreview = () => {
   const renderButtonRow = (type: string) => (
     <div class="flex flex-row gap-2">
       {buttonColorsClasses.map((color) => (
-        <button class={`btn btn-xs md:btn-sm capitalize ${color} ${type}`}>
+        <button type="button" class={`btn btn-xs md:btn-sm capitalize ${color} ${type}`}>
           {color ? color.split("-")[1] : "Button"}
         </button>
       ))}
@@ -469,7 +420,7 @@ const ButtonStylesPreview = () => {
   return (
     <div class="bg-base-100 overflow-x-auto rounded-lg flex flex-row p-2 gap-2">
       {buttonStylesClasses.map((style) => (
-        <button class={`btn btn-xs md:btn-sm capitalize ${style}`}>
+        <button type="button" class={`btn btn-xs md:btn-sm capitalize ${style}`}>
           {style ? style.split("-")[1] : "Button"}
         </button>
       ))}
@@ -497,19 +448,12 @@ const TextColorsPreview = () => {
 };
 
 const PreviewContainer = (
-  { mode, title, children, codeString }: {
-    mode: string;
+  { title, children, codeString }: {
     title: string;
     children: ComponentChildren;
     codeString: string;
   },
 ) => {
-  const borderClass = mode === "dark"
-    ? "border-color-dark"
-    : "border-color-light";
-  const btnOutlineClass = mode === "dark"
-    ? "btn-outline-dark"
-    : "btn-outline-light";
   const checkboxId = `show-code-${title.replace(/\s+/g, "-").toLowerCase()}`;
   const codeBlockId = `code-block-${title.replace(/\s+/g, "-").toLowerCase()}`;
 
@@ -528,16 +472,8 @@ const PreviewContainer = (
       display: none;
     }
     #${checkboxId}:checked ~ .hide-label {
-      background-color: ${
-    mode === "dark"
-      ? "var(--admin-hover-bg-color)"
-      : "var(--admin-text-color-light)"
-  };
-      color: ${
-    mode === "dark"
-      ? "var(--admin-text-color-light)"
-      : "var(--admin-hover-bg-color)"
-  };
+      background-color: var(--admin-text-color-light);
+      color: var(--admin-hover-bg-color);
     }
   `;
 
@@ -546,9 +482,7 @@ const PreviewContainer = (
       <style>{dynamicStyle}</style>
       <div
         class={clx(
-          `border p-4 flex flex-col gap-2 grow relative`,
-          borderClass,
-          `rounded-lg`,
+          `border p-4 flex flex-col gap-2 grow relative border-color-light rounded-lg`,
         )}
       >
         <div>
@@ -559,9 +493,7 @@ const PreviewContainer = (
             <label
               htmlFor={checkboxId}
               class={clx(
-                `btn-sm absolute right-4 top-4`,
-                btnOutlineClass,
-                `show-label`,
+                `btn-sm absolute right-4 top-4 btn-outline-light show-label`,
               )}
             >
               Show code
@@ -570,9 +502,7 @@ const PreviewContainer = (
             <label
               htmlFor={checkboxId}
               class={clx(
-                `btn-sm absolute right-4 top-4`,
-                btnOutlineClass,
-                `hide-label`,
+                `btn-sm absolute right-4 top-4 btn-outline-light hide-label`,
               )}
             >
               Hide code
@@ -580,8 +510,7 @@ const PreviewContainer = (
             <div
               id={codeBlockId}
               class={clx(
-                "mt-4 mb-2 text-xs md:text-sm",
-                mode === "dark" ? "bg-slate-800" : "bg-slate-100",
+                "mt-4 mb-2 text-xs md:text-sm bg-slate-100",
               )}
             >
               <pre class="p-4 overflow-x-auto">{codeString}</pre>
