@@ -7,24 +7,41 @@
     "--border-btn": "0px"
   },
   "font": {
-    "__resolveType": "website/loaders/fonts/googleFonts.ts",
+    "__resolveType": "website/loaders/fonts/local.ts",
     "fonts": [
       {
         "variations": [
           {
-            "weight": "400"
+            "weight": "700",
+            "src": "https://assets.decocache.com/demo-linkedin/ade2cd63-f760-43e7-bee5-2cad0be09074/ELZA-BOLD.woff2"
           },
           {
-            "weight": "500"
+            "weight": "300",
+            "src": "https://assets.decocache.com/demo-linkedin/72cc1df7-8001-459a-ab92-3ea3fb4d5fa4/ELZA-LIGHT.woff2"
           },
           {
-            "weight": "600"
-          },
-          {
-            "weight": "700"
+            "weight": "500",
+            "src": "https://assets.decocache.com/demo-linkedin/d19d591d-07f2-4e87-84cc-035bcc5bc1db/ELZA-MEDIUM.woff2"
           }
         ],
-        "family": "Inter"
+        "family": "Elza"
+      },
+      {
+        "variations": [
+          {
+            "weight": "900",
+            "src": "https://assets.decocache.com/demo-linkedin/a27f25fc-9105-4dca-9998-b168ce06a871/DECOY-BLACK.woff2"
+          },
+          {
+            "weight": "500",
+            "src": "https://assets.decocache.com/demo-linkedin/24b3f75a-eb04-4540-a0ca-0b265b5a5a63/DECOY-MEDIUM.woff2"
+          },
+          {
+            "weight": "300",
+            "src": "https://assets.decocache.com/demo-linkedin/68c5d633-779b-4b62-9590-7f4fc5c920ef/DECOY-LIGHT.woff2"
+          }
+        ],
+        "family": "Decoy"
       }
     ]
   },
