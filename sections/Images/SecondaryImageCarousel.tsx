@@ -233,7 +233,7 @@ const onLoad = (containerId: string) => {
   container.style.scrollBehavior = "smooth";
 };
 
-export default function ImageCarousel({ images }: Props) {
+export default function SecondaryImageCarousel({ images }: Props) {
   const id = useId();
 
   return (

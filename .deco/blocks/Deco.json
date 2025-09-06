@@ -7,24 +7,24 @@
     "--border-btn": "0px"
   },
   "font": {
-    "__resolveType": "website/loaders/fonts/local.ts",
+    "__resolveType": "website/loaders/fonts/googleFonts.ts",
     "fonts": [
       {
         "variations": [
           {
-            "weight": "900",
-            "src": "https://assets.decocache.com/demo-linkedin/85e3b420-1708-43fc-a451-bb48c536621b/DECOY-BLACK.woff2"
-          }
-        ]
-      },
-      {
-        "variations": [
+            "weight": "400"
+          },
           {
-            "weight": "500",
-            "src": "https://assets.decocache.com/demo-linkedin/d19d591d-07f2-4e87-84cc-035bcc5bc1db/ELZA-MEDIUM.woff2"
+            "weight": "500"
+          },
+          {
+            "weight": "600"
+          },
+          {
+            "weight": "700"
           }
         ],
-        "family": "Elza"
+        "family": "Inter"
       }
     ]
   },
