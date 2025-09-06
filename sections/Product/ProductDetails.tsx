@@ -43,7 +43,6 @@ export default function ProductDetails({ page }: Props) {
         <div class="w-full">
           <ImageGallerySlider page={page} />
         </div>
-
       </div>
     </div>
   );

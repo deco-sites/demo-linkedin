@@ -178,7 +178,10 @@ function Carousel({ items = [], preload, interval }: Props) {
       <div class="col-span-full row-span-full">
         <Slider class="carousel carousel-center w-full gap-6">
           {items.map((item, index) => (
-            <Slider.Item index={index} class="carousel-item w-full rounded-lg overflow-hidden">
+            <Slider.Item
+              index={index}
+              class="carousel-item w-full rounded-lg overflow-hidden"
+            >
               <BannerItem item={item} lcp={index === 0 && preload} />
             </Slider.Item>
           ))}

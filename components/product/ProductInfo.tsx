@@ -1,6 +1,5 @@
 import { ProductDetailsPage } from "apps/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "apps/commerce/utils/productToAnalyticsItem.ts";
-import { clx } from "../../sdk/clx.ts";
 import { formatPrice } from "../../sdk/format.ts";
 import { useId } from "../../sdk/useId.ts";
 import { useOffer } from "../../sdk/useOffer.ts";
@@ -34,7 +33,7 @@ function ProductInfo({ page }: Props) {
     availability,
   } = useOffer(offers);
 
-  const percent = listPrice && price
+  const _percent = listPrice && price
     ? Math.round(((listPrice - price) / listPrice) * 100)
     : 0;
 

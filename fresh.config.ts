@@ -8,6 +8,7 @@ export default defineConfig({
     manifest,
     htmx: true,
     useServer: (deco, hono) => {
+      // @ts-ignore Trust me, im an engineer
       hono.use("/*", mcpServer(deco));
     },
   }),

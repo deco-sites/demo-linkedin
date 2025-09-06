@@ -69,7 +69,16 @@ export interface Button {
    * @default 1px
    * @title Border width
    */
-  "--border-btn": "0px" | "1px" | "2px" | "3px" | "4px" | "5px" | "6px" | "7px" | "8px";
+  "--border-btn":
+    | "0px"
+    | "1px"
+    | "2px"
+    | "3px"
+    | "4px"
+    | "5px"
+    | "6px"
+    | "7px"
+    | "8px";
   /**
    * @default 0.2rem
    * @title Radius
@@ -400,7 +409,10 @@ const ButtonColorsPreview = () => {
   const renderButtonRow = (type: string) => (
     <div class="flex flex-row gap-2">
       {buttonColorsClasses.map((color) => (
-        <button type="button" class={`btn btn-xs md:btn-sm capitalize ${color} ${type}`}>
+        <button
+          type="button"
+          class={`btn btn-xs md:btn-sm capitalize ${color} ${type}`}
+        >
           {color ? color.split("-")[1] : "Button"}
         </button>
       ))}
@@ -420,7 +432,10 @@ const ButtonStylesPreview = () => {
   return (
     <div class="bg-base-100 overflow-x-auto rounded-lg flex flex-row p-2 gap-2">
       {buttonStylesClasses.map((style) => (
-        <button type="button" class={`btn btn-xs md:btn-sm capitalize ${style}`}>
+        <button
+          type="button"
+          class={`btn btn-xs md:btn-sm capitalize ${style}`}
+        >
           {style ? style.split("-")[1] : "Button"}
         </button>
       ))}

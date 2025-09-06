@@ -25,7 +25,7 @@ const removeItemHandler = () => {
   }
 };
 function CartItem({ item, index, locale, currency }: Props) {
-  const { image, listPrice, price = Infinity, quantity } = item;
+  const { image, price = Infinity, quantity } = item;
   const isGift = price < 0.01;
   // deno-lint-ignore no-explicit-any
   const name = (item as any).item_name;
@@ -53,6 +53,7 @@ function CartItem({ item, index, locale, currency }: Props) {
         <div class="flex justify-between items-center">
           <legend class="text-xs">{name}</legend>
           <button
+            type="button"
             class={clx(
               isGift && "hidden",
               "btn btn-ghost btn-square no-animation",

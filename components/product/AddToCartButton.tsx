@@ -81,7 +81,6 @@ function AddToCartButton(props: Props) {
         JSON.stringify({ item, platformProps }),
       )}
     >
-
       <button
         type="button"
         class={clx("flex-grow", _class?.toString())}
@@ -89,7 +88,6 @@ function AddToCartButton(props: Props) {
       >
         {children}
       </button>
-
     </div>
   );
 }

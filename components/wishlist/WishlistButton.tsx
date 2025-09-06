@@ -56,12 +56,15 @@ function WishlistButton({ item, variant = "full" }: Props) {
         hx-on:click={useScript(onClick, productID, productGroupID)}
         class={clx(
           "background btn btn-primary pl-0 pr-0 btn-sm no-animation flex items-center justify-center",
-          variant === "icon"
-            ? "h-8 w-8"
-            : "btn-outline gap-2 w-full",
+          variant === "icon" ? "h-8 w-8" : "btn-outline gap-2 w-full",
         )}
       >
-        <Icon id="favorite" class="[.htmx-request_&]:hidden" fill="none" size={12} />
+        <Icon
+          id="favorite"
+          class="[.htmx-request_&]:hidden"
+          fill="none"
+          size={12}
+        />
         {variant === "full" && (
           <span class="[.htmx-request_&]:hidden">Add to wishlist</span>
         )}
