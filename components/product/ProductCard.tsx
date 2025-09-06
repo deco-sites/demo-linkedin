@@ -11,7 +11,6 @@ import WishlistButton from "../wishlist/WishlistButton.tsx";
 import AddToCartButton from "./AddToCartButton.tsx";
 import { Ring } from "./ProductVariantSelector.tsx";
 import { useId } from "../../sdk/useId.ts";
-import Icon from "../ui/Icon.tsx";
 
 interface Props {
   product: Product;
@@ -43,7 +42,7 @@ function ProductCard({
   const { url, image: images, offers, isVariantOf } = product;
   const hasVariant = isVariantOf?.hasVariant ?? [];
   const title = isVariantOf?.name ?? product.name;
-  const [front, back] = images ?? [];
+  const [front] = images ?? [];
 
   const { listPrice, price, seller = "1", availability } = useOffer(offers);
   const inStock = availability === "https://schema.org/InStock";
@@ -175,7 +174,6 @@ function ProductCard({
                 "flex justify-center items-center border-none !text-sm !font-medium px-0 no-animation w-full",
               )}
             >
-
               <span class="w-[17px] h-[17px] bg-[#fff] rounded-full flex items-center justify-center">
                 +
               </span>

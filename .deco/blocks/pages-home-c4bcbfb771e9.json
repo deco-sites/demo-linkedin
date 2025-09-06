@@ -12,62 +12,52 @@
       "preload": true,
       "items": [
         {
-          "mobile": "https://assets.decocache.com/storefront/05748b9f-6c37-4845-aa57-1d2338ece0b8/1742560215958-47a4d85a-1150-4e5d-abc2-5c642445ff12",
-          "alt": "Men",
-          "action": {
-            "title": "Discover Fresh Looks",
-            "subTitle": "Modern men's clothing and accessories.",
-            "href": "/men",
-            "label": "Shop the Collection"
-          },
-          "desktop": "https://assets.decocache.com/storefront/98a22637-60b2-41f7-9d49-dbbf99f50472/1742560212519-d26304f4-355b-48d0-b649-e24b9cbf0ded",
-          "video": "https://assets.decocache.com/demo-linkedin/35190151-bf77-4cf7-999b-c9cc3f4e7ec5/wrangler-video3.mp4",
           "type": "video",
-          "autoplay": true
+          "action": {},
+          "video": "https://assets.decocache.com/demo-linkedin/8e6fc51d-c24a-4cc2-82a1-c82f110604cf/Gravacao-de-Tela-2025-08-21-as-15.51.23-(1).mp4",
+          "alt": "Video",
+          "autoplay": true,
+          "poster": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
+          "muted": true,
+          "loop": true
         }
       ]
     },
     {
-      "__resolveType": "website/sections/Rendering/Lazy.tsx",
-      "section": {
-        "__resolveType": "site/sections/Content/Benefits.tsx",
-        "benefits": [
-          {
-            "text": "• Frete Grátis em compras a partir de R$ 50"
-          },
-          {
-            "text": "• Até R$ 200 de desconto na primeira compra"
-          },
-          {
-            "text": "• Parcelamento em até 12x sem juros"
-          },
-          {
-            "text": "• Até 15% de desconto à vista"
-          }
-        ]
-      }
+      "__resolveType": "site/sections/Content/Benefits.tsx",
+      "benefits": [
+        {
+          "text": "• Frete Grátis em compras a partir de R$ 50"
+        },
+        {
+          "text": "• Até R$ 200 de desconto na primeira compra"
+        },
+        {
+          "text": "• Parcelamento em até 12x sem juros"
+        },
+        {
+          "text": "• Até 15% de desconto à vista"
+        }
+      ]
     },
     {
-      "__resolveType": "website/sections/Rendering/Lazy.tsx",
-      "section": {
-        "__resolveType": "site/sections/Images/ImageCarousel.tsx",
-        "images": [
-          {
-            "image": "https://assets.decocache.com/demo-linkedin/202e4c27-61e8-47bf-b490-9e54600c070c/c2d91fdeca1169db15d499a27652282f1bf85fb3.png",
-            "mobileImage": "https://assets.decocache.com/demo-linkedin/202e4c27-61e8-47bf-b490-9e54600c070c/c2d91fdeca1169db15d499a27652282f1bf85fb3.png",
-            "width": 1000,
-            "height": 461,
-            "alt": "Image 1"
-          },
-          {
-            "image": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
-            "mobileImage": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
-            "width": 1000,
-            "height": 461,
-            "alt": "Image 2"
-          }
-        ]
-      }
+      "__resolveType": "site/sections/Images/SecondaryImageCarousel.tsx",
+      "images": [
+        {
+          "image": "https://assets.decocache.com/demo-linkedin/202e4c27-61e8-47bf-b490-9e54600c070c/c2d91fdeca1169db15d499a27652282f1bf85fb3.png",
+          "mobileImage": "https://assets.decocache.com/demo-linkedin/202e4c27-61e8-47bf-b490-9e54600c070c/c2d91fdeca1169db15d499a27652282f1bf85fb3.png",
+          "width": 1000,
+          "height": 461,
+          "alt": "Image 1"
+        },
+        {
+          "image": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
+          "mobileImage": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
+          "width": 1000,
+          "height": 461,
+          "alt": "Image 2"
+        }
+      ]
     },
     {
       "__resolveType": "website/sections/Rendering/Lazy.tsx",
@@ -83,41 +73,37 @@
       }
     },
     {
-      "__resolveType": "website/sections/Rendering/Lazy.tsx",
-      "section": {
-        "__resolveType": "site/sections/Images/ImageGrid.tsx",
-        "images": [
-          {
-            "mobileImage": "https://assets.decocache.com/demo-linkedin/b9a7bd3b-4eee-442b-a261-741e8f748fc4/5e1a3c5ba6b512f9ca24d6ae02bfdcac474a29f4.jpg",
-            "image": "https://assets.decocache.com/demo-linkedin/b9a7bd3b-4eee-442b-a261-741e8f748fc4/5e1a3c5ba6b512f9ca24d6ae02bfdcac474a29f4.jpg",
-            "width": 1000,
-            "height": 1000,
-            "type": "image"
-          },
-          {
-            "mobileImage": "https://assets.decocache.com/demo-linkedin/6748a2ba-a1a7-49b9-ab2b-0d068c73ad1a/f1f01d5548c79854a34f4aa3055b237eff71a7b8.jpg",
-            "image": "https://assets.decocache.com/demo-linkedin/6748a2ba-a1a7-49b9-ab2b-0d068c73ad1a/f1f01d5548c79854a34f4aa3055b237eff71a7b8.jpg",
-            "width": 1000,
-            "height": 1000,
-            "type": "video",
-            "video": "https://assets.decocache.com/demo-linkedin/8e6fc51d-c24a-4cc2-82a1-c82f110604cf/Gravacao-de-Tela-2025-08-21-as-15.51.23-(1).mp4",
-            "mobileVideo": "https://assets.decocache.com/demo-linkedin/8e6fc51d-c24a-4cc2-82a1-c82f110604cf/Gravacao-de-Tela-2025-08-21-as-15.51.23-(1).mp4"
-          },
-          {
-            "mobileImage": "https://assets.decocache.com/demo-linkedin/6748a2ba-a1a7-49b9-ab2b-0d068c73ad1a/f1f01d5548c79854a34f4aa3055b237eff71a7b8.jpg",
-            "image": "https://assets.decocache.com/demo-linkedin/6748a2ba-a1a7-49b9-ab2b-0d068c73ad1a/f1f01d5548c79854a34f4aa3055b237eff71a7b8.jpg",
-            "width": 1000,
-            "height": 1000,
-            "type": "image"
-          }
-        ]
-      }
+      "__resolveType": "site/sections/Images/ImageGrid.tsx",
+      "images": [
+        {
+          "desktop": "https://assets.decocache.com/demo-linkedin/b9a7bd3b-4eee-442b-a261-741e8f748fc4/5e1a3c5ba6b512f9ca24d6ae02bfdcac474a29f4.jpg",
+          "mobile": "https://assets.decocache.com/demo-linkedin/b9a7bd3b-4eee-442b-a261-741e8f748fc4/5e1a3c5ba6b512f9ca24d6ae02bfdcac474a29f4.jpg",
+          "alt": "IMG 1",
+          "width": 1000,
+          "height": 1000
+        },
+        {
+          "action": {},
+          "src": "https://assets.decocache.com/demo-linkedin/b5bfae2f-f9fb-4b37-87c9-127eda21bce1/wrangler-video3.mp4",
+          "alt": "VIDEO 1",
+          "width": 1000,
+          "height": 1000,
+          "poster": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
+          "autoplay": true,
+          "muted": true,
+          "loop": true
+        },
+        {
+          "desktop": "https://assets.decocache.com/demo-linkedin/6748a2ba-a1a7-49b9-ab2b-0d068c73ad1a/f1f01d5548c79854a34f4aa3055b237eff71a7b8.jpg",
+          "mobile": "https://assets.decocache.com/demo-linkedin/6748a2ba-a1a7-49b9-ab2b-0d068c73ad1a/f1f01d5548c79854a34f4aa3055b237eff71a7b8.jpg",
+          "alt": "IMAGE 2",
+          "width": 1000,
+          "height": 1000
+        }
+      ]
     },
     {
-      "__resolveType": "website/sections/Rendering/Lazy.tsx",
-      "section": {
-        "__resolveType": "site/sections/Newsletter/Newsletter.tsx"
-      }
+      "__resolveType": "site/sections/Newsletter/Newsletter.tsx"
     },
     {
       "__resolveType": "website/sections/Rendering/Lazy.tsx",

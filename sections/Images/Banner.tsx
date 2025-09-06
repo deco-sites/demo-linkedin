@@ -4,16 +4,39 @@ import Section from "../../components/ui/Section.tsx";
 import { clx } from "../../sdk/clx.ts";
 
 export interface Props {
+  /**
+   * @title Title
+   */
   title: string;
+  /**
+   * @title Description
+   */
   description?: HTMLWidget;
 
+  /**
+   * @title Images
+   */
   images: {
+    /**
+     * @title Mobile Image
+     */
     mobile: ImageWidget;
+    /**
+     * @title Desktop Image
+     */
     desktop: ImageWidget;
   };
-
+  /**
+   * @title CTA
+   */
   cta?: {
+    /**
+     * @title CTA href
+     */
     href: string;
+    /**
+     * @title CTA label
+     */
     label: string;
   };
 }

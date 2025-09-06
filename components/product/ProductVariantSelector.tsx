@@ -31,7 +31,7 @@ const colors: Record<string, string | undefined> = {
   "Preto": "#000000",
   "Roxo": "#800080",
 };
-const useStyles = (value: string, checked: boolean) => {
+const useStyles = (value: string, _checked: boolean) => {
   if (colors[value]) {
     return clx(
       "w-2.5 h-2.5 block rounded-full",

@@ -139,7 +139,10 @@ function Newsletter({
               class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               required
             />
-            <label for="consent" class="text-[10px] text-gray-600 leading-relaxed truncate text-nowrap">
+            <label
+              for="consent"
+              class="text-[10px] text-gray-600 leading-relaxed truncate text-nowrap"
+            >
               I agree to receive information about products and special
               promotional offers.
             </label>
