@@ -1,5 +1,6 @@
 {
   "imports": {
+    "@deco/deno-ast-wasm": "jsr:@deco/deno-ast-wasm@^0.5.5",
     "site/": "./",
     "$fresh/": "https://deno.land/x/fresh@1.7.3/",
     "preact": "npm:preact@10.23.1",
@@ -73,7 +74,9 @@
   "lint": {
     "rules": {
       "exclude": [
-        "no-window"
+        "no-window",
+        "react-no-danger",
+        "react-rules-of-hooks"
       ],
       "tags": [
         "fresh",

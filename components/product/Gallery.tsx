@@ -36,7 +36,8 @@ export default function GallerySlider(props: Props) {
   const filtered = groupImages.filter((img) =>
     name?.includes(img.alternateName || "")
   );
-  const images = (filtered.length > 0 ? filtered : groupImages).toSpliced(1, 2).toSpliced(-2, 2);
+  const images = (filtered.length > 0 ? filtered : groupImages).toSpliced(1, 2)
+    .toSpliced(-2, 2);
 
   return (
     <>
@@ -86,7 +87,7 @@ export default function GallerySlider(props: Props) {
             style={{ maxHeight: "600px" }}
           >
             {images.map((img, index) => (
-              <li class="w-16 h-16">
+              <li class="w-16 h-16" key={index}>
                 <button type="button" class="w-full h-full">
                   <Image
                     style={{ aspectRatio: "1 / 1" }}
@@ -101,8 +102,6 @@ export default function GallerySlider(props: Props) {
             ))}
           </ul>
         </div>
-
-
       </div>
       <ProductImageZoom
         id={zoomId}

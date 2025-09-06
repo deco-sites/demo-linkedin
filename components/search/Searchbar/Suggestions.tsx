@@ -39,8 +39,8 @@ function Suggestions(
   { suggestion }: ComponentProps<typeof loader, typeof action>,
 ) {
   const { products = [], searches = [] } = suggestion ?? {};
-  const hasProducts = Boolean(products.length);
-  const hasTerms = Boolean(searches.length);
+  const hasProducts = Boolean(products?.length);
+  const hasTerms = Boolean(searches?.length);
   return (
     <div
       class={clx(`overflow-y-scroll`, !hasProducts && !hasTerms && "hidden")}
@@ -68,7 +68,11 @@ function Suggestions(
           </ul>
         </div>
         <div class="flex flex-col pt-6 md:pt-0 gap-6 overflow-x-hidden">
-          <span class="font-medium text-xl text-base-100" role="heading" aria-level={3}>
+          <span
+            class="font-medium text-xl text-base-100"
+            role="heading"
+            aria-level={3}
+          >
             Produtos sugeridos
           </span>
           <Slider class="carousel gap-2">

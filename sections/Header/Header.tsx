@@ -66,7 +66,6 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
 
     <div class="flex flex-col gap-4 py-3 px-4">
       <div class="grid grid-cols-3">
-
         <label
           for={SEARCHBAR_POPUP_ID}
           class="flex items-center gap-2.5 px-2 justify-between background w-[253px] h-[40px] rounded-lg cursor-pointer"
@@ -79,7 +78,7 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
             Products, categories...
           </span>
           <div class="flex items-center justify-center">
-            <Icon id="search" size={16} />  
+            <Icon id="search" size={16} />
           </div>
         </label>
 
@@ -92,12 +91,17 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
             />
           </a>
           <ul class="flex gap-2">
-          {navItems?.slice(0, 10).map((item) => <NavItem key={item.name} item={item} />)}
+            {navItems?.slice(0, 10).map((item) => (
+              <NavItem key={item.name} item={item} />
+            ))}
           </ul>
         </div>
 
         <div class="flex gap-4 place-self-end">
-          <a href="/account" class="background text-[14px] flex justify-center items-center h-[40px] px-3 rounded-lg">
+          <a
+            href="/account"
+            class="background text-[14px] flex justify-center items-center h-[40px] px-3 rounded-lg"
+          >
             Account
           </a>
           <Bag />
@@ -187,7 +191,7 @@ const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
   </>
 );
 function Header({
-  alerts = [],
+  alerts: _alerts = [],
   logo = {
     src:
       "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/2291/986b61d4-3847-4867-93c8-b550cb459cc7",

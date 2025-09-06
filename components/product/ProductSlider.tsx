@@ -1,6 +1,5 @@
 import { Product } from "apps/commerce/types.ts";
 import { clx } from "../../sdk/clx.ts";
-import Icon from "../ui/Icon.tsx";
 import Slider from "../ui/Slider.tsx";
 import ProductCard from "./ProductCard.tsx";
 import { useId } from "../../sdk/useId.ts";

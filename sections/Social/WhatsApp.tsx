@@ -16,6 +16,7 @@ function WhatsApp({ phone }: Props) {
       <button
         class="bg-[#45D268] text-base-100 p-2 rounded-full shadow-lg"
         aria-label="Chat on WhatsApp"
+        type="button"
       >
         <svg
           width={32}

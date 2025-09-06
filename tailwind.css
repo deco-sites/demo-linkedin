@@ -3,15 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-
   /* Allow changing font family via CMS */
   html {
     font-family: var(--font-family);
   }
 
   /** Remove default styles from input[type=number] */
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -25,21 +24,21 @@
 }
 
 .group:disabled .group-disabled\:animate-progress {
-  animation: progress-frame ease normal
+  animation: progress-frame ease normal;
 }
 
 @keyframes progress-frame {
   0% {
-    --dot-progress: 0%
+    --dot-progress: 0%;
   }
 
   to {
-    --dot-progress: 100%
+    --dot-progress: 100%;
   }
 }
 
 .background {
-  background-color: var(--fallback-p,oklch(var(--p)/0.6));
+  background-color: var(--fallback-p, oklch(var(--p)/0.6));
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
 }
@@ -48,24 +47,24 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--fallback-p,oklch(var(--p)/0.6));
+  background: var(--fallback-p, oklch(var(--p)/0.6));
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
   z-index: 15;
-  border-radius: 0.5rem
+  border-radius: 0.5rem;
 }
 
-.background-pdp{
-  background-color: #FFFFFF66;
+.background-pdp {
+  background-color: #ffffff66;
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
 }
 
-.drawer-end .drawer-toggle:checked ~ .drawer-side > *:not(.drawer-overlay){
+.drawer-end .drawer-toggle:checked ~ .drawer-side > *:not(.drawer-overlay) {
   margin-right: 8px;
 }
 
-.checkbox{
+.checkbox {
   width: 16px !important;
   height: 16px !important;
 }
