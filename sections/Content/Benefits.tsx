@@ -2,9 +2,15 @@
  * @title {{{text}}}
  */
 interface Benefit {
+  /**
+   * @title Benefit text
+   */
   text: string;
 }
 interface Props {
+  /**
+   * @title Benefits
+   */
   benefits: Benefit[];
 }
 

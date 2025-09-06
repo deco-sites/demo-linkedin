@@ -22,12 +22,24 @@ import {
 import { useDevice } from "@deco/deco/hooks";
 import { type LoadingFallbackProps } from "@deco/deco";
 export interface Logo {
+  /**
+   * @title Logo
+   */
   src: ImageWidget;
+  /**
+   * @title Logo alt
+   */
   alt: string;
+  /**
+   * @title Logo width
+   */
   width?: number;
-  height?: number;
 }
 export interface SectionProps {
+  /**
+   * @title Alerts
+   * @description Alerts used both on mobile and desktop menus
+   */
   alerts?: HTMLWidget[];
   /**
    * @title Navigation items
@@ -83,11 +95,12 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
         </label>
 
         <div class="flex background-menu-before items-center w-[543px] h-[40px] justify-between gap-16 p-1 px-2 rounded-lg relative">
-          <a href="/" aria-label="Store logo" class="z-20">
+          <a href="/" aria-label="Store logo" class="z-20 p-1 h-full">
             <Image
               src={logo.src}
               alt={logo.alt}
               width={logo.width || 100}
+              class="object-contain max-h-full w-fit"
             />
           </a>
           <ul class="flex gap-2">
@@ -174,7 +187,6 @@ const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
             src={logo.src}
             alt={logo.alt}
             width={logo.width || 100}
-            height={logo.height || 13}
           />
         </a>
       )}
@@ -196,7 +208,6 @@ function Header({
     src:
       "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/2291/986b61d4-3847-4867-93c8-b550cb459cc7",
     width: 100,
-    height: 16,
     alt: "Logo",
   },
   ...props

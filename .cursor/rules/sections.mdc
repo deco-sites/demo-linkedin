@@ -372,6 +372,16 @@ Below Section, create mocked props with random values:
   }
   ```
 
+- To make an property be hide in CMS, use @ignore
+  ```tsx
+  interface Props {
+    /**
+    * @ignore
+    */
+    constantProp: "constantValue";
+  }
+  ```
+
 - The order of props in the interface is based on the position of the elements
   in the section where these props will be used. For example, in a section that
   has a title, image and description (in that order), the props order will be:

@@ -9,20 +9,26 @@ import { useSendEvent } from "../../sdk/useSendEvent.ts";
 /**
  * @titleBy alt
  */
-export interface Banner {
-  /** @description Media type */
-  type: "image" | "video";
-
+export interface ImageBanner {
   /** @description desktop optimized image */
-  desktop?: ImageWidget;
+  desktop: ImageWidget;
 
   /** @description mobile optimized image */
-  mobile?: ImageWidget;
+  mobile: ImageWidget;
 
+  /** @description Image's alt text or description */
+  alt: string;
+  action?: Action;
+}
+
+/**
+ * @titleBy alt
+ */
+export interface VideoBanner {
   /** @description video source */
-  video?: VideoWidget;
+  video: VideoWidget;
 
-  /** @description Image's/Video's alt text or description */
+  /** @description Video's alt text or description */
   alt: string;
 
   /** @description Video poster image (thumbnail) */
@@ -37,21 +43,27 @@ export interface Banner {
   /** @description Loop video (default: true) */
   loop?: boolean;
 
-  action?: {
-    /** @description when user clicks on the media, go to this link */
-    href: string;
-    /** @description Media text title */
-    title: string;
-    /** @description Media text subtitle */
-    subTitle: string;
-    /** @description Button label */
-    label: string;
-  };
+  action?: Action;
 }
+
+interface Action {
+  /** @description when user clicks on the media, go to this link */
+  href?: string;
+  /** @description Media text title */
+  title?: string;
+  /** @description Media text subtitle */
+  subTitle?: string;
+  /** @description Button label */
+  label?: string;
+}
+
+/**
+ * @titleBy alt
+ */
+export type Banner = ImageBanner | VideoBanner;
 
 export interface Props {
   items?: Banner[];
-
   /**
    * @description Check this option when this banner is the biggest image on the screen for image optimizations
    */
@@ -67,24 +79,19 @@ export interface Props {
 function MediaItem(
   { item, lcp }: { item: Banner; lcp?: boolean },
 ) {
-  const {
-    type,
-    alt,
-    mobile,
-    desktop,
-    video,
-    poster,
-    autoplay = false,
-    muted = true,
-    loop = true,
-  } = item;
+  const { alt } = item;
 
   const viewPromotionEvent = useSendEvent({
     on: "view",
     event: { name: "view_promotion", params: { promotion_name: alt } },
   });
 
-  if (type === "video" && video) {
+  // Check if it's a video by looking for video field
+  if ("video" in item) {
+    const videoItem = item as VideoBanner;
+    const { video, poster, autoplay = false, muted = true, loop = true } =
+      videoItem;
+
     return (
       <video
         class="object-cover w-full h-[50vw]"
@@ -102,36 +109,30 @@ function MediaItem(
     );
   }
 
-  // Default to image - ensure we have at least one image source
-  const imageSrc = desktop || mobile;
-  if (!imageSrc) {
-    return (
-      <div class="object-cover w-full h-full bg-gray-200 flex items-center justify-center">
-        <span class="text-gray-500">No image available</span>
-      </div>
-    );
-  }
+  // It's an image - check for desktop and mobile fields
+  const imageItem = item as ImageBanner;
+  const { desktop, mobile } = imageItem;
 
   return (
     <Picture preload={lcp} {...viewPromotionEvent}>
       <Source
         media="(max-width: 767px)"
         fetchPriority={lcp ? "high" : "auto"}
-        src={mobile || desktop!}
+        src={mobile}
         width={412}
         height={660}
       />
       <Source
         media="(min-width: 768px)"
         fetchPriority={lcp ? "high" : "auto"}
-        src={desktop || mobile!}
+        src={desktop}
         width={1440}
         height={600}
       />
       <img
         class="object-cover w-full h-full"
         loading={lcp ? "eager" : "lazy"}
-        src={imageSrc}
+        src={desktop}
         alt={alt}
       />
     </Picture>
@@ -229,6 +230,46 @@ function Carousel({ items = [], preload, interval }: Props) {
       <Slider.JS rootId={id} interval={interval && interval * 1e3} infinite />
     </div>
   );
+}
+
+const defaultProps: Props = {
+  items: [
+    {
+      desktop:
+        "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1818/ff6bb37e-0eab-40e1-a454-86856efc278e",
+      mobile:
+        "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1818/ff6bb37e-0eab-40e1-a454-86856efc278e",
+      alt: "Banner promocional",
+      action: {
+        href: "#",
+        title: "Título do Banner",
+        subTitle: "Subtítulo do Banner",
+        label: "Ver mais",
+      },
+    },
+    {
+      video:
+        "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1818/ff6bb37e-0eab-40e1-a454-86856efc278e",
+      alt: "Vídeo promocional",
+      poster:
+        "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1818/ff6bb37e-0eab-40e1-a454-86856efc278e",
+      autoplay: true,
+      muted: true,
+      loop: true,
+      action: {
+        href: "#",
+        title: "Título do Vídeo",
+        subTitle: "Subtítulo do Vídeo",
+        label: "Assistir",
+      },
+    },
+  ],
+  preload: true,
+  interval: 5,
+};
+
+export function Preview() {
+  return <Carousel {...defaultProps} />;
 }
 
 export default Carousel;

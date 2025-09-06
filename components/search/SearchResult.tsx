@@ -22,6 +22,10 @@ export interface Layout {
 export interface Props {
   /** @title Integration */
   page: ProductListingPage | null;
+  /**
+   * @title Layout
+   * @description Layout of the search result
+   */
   layout?: Layout;
   /** @description 0 for ?page=0 as your first page */
   startingPage?: 0 | 1;
