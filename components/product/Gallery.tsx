@@ -10,7 +10,7 @@ export interface Props {
   page: ProductDetailsPage | null;
 }
 
-const WIDTH = 506;
+const WIDTH = 606;
 const HEIGHT = 825;
 const ASPECT_RATIO = `${WIDTH} / ${HEIGHT}`;
 
@@ -36,8 +36,10 @@ export default function GallerySlider(props: Props) {
   const filtered = groupImages.filter((img) =>
     name?.includes(img.alternateName || "")
   );
-  const images = (filtered.length > 0 ? filtered : groupImages).toSpliced(1, 2)
-    .toSpliced(-2, 2);
+  
+  const isSmartphone = name?.includes("Smartphone") || isVariantOf?.name?.includes("Smartphone");
+  console.log(isSmartphone);
+  const images = isSmartphone ? (filtered.length > 0 ? filtered : groupImages).toSpliced(1, 2).toSpliced(-2, 2) : (filtered.length > 0 ? filtered : groupImages);
 
   return (
     <>
@@ -50,7 +52,10 @@ export default function GallerySlider(props: Props) {
           <div class="overflow-x-auto overflow-y-hidden w-full max-w-[100vw]">
             <div class="flex gap-4 pl-[calc(33.333333vw)] w-max">
               {images.map((img, index) => (
-                <div class="flex items-center w-[543px] px-20 bg-[#EEEEEE] rounded-lg h-[885px]">
+                <div class={clx(
+                  "flex items-center w-[543px]  bg-[#EEEEEE] rounded-lg h-[885px]",
+                  isSmartphone && "px-20"
+                )}>
                   <Image
                     class="w-full"
                     sizes="(max-width: 640px) 100vw, 40vw"

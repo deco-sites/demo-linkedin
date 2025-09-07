@@ -24,12 +24,9 @@
       }
     },
     {
-      "__resolveType": "website/sections/Rendering/Lazy.tsx",
-      "section": {
-        "__resolveType": "site/sections/Product/ProductDetails.tsx",
-        "page": {
-          "__resolveType": "PDP Loader"
-        }
+      "__resolveType": "site/sections/Product/ProductDetails.tsx",
+      "page": {
+        "__resolveType": "PDP Loader"
       }
     },
     {
