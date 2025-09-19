@@ -3774,6 +3774,9 @@ details.collapse summary::-webkit-details-marker {
 .h-\[3px\] {
   height: 3px;
 }
+.h-\[400px\] {
+  height: 400px;
+}
 .h-\[40px\] {
   height: 40px;
 }

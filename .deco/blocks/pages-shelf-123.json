@@ -1,0 +1,11 @@
+{
+    "name": "Shelf",
+    "sections": [{
+        "__resolveType": "site/sections/Shelf.tsx"
+    }],
+    "__resolveType": "website/pages/Page.tsx",
+    "path": "/shelf",
+    "seo": {
+      "__resolveType": "website/sections/Seo/SeoV2.tsx"
+    }
+  }
