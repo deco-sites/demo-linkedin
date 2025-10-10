@@ -104,7 +104,7 @@
     },
     {
       "__resolveType": "site/sections/Newsletter/Newsletter.tsx"
-    },
+    }
     {
       "__resolveType": "website/sections/Rendering/Lazy.tsx",
       "section": {
