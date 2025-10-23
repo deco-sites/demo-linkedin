@@ -1,4 +1,4 @@
-import { useState, useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { type JSX } from "preact";
 import { clx } from "../../sdk/clx.ts";
 import { useId } from "../../sdk/useId.ts";
@@ -10,14 +10,14 @@ interface Props extends Omit<JSX.IntrinsicElements["input"], "onChange"> {
   max?: number;
 }
 
-function QuantitySelector({ 
-  id = useId(), 
-  disabled, 
+function QuantitySelector({
+  id = useId(),
+  disabled,
   value = 0,
   min = 0,
   max = 100,
   onChange,
-  ...props 
+  ...props
 }: Props) {
   const [currentValue, setCurrentValue] = useState(value);
 
@@ -31,7 +31,7 @@ function QuantitySelector({
     onChange?.(newValue);
   };
 
-  const handleInputChange = (e: Event) => {
+  const _handleInputChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
     const newValue = Math.min(Math.max(Number(target.value), min), max);
     setCurrentValue(newValue);
@@ -68,8 +68,10 @@ function QuantitySelector({
           value={currentValue}
           min={min}
           max={max}
-          onChange={handleInputChange}
-          {...props}
+          {
+            /* onChange={handleInputChange} */
+            ...props
+          }
         />
       </div>
       <button

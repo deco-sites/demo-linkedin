@@ -1,7 +1,7 @@
 import { itemToAnalyticsItem } from "apps/vtex/hooks/useCart.ts";
 import type a from "apps/vtex/loaders/cart.ts";
 import { AppContext } from "apps/vtex/mod.ts";
-import { Minicart } from "../../../components/minicart/Minicart.tsx";
+import { Minicart } from "../../types.ts";
 
 export type Cart = Awaited<ReturnType<typeof a>>;
 

@@ -40,15 +40,19 @@ export interface LinxCartProps {
   Quantity: number;
 }
 
-export type PlatformCartProps = 
-  | VTEXCartProps 
-  | ShopifyCartProps 
-  | VNDACartProps 
-  | WakeCartProps 
-  | NuvemshopCartProps 
+export type PlatformCartProps =
+  | VTEXCartProps
+  | ShopifyCartProps
+  | VNDACartProps
+  | WakeCartProps
+  | NuvemshopCartProps
   | LinxCartProps;
 
-export function getPlatformCartProps(product: Product, seller: string, platform: string): PlatformCartProps {
+export function getPlatformCartProps(
+  product: Product,
+  seller: string,
+  platform: string,
+): PlatformCartProps {
   const { additionalProperty = [], isVariantOf, productID } = product;
   const productGroupID = isVariantOf?.productGroupID;
 
@@ -58,13 +62,13 @@ export function getPlatformCartProps(product: Product, seller: string, platform:
       orderItems: [{ quantity: 1, seller: seller, id: productID }],
     };
   }
-  
+
   if (platform === "shopify") {
-    return { 
-      lines: { merchandiseId: productID } 
+    return {
+      lines: { merchandiseId: productID },
     };
   }
-  
+
   if (platform === "vnda") {
     return {
       quantity: 1,
@@ -74,14 +78,14 @@ export function getPlatformCartProps(product: Product, seller: string, platform:
       ),
     };
   }
-  
+
   if (platform === "wake") {
     return {
       productVariantId: Number(productID),
       quantity: 1,
     };
   }
-  
+
   if (platform === "nuvemshop") {
     return {
       quantity: 1,
@@ -92,7 +96,7 @@ export function getPlatformCartProps(product: Product, seller: string, platform:
       ),
     };
   }
-  
+
   if (platform === "linx") {
     return {
       ProductID: productGroupID!,
@@ -100,6 +104,6 @@ export function getPlatformCartProps(product: Product, seller: string, platform:
       Quantity: 1,
     };
   }
-  
+
   throw new Error(`Unsupported platform: ${platform}`);
 }

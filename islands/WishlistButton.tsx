@@ -12,7 +12,7 @@ interface Props {
 export default function WishlistButton({ item, variant = "full" }: Props) {
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isToggling, setIsToggling] = useState(false);
-  
+
   // @ts-ignore - AnalyticsItem structure varies
   const productID = item.item_id;
   // @ts-ignore - AnalyticsItem structure varies
@@ -32,7 +32,7 @@ export default function WishlistButton({ item, variant = "full" }: Props) {
 
   const handleToggle = async () => {
     const user = storeState.user.value;
-    
+
     if (!user?.email) {
       window.alert("Please login to add the product to your wishlist");
       return;
@@ -71,7 +71,9 @@ export default function WishlistButton({ item, variant = "full" }: Props) {
           {isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
         </span>
       )}
-      <span class={isToggling || storeState.loading.value ? "inline" : "hidden"}>
+      <span
+        class={isToggling || storeState.loading.value ? "inline" : "hidden"}
+      >
         <span class="loading loading-spinner" />
       </span>
     </button>

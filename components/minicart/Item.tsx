@@ -16,7 +16,9 @@ export interface Props {
   onQuantityChange?: (itemId: string, quantity: number) => void;
 }
 const QUANTITY_MAX_VALUE = 100;
-function CartItem({ item, index, locale, currency, onQuantityChange }: Props) {
+function CartItem(
+  { item, index: _index, locale, currency, onQuantityChange }: Props,
+) {
   const { image, price = Infinity, quantity } = item;
   const isGift = price < 0.01;
   // deno-lint-ignore no-explicit-any

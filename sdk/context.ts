@@ -2,10 +2,10 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 import { signal } from "@preact/signals";
 import { withManifest } from "deco/clients/withManifest.ts";
 import type { Manifest } from "../manifest.gen.ts";
-import type { Minicart } from "../components/minicart/Minicart.tsx";
-import type { Wishlist } from "../components/wishlist/Provider.tsx";
+import type { Wishlist } from "./types.ts";
 import type { AnalyticsItem, Person } from "apps/commerce/types.ts";
 import type { PlatformCartProps } from "./getPlatformCartProps.ts";
+import { Minicart } from "./types.ts";
 
 interface Context {
   cart: Minicart;
@@ -60,8 +60,8 @@ const enqueue = (
       }
 
       loading.value = false;
-    } catch (error: any) {
-      if (error.name === "AbortError") return;
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === "AbortError") return;
 
       console.error(error);
       loading.value = false;
@@ -135,7 +135,7 @@ const updateQuantity = async (itemId: string, quantity: number) => {
     // Create items array with updated quantity
     const items = currentCart.storefront.items.map((item) => {
       // @ts-ignore - item structure varies by platform
-      if ((item as any).item_id === itemId) {
+      if (item.item_id === itemId) {
         return { ...item, quantity };
       }
       return item;
@@ -143,7 +143,8 @@ const updateQuantity = async (itemId: string, quantity: number) => {
 
     // Dispatch analytics event
     if (typeof window !== "undefined" && window.DECO?.events) {
-      const item = items.find((item) => (item as any).item_id === itemId);
+      // @ts-ignore - item structure varies by platform
+      const item = items.find((item) => item.item_id === itemId);
       if (item) {
         window.DECO.events.dispatch({
           name: quantity > 0 ? "add_to_cart" : "remove_from_cart",

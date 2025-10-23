@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 import { JSX } from "preact";
-import type { Product, AnalyticsItem } from "apps/commerce/types.ts";
+import type { AnalyticsItem, Product } from "apps/commerce/types.ts";
 import { state as storeState } from "../sdk/context.ts";
 import { clx } from "../sdk/clx.ts";
 import { getPlatformCartProps } from "../sdk/getPlatformCartProps.ts";
@@ -13,14 +13,14 @@ export interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
   children?: JSX.Element;
 }
 
-export default function AddToCartButton({ 
-  product, 
-  seller, 
-  item, 
+export default function AddToCartButton({
+  product,
+  seller,
+  item,
   platform,
-  class: _class, 
+  class: _class,
   children,
-  ...props 
+  ...props
 }: Props) {
   const [isAdding, setIsAdding] = useState(false);
 
@@ -45,11 +45,9 @@ export default function AddToCartButton({
       disabled={isAdding || storeState.loading.value}
       {...props}
     >
-      {isAdding || storeState.loading.value ? (
-        <span class="loading loading-spinner loading-sm" />
-      ) : (
-        children
-      )}
+      {isAdding || storeState.loading.value
+        ? <span class="loading loading-spinner loading-sm" />
+        : children}
     </button>
   );
 }

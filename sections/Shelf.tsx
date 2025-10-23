@@ -21,9 +21,9 @@ export default function Shelf({ products }: { products: Product[] | null }) {
 }
 
 export const loader = async (
-  props: unknown,
+  _props: unknown,
   req: Request,
-  ctx: AppContext & VtexContext,
+  _ctx: AppContext & VtexContext,
 ) => {
   const url = new URL(req.url);
   const accountName = url.searchParams.get("accountName");
@@ -58,7 +58,9 @@ export const loader = async (
 };
 
 export const ErrorFallback = () => {
-  return <div class="w-full h-[400px] flex justify-center items-center">
-    <div class="skeleton h-8 w-48 rounded-sm"></div>
-  </div>;
+  return (
+    <div class="w-full h-[400px] flex justify-center items-center">
+      <div class="skeleton h-8 w-48 rounded-sm"></div>
+    </div>
+  );
 };

@@ -17,7 +17,7 @@ export default function CartBag() {
 
     // Subscribe to cart signal changes
     const unsubscribe = storeState.cart.subscribe(updateCount);
-    
+
     return unsubscribe;
   }, []);
 

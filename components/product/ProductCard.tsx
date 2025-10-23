@@ -148,7 +148,8 @@ function ProductCard({
 
         <div class="flex gap-2 items-center justify-between">
           {/* SKU Selector */}
-          {false && variants.length > 1 && firstVariantName !== shoeSizeVariant && (
+          {false && variants.length > 1 &&
+            firstVariantName !== shoeSizeVariant && (
             <ul class="flex items-center justify-start gap-2 overflow-x-auto">
               {variants.map(([value, link]) => [value, relative(link)] as const)
                 .map(([value, link]) => (
