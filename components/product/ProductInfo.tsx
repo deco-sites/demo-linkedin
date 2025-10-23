@@ -5,10 +5,11 @@ import { useId } from "../../sdk/useId.ts";
 import { useOffer } from "../../sdk/useOffer.ts";
 import { useSendEvent } from "../../sdk/useSendEvent.ts";
 import ShippingSimulationForm from "../shipping/Form.tsx";
-import WishlistButton from "../wishlist/WishlistButton.tsx";
-import AddToCartButton from "./AddToCartButton.tsx";
+import WishlistButton from "../../islands/WishlistButton.tsx";
+import AddToCartButton from "../../islands/AddToCartButton.tsx";
 import OutOfStock from "./OutOfStock.tsx";
 import ProductSelector from "./ProductVariantSelector.tsx";
+import { usePlatform } from "../../sdk/usePlatform.tsx";
 
 interface Props {
   page: ProductDetailsPage | null;
@@ -16,6 +17,7 @@ interface Props {
 
 function ProductInfo({ page }: Props) {
   const id = useId();
+  const platform = usePlatform();
 
   if (page === null) {
     throw new Error("Missing Product Details Page Info");
@@ -107,6 +109,7 @@ function ProductInfo({ page }: Props) {
             <div class="flex flex-nowrap gap-2">
               <WishlistButton item={item} variant="icon" />
               <AddToCartButton
+                platform={platform}
                 item={item}
                 seller={seller}
                 product={product}

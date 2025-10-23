@@ -7,10 +7,11 @@ import { relative } from "../../sdk/url.ts";
 import { useOffer } from "../../sdk/useOffer.ts";
 import { useSendEvent } from "../../sdk/useSendEvent.ts";
 import { useVariantPossibilities } from "../../sdk/useVariantPossiblities.ts";
-import WishlistButton from "../wishlist/WishlistButton.tsx";
-import AddToCartButton from "./AddToCartButton.tsx";
+import WishlistButton from "../../islands/WishlistButton.tsx";
+import AddToCartButton from "../../islands/AddToCartButton.tsx";
 import { Ring } from "./ProductVariantSelector.tsx";
 import { useId } from "../../sdk/useId.ts";
+import { usePlatform } from "../../sdk/usePlatform.tsx";
 
 interface Props {
   product: Product;
@@ -38,7 +39,7 @@ function ProductCard({
   class: _class,
 }: Props) {
   const id = useId();
-
+  const platform = usePlatform();
   const { url, image: images, offers, isVariantOf } = product;
   const hasVariant = isVariantOf?.hasVariant ?? [];
   const title = isVariantOf?.name ?? product.name;
@@ -170,6 +171,7 @@ function ProductCard({
               product={product}
               seller={seller}
               item={item}
+              platform={platform}
               class={clx(
                 "flex justify-center items-center border-none !text-sm !font-medium px-0 no-animation w-full",
               )}

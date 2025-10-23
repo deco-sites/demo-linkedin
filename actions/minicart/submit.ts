@@ -9,6 +9,62 @@ import vtex from "../../sdk/cart/vtex/submit.ts";
 import shopify from "../../sdk/cart/shopify/submit.ts";
 import nuvemshop from "../../sdk/cart/nuvemshop/submit.ts";
 
+// Platform-specific cart props types
+export interface VTEXCartProps {
+  allowedOutdatedData: string[];
+  orderItems: Array<{
+    quantity: number;
+    seller: string;
+    id: string;
+  }>;
+}
+
+export interface ShopifyCartProps {
+  lines: {
+    merchandiseId: string;
+  };
+}
+
+export interface VNDACartProps {
+  quantity: number;
+  itemId: string;
+  attributes: Record<string, string>;
+}
+
+export interface WakeCartProps {
+  productVariantId: number;
+  quantity: number;
+}
+
+export interface NuvemshopCartProps {
+  quantity: number;
+  itemId: number;
+  add_to_cart_enhanced: string;
+  attributes: Record<string, string>;
+}
+
+export interface LinxCartProps {
+  ProductID: string;
+  SkuID: string;
+  Quantity: number;
+}
+
+export type PlatformCartProps =
+  | VTEXCartProps
+  | ShopifyCartProps
+  | VNDACartProps
+  | WakeCartProps
+  | NuvemshopCartProps
+  | LinxCartProps;
+
+interface CartForm {
+  items: number[];
+  coupon: string | null;
+  action: string | null;
+  platformCart: unknown;
+  addToCart: PlatformCartProps | null;
+}
+
 const actions: Record<string, CartSubmitActions> = {
   vtex: vtex as CartSubmitActions,
   vnda: vnda as CartSubmitActions,
@@ -18,64 +74,34 @@ const actions: Record<string, CartSubmitActions> = {
   nuvemshop: nuvemshop as CartSubmitActions,
 };
 
-interface CartForm {
-  items: number[];
-  coupon: string | null;
-  action: string | null;
-  platformCart: unknown;
-  addToCart: unknown;
-}
-
 export interface CartSubmitActions<AC = unknown> {
   addToCart?: (props: CartForm, req: Request, ctx: AC) => Promise<Minicart>;
   setQuantity?: (props: CartForm, req: Request, ctx: AC) => Promise<Minicart>;
   setCoupon?: (props: CartForm, req: Request, ctx: AC) => Promise<Minicart>;
 }
 
-const safeParse = (payload: string | null) => {
-  try {
-    return JSON.parse(payload || "null");
-  } catch {
-    return null;
-  }
-};
-
-// Reconstruct the cart state from the received form data
-const cartFrom = (form: FormData) => {
-  const cart: CartForm = {
-    items: [],
-    coupon: null,
-    platformCart: null,
-    action: null,
-    addToCart: null,
-  };
-
-  for (const [name, value] of form.entries()) {
-    if (name === "coupon") {
-      cart.coupon = value.toString();
-    } else if (name === "action") {
-      cart.action = value.toString();
-    } else if (name === "platform-cart") {
-      cart.platformCart = safeParse(decodeURIComponent(value.toString()));
-    } else if (name.startsWith("item::")) {
-      const [_, it] = name.split("::");
-      cart.items[Number(it)] = Number(value);
-    } else if (name === "add-to-cart") {
-      cart.addToCart = safeParse(decodeURIComponent(value.toString()));
-    }
-  }
-
-  return cart;
-};
+// New interface for direct props
+interface CartActionProps {
+  action: "add-to-cart" | "set-quantity" | "set-coupon";
+  addToCart?: PlatformCartProps;
+  items?: Record<string, number>;
+  coupon?: string;
+}
 
 async function action(
-  _props: unknown,
+  props: CartActionProps,
   req: Request,
   ctx: AppContext,
 ): Promise<Minicart> {
   const { setQuantity, setCoupon, addToCart } = actions[usePlatform()];
 
-  const form = cartFrom(await req.formData());
+  const form: CartForm = {
+    items: props.items ? Object.values(props.items) : [],
+    coupon: props.coupon || null,
+    action: props.action,
+    platformCart: null,
+    addToCart: props.addToCart || null,
+  };
 
   const handler = form.action === "set-coupon"
     ? setCoupon

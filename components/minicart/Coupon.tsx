@@ -1,47 +1,65 @@
-import { MINICART_FORM_ID } from "../../constants.ts";
-import { useScript } from "@deco/deco/hooks";
+import { useState } from "preact/hooks";
+
 export interface Props {
   coupon?: string;
+  onCouponChange?: (coupon: string) => void;
 }
-function Coupon({ coupon }: Props) {
+
+function Coupon({ coupon, onCouponChange }: Props) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [couponValue, setCouponValue] = useState(coupon ?? "");
+
+  const handleSubmit = () => {
+    if (onCouponChange) {
+      onCouponChange(couponValue);
+    }
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setCouponValue(coupon ?? "");
+    setIsEditing(false);
+  };
+
   return (
     <div class="flex justify-between items-center px-4">
       <span class="text-sm">Discount coupon</span>
 
-      <button
-        type="button"
-        class="btn btn-ghost underline font-normal no-animation"
-        hx-on:click={useScript(() => {
-          event?.stopPropagation();
-          const button = event?.currentTarget as HTMLButtonElement;
-          button.classList.add("hidden");
-          button.nextElementSibling?.classList.remove("hidden");
-        })}
-      >
-        {coupon || "Add"}
-      </button>
-
-      {/* Displayed when checkbox is checked=true */}
-      <div class="join hidden">
-        <input
-          form={MINICART_FORM_ID}
-          name="coupon"
-          class="input join-item"
-          type="text"
-          value={coupon ?? ""}
-          placeholder="Cupom"
-        />
+      {!isEditing ? (
         <button
           type="button"
-          form={MINICART_FORM_ID}
-          class="btn join-item"
-          name="action"
-          value="set-coupon"
+          class="btn btn-ghost underline font-normal no-animation"
+          onClick={() => setIsEditing(true)}
         >
-          Ok
+          {coupon || "Add"}
         </button>
-      </div>
+      ) : (
+        <div class="join">
+          <input
+            class="input join-item"
+            type="text"
+            value={couponValue}
+            onChange={(e) => setCouponValue((e.target as HTMLInputElement).value)}
+            placeholder="Cupom"
+          />
+          <button
+            type="button"
+            class="btn join-item"
+            onClick={handleSubmit}
+          >
+            Ok
+          </button>
+          <button
+            type="button"
+            class="btn join-item btn-outline"
+            onClick={handleCancel}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
   );
 }
+
 export default Coupon;

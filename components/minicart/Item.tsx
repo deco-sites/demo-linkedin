@@ -4,7 +4,6 @@ import { clx } from "../../sdk/clx.ts";
 import { formatPrice } from "../../sdk/format.ts";
 import Icon from "../ui/Icon.tsx";
 import QuantitySelector from "../ui/QuantitySelector.tsx";
-import { useScript } from "@deco/deco/hooks";
 export type Item = AnalyticsItem & {
   listPrice: number;
   image: string;
@@ -14,21 +13,28 @@ export interface Props {
   index: number;
   locale: string;
   currency: string;
+  onQuantityChange?: (itemId: string, quantity: number) => void;
 }
 const QUANTITY_MAX_VALUE = 100;
-const removeItemHandler = () => {
-  const itemID = (event?.currentTarget as HTMLButtonElement | null)
-    ?.closest("fieldset")
-    ?.getAttribute("data-item-id");
-  if (typeof itemID === "string") {
-    window.STOREFRONT.CART.setQuantity(itemID, 0);
-  }
-};
-function CartItem({ item, index, locale, currency }: Props) {
+function CartItem({ item, index, locale, currency, onQuantityChange }: Props) {
   const { image, price = Infinity, quantity } = item;
   const isGift = price < 0.01;
   // deno-lint-ignore no-explicit-any
   const name = (item as any).item_name;
+  // deno-lint-ignore no-explicit-any
+  const itemId = (item as any).item_id;
+
+  const handleQuantityChange = (newQuantity: number) => {
+    if (onQuantityChange) {
+      onQuantityChange(itemId, newQuantity);
+    }
+  };
+
+  const handleRemove = () => {
+    if (onQuantityChange) {
+      onQuantityChange(itemId, 0);
+    }
+  };
   return (
     <fieldset
       // deno-lint-ignore no-explicit-any
@@ -58,7 +64,7 @@ function CartItem({ item, index, locale, currency }: Props) {
               isGift && "hidden",
               "btn btn-ghost btn-square no-animation",
             )}
-            hx-on:click={useScript(removeItemHandler)}
+            onClick={handleRemove}
           >
             <Icon id="trash" size={24} />
           </button>
@@ -75,7 +81,7 @@ function CartItem({ item, index, locale, currency }: Props) {
               min={0}
               max={QUANTITY_MAX_VALUE}
               value={quantity}
-              name={`item::${index}`}
+              onChange={handleQuantityChange}
             />
           </div>
         </div>
