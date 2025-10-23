@@ -13,7 +13,6 @@ interface Context {
   user: Person | null;
 }
 
-// @ts-ignore <IDK why this is wrong>
 const Runtime = withManifest<Manifest>();
 const loading = signal<boolean>(true);
 const context = {
@@ -155,10 +154,12 @@ const updateQuantity = async (itemId: string, quantity: number) => {
 
     const cartData = await Runtime.invoke({
       key: "site/actions/minicart/submit.ts",
-      action: "set-quantity",
-      items: Object.fromEntries(
-        items.map((item, index) => [`item::${index}`, item.quantity]),
-      ),
+      props: {
+        action: "set-quantity",
+        items: Object.fromEntries(
+          items.map((item, index) => [`item::${index}`, item.quantity]),
+        ),
+      },
     });
     context.cart.value = cartData as Minicart;
   } catch (err) {
@@ -174,8 +175,10 @@ const updateCoupon = async (coupon: string) => {
 
     const cartData = await Runtime.invoke({
       key: "site/actions/minicart/submit.ts",
-      action: "set-coupon",
-      coupon: coupon,
+      props: {
+        action: "set-coupon",
+        coupon: coupon,
+      },
     });
     context.cart.value = cartData as Minicart;
   } catch (err) {
@@ -191,13 +194,13 @@ const toggleWishlist = async (productID: string, productGroupID: string) => {
     loading.value = true;
 
     const wishlistData = await Runtime.invoke({
-      wishlist: {
-        key: "site/actions/wishlist/submit.ts",
-        "product-id": productID,
-        "product-group-id": productGroupID,
+      key: "site/actions/wishlist/submit.ts",
+      props: {
+        productID: productID,
+        productGroupID: productGroupID,
       },
     });
-    context.wishlist.value = wishlistData.wishlist as Wishlist;
+    context.wishlist.value = wishlistData;
   } catch (err) {
     console.error("Error toggling wishlist:", err);
   } finally {

@@ -22,6 +22,10 @@
     {
       "__resolveType": "analytics/sections/Analytics/DecoAnalytics.tsx",
       "domain": "storefront.deco.site"
+    },
+    {
+      "__resolveType": "site/sections/Minicart.tsx",
+      "freeShippingTarget": 600
     }
   ],
   "routes": [

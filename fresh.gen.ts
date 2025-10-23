@@ -5,7 +5,7 @@
 import * as $_app from "./routes/_app.tsx";
 import * as $AddToCartButton from "./islands/AddToCartButton.tsx";
 import * as $CartBag from "./islands/CartBag.tsx";
-import * as $MinicartDrawer from "./islands/MinicartDrawer.tsx";
+import * as $MinicartContent from "./islands/MinicartContent.tsx";
 import * as $WishlistButton from "./islands/WishlistButton.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
@@ -16,7 +16,7 @@ const manifest = {
   islands: {
     "./islands/AddToCartButton.tsx": $AddToCartButton,
     "./islands/CartBag.tsx": $CartBag,
-    "./islands/MinicartDrawer.tsx": $MinicartDrawer,
+    "./islands/MinicartContent.tsx": $MinicartContent,
     "./islands/WishlistButton.tsx": $WishlistButton,
   },
   baseUrl: import.meta.url,

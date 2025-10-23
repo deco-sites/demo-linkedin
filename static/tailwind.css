@@ -3791,9 +3791,6 @@ details.collapse summary::-webkit-details-marker {
 .grid {
   display: grid;
 }
-.contents {
-  display: contents;
-}
 .hidden {
   display: none;
 }
@@ -5568,10 +5565,6 @@ details.collapse summary::-webkit-details-marker {
   display: contents;
 }
 
-.htmx-request .\[\.htmx-request_\&\]\:pointer-events-none {
-  pointer-events: none;
-}
-
 .htmx-request .\[\.htmx-request_\&\]\:block {
   display: block;
 }
@@ -5584,20 +5577,12 @@ details.collapse summary::-webkit-details-marker {
   display: none;
 }
 
-.htmx-request .\[\.htmx-request_\&\]\:cursor-wait {
-  cursor: wait;
-}
-
 .htmx-request .\[\.htmx-request_\&\]\:opacity-0 {
   opacity: 0;
 }
 
 .htmx-request .\[\.htmx-request_\&\]\:opacity-100 {
   opacity: 1;
-}
-
-.htmx-request .\[\.htmx-request_\&\]\:opacity-60 {
-  opacity: 0.6;
 }
 
 [data-aside].\[\[data-aside\]\&_section\]\:contents section {
