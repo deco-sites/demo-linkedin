@@ -10,6 +10,7 @@ import * as $NewsletterForm from "./islands/NewsletterForm.tsx";
 import * as $OutOfStock from "./islands/OutOfStock.tsx";
 import * as $Searchbar from "./islands/Searchbar.tsx";
 import * as $ShippingForm from "./islands/ShippingForm.tsx";
+import * as $ShowMoreButton from "./islands/ShowMoreButton.tsx";
 import * as $Sort from "./islands/Sort.tsx";
 import * as $WishlistButton from "./islands/WishlistButton.tsx";
 import type { Manifest } from "$fresh/server.ts";
@@ -26,6 +27,7 @@ const manifest = {
     "./islands/OutOfStock.tsx": $OutOfStock,
     "./islands/Searchbar.tsx": $Searchbar,
     "./islands/ShippingForm.tsx": $ShippingForm,
+    "./islands/ShowMoreButton.tsx": $ShowMoreButton,
     "./islands/Sort.tsx": $Sort,
     "./islands/WishlistButton.tsx": $WishlistButton,
   },

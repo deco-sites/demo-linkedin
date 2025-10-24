@@ -13,6 +13,8 @@ import Drawer from "../ui/Drawer.tsx";
 import Sort from "../../islands/Sort.tsx";
 import { useDevice, usePartialSection, useScript } from "@deco/deco/hooks";
 import { type SectionProps } from "@deco/deco";
+import ShowMoreButton from "../../islands/ShowMoreButton.tsx";
+
 export interface Layout {
   /**
    * @title Pagination
@@ -31,7 +33,7 @@ export interface Props {
   /** @description 0 for ?page=0 as your first page */
   startingPage?: 0 | 1;
   /** @hidden */
-  partial?: "hideMore" | "hideLess";
+  partial?: boolean;
 }
 function NotFound() {
   return (
@@ -55,7 +57,7 @@ const useUrlRebased = (overrides: string | undefined, base: string) => {
   return url;
 };
 function PageResult(props: SectionProps<typeof loader>) {
-  const { layout, startingPage = 0, url, partial } = props;
+  const { layout, startingPage = 0, url } = props;
   const page = props.page!;
   const { products, pageInfo } = page;
   const perPage = pageInfo?.recordPerPage || products.length;
@@ -67,26 +69,6 @@ function PageResult(props: SectionProps<typeof loader>) {
   const platform = usePlatform();
   return (
     <div class="grid grid-flow-row grid-cols-1 place-items-center">
-      <div
-        class={clx(
-          "pb-2 sm:pb-10",
-          (!prevPageUrl || partial === "hideLess") && "hidden",
-        )}
-      >
-        <a
-          rel="prev"
-          class="btn btn-ghost"
-          {...usePartialSection({
-            href: prevPageUrl,
-            mode: "append",
-          })}
-        >
-          <span class="inline">
-            Show Less
-          </span>
-        </a>
-      </div>
-
       <div
         data-product-list
         class={clx(
@@ -107,12 +89,11 @@ function PageResult(props: SectionProps<typeof loader>) {
           />
         ))}
       </div>
-
-      <div class={clx("pt-2 sm:pt-10 w-full", "")}>
-        {infinite
-          ? (
-            <div class="flex justify-center [&_section]:contents">
-              {nextPageUrl && partial !== "hideMore" && (
+      {infinite
+        ? (
+          <ShowMoreButton>
+            <div class="flex justify-center [&_section]:contents pt-2 sm:pt-10 w-full">
+              {nextPageUrl && (
                 <button
                   class="btn btn-ghost"
                   {...usePartialSection({
@@ -126,33 +107,35 @@ function PageResult(props: SectionProps<typeof loader>) {
                 </button>
               )}
             </div>
-          )
-          : (
-            <div class={clx("join", infinite && "hidden")}>
-              <a
-                rel="prev"
-                aria-label="previous page link"
-                href={prevPageUrl ?? "#"}
-                disabled={!prevPageUrl}
-                class="btn btn-ghost join-item"
-              >
-                <Icon id="chevron-right" class="rotate-180" />
-              </a>
-              <span class="btn btn-ghost join-item">
-                Page {zeroIndexedOffsetPage + 1}
-              </span>
-              <a
-                rel="next"
-                aria-label="next page link"
-                href={nextPageUrl ?? "#"}
-                disabled={!nextPageUrl}
-                class="btn btn-ghost join-item"
-              >
-                <Icon id="chevron-right" />
-              </a>
-            </div>
-          )}
-      </div>
+          </ShowMoreButton>
+        )
+        : (
+          <div
+            class={clx("join", infinite && "hidden", "pt-2 sm:pt-10 w-full")}
+          >
+            <a
+              rel="prev"
+              aria-label="previous page link"
+              href={prevPageUrl ?? "#"}
+              disabled={!prevPageUrl}
+              class="btn btn-ghost join-item"
+            >
+              <Icon id="chevron-right" class="rotate-180" />
+            </a>
+            <span class="btn btn-ghost join-item">
+              Page {zeroIndexedOffsetPage + 1}
+            </span>
+            <a
+              rel="next"
+              aria-label="next page link"
+              href={nextPageUrl ?? "#"}
+              disabled={!nextPageUrl}
+              class="btn btn-ghost join-item"
+            >
+              <Icon id="chevron-right" />
+            </a>
+          </div>
+        )}
     </div>
   );
 }
@@ -220,9 +203,17 @@ function Result(props: SectionProps<typeof loader>) {
     <>
       <div id={container} {...viewItemListEvent} class="w-full">
         {partial
-          ? <PageResult {...props} />
+          ? (
+            <div class="px-4 flex flex-col gap-4 sm:gap-5 w-full sm:pb-2">
+              <div class="grid grid-cols-1 sm:grid-cols-[250px_1fr] gap-2">
+                <div class="">
+                </div>
+                <PageResult {...props} />
+              </div>
+            </div>
+          )
           : (
-            <div class="px-4 flex flex-col gap-4 sm:gap-5 w-full py-4 sm:py-5">
+            <div class="px-4 flex flex-col gap-4 sm:gap-5 w-full max-sm:py-4 sm:pt-5 sm:pb-2">
               <Breadcrumb itemListElement={breadcrumb?.itemListElement} />
 
               {device === "mobile" && (
@@ -263,7 +254,7 @@ function Result(props: SectionProps<typeof loader>) {
                     <span class="text-base h-12 flex items-center">
                       Filters
                     </span>
-                    <div class="background rounded-lg p-4">
+                    <div class="background rounded-lg p-4 2xl:max-h-[1400px] xl:max-h-[1000px] lg:max-h-[800px] md:max-h-[600px] sm:max-h-[400px] overflow-y-scroll">
                       <Filters filters={filters} />
                     </div>
                   </aside>
@@ -305,9 +296,12 @@ function SearchResult({ page, ...props }: SectionProps<typeof loader>) {
   return <Result {...props} page={page} />;
 }
 export const loader = (props: Props, req: Request) => {
+  const url = new URL(req.url);
+  const partialFromUrl = url.searchParams.get("partial");
   return {
     ...props,
     url: req.url,
+    partial: props.partial ?? partialFromUrl === "true",
   };
 };
 export default SearchResult;

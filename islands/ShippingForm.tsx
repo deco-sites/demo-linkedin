@@ -1,17 +1,25 @@
 import { useState } from "preact/hooks";
-import type { SKU } from "apps/vtex/utils/types.ts";
-import { useId } from "site/sdk/hooks/useId.ts";
+import type { SimulationOrderForm, SKU, Sla } from "apps/vtex/utils/types.ts";
+import { invoke } from "../runtime.ts";
+import { formatPrice } from "../sdk/format.ts";
 
 export interface Props {
   items: SKU[];
 }
 
+const formatShippingEstimate = (estimate: string) => {
+  const [, time, type] = estimate.split(/(\d+)/);
+
+  if (type === "bd") return `${time} dias úteis`;
+  if (type === "d") return `${time} dias`;
+  if (type === "h") return `${time} horas`;
+};
+
 export default function ShippingForm({ items }: Props) {
-  const slot = useId();
   const [postalCode, setPostalCode] = useState("");
-  // deno-lint-ignore no-explicit-any
-  const [results, setResults] = useState<any>(null);
+  const [result, setResult] = useState<SimulationOrderForm | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
@@ -19,35 +27,37 @@ export default function ShippingForm({ items }: Props) {
     if (!postalCode.trim()) return;
 
     setIsLoading(true);
+    setHasError(false);
     try {
-      // Call the shipping results action
-      const response = await fetch("/api/shipping", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          postalCode: postalCode.trim(),
-          items: items.map((item) => ({ skuId: item.id })),
-        }),
-      });
+      const simulation = await invoke.vtex.actions.cart.simulation({
+        items: items,
+        postalCode: postalCode.trim(),
+        country: "BRA",
+      }) as SimulationOrderForm | null;
 
-      if (response.ok) {
-        const shippingResults = await response.json();
-        setResults(shippingResults);
-      } else {
-        console.error("Failed to calculate shipping");
+      setResult(simulation);
+      if (!simulation) {
+        setHasError(true);
       }
     } catch (error) {
       console.error("Error calculating shipping:", error);
+      setHasError(true);
+      setResult(null);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const methods = result?.logisticsInfo?.reduce(
+    (initial, { slas }) => [...initial, ...slas],
+    [] as Sla[],
+  ) ?? [];
+
   return (
     <div class="flex flex-col gap-2">
       <div class="flex flex-col">
         <span class="text-[#616B6B] text-sm pt-5 border-t-[1px] border-gray-300">
-          Please provide your ZIP code to check the delivery times.
+          Informe seu CEP para consultar os prazos de entrega.
         </span>
       </div>
 
@@ -67,28 +77,43 @@ export default function ShippingForm({ items }: Props) {
           class="btn join-item no-animation"
           disabled={isLoading || !postalCode.trim()}
         >
-          <span class={isLoading ? "hidden" : "inline"}>Calculate</span>
+          <span class={isLoading ? "hidden" : "inline"}>Calcular</span>
           <span class={isLoading ? "inline" : "hidden"}>
             <span class="loading loading-spinner loading-xs" />
           </span>
         </button>
       </form>
 
-      {/* Results Slot */}
-      <div id={slot}>
-        {results && (
-          <div class="mt-4 p-4 bg-base-200 rounded-lg">
-            <h3 class="font-semibold mb-2">Shipping Options</h3>
-            {results.options?.map((option, index: number) => (
-              <div
-                key={index}
-                class="flex justify-between items-center py-2 border-b border-base-300 last:border-b-0"
-              >
-                <span class="text-sm">{option.name}</span>
-                <span class="text-sm font-medium">{option.price}</span>
-              </div>
-            ))}
+      {/* Results */}
+      <div>
+        {hasError && !methods.length && (
+          <div class="p-2">
+            <span>CEP inválido</span>
           </div>
+        )}
+        {methods.length > 0 && (
+          <ul class="flex flex-col gap-4 p-4 border border-base-400 rounded">
+            {methods.map((method) => (
+              <li class="flex justify-between items-center border-base-200 not-first-child:border-t">
+                <span class="text-button text-center">
+                  Entrega {method.name}
+                </span>
+                <span class="text-button">
+                  até {formatShippingEstimate(method.shippingEstimate)}
+                </span>
+                <span class="text-base font-semibold text-right">
+                  {method.price === 0 ? "Grátis" : (
+                    formatPrice(method.price / 100, "BRL", "pt-BR")
+                  )}
+                </span>
+              </li>
+            ))}
+            <span class="text-xs font-thin">
+              Os prazos de entrega começam a contar a partir da confirmação do
+              pagamento e podem variar de acordo com a quantidade de produtos na
+              sacola.
+            </span>
+          </ul>
         )}
       </div>
     </div>

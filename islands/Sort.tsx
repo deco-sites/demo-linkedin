@@ -47,7 +47,7 @@ export default function Sort({ sortOptions, url }: Props) {
       <select
         name="sort"
         class="select w-full max-w-sm rounded-lg"
-        onChange={handleChange}
+        onChange={(e) => handleChange(e as unknown as Event)}
       >
         {options?.map(({ value, label }) => (
           <option
