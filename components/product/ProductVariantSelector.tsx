@@ -1,8 +1,8 @@
 import type { Product } from "apps/commerce/types.ts";
 import { clx } from "../../sdk/clx.ts";
 import { relative } from "../../sdk/url.ts";
-import { useId } from "../../sdk/useId.ts";
-import { useVariantPossibilities } from "../../sdk/useVariantPossiblities.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
+import { useVariantPossibilities } from "../../sdk/hooks/useVariantPossiblities.ts";
 import { useSection } from "@deco/deco/hooks";
 interface Props {
   product: Product;

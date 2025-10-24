@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { type JSX } from "preact";
 import { clx } from "../../sdk/clx.ts";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 
 interface Props extends Omit<JSX.IntrinsicElements["input"], "onChange"> {
   onChange?: (value: number) => void;

@@ -1,15 +1,15 @@
 import { ProductDetailsPage } from "apps/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "apps/commerce/utils/productToAnalyticsItem.ts";
 import { formatPrice } from "../../sdk/format.ts";
-import { useId } from "../../sdk/useId.ts";
-import { useOffer } from "../../sdk/useOffer.ts";
-import { useSendEvent } from "../../sdk/useSendEvent.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
+import { useOffer } from "../../sdk/hooks/useOffer.ts";
+import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
 import ShippingSimulationForm from "../shipping/Form.tsx";
 import WishlistButton from "../../islands/WishlistButton.tsx";
 import AddToCartButton from "../../islands/AddToCartButton.tsx";
 import OutOfStock from "./OutOfStock.tsx";
 import ProductSelector from "./ProductVariantSelector.tsx";
-import { usePlatform } from "../../sdk/usePlatform.tsx";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 interface Props {
   page: ProductDetailsPage | null;

@@ -1,6 +1,6 @@
 import { Person } from "apps/commerce/types.ts";
 import { AppContext } from "../apps/site.ts";
-import { usePlatform } from "../sdk/usePlatform.tsx";
+import { usePlatform } from "../sdk/hooks/usePlatform.tsx";
 
 import { AppContext as AppContextVTEX } from "apps/vtex/mod.ts";
 

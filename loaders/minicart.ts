@@ -1,5 +1,5 @@
 import { AppContext } from "../apps/site.ts";
-import { usePlatform } from "../sdk/usePlatform.tsx";
+import { usePlatform } from "../sdk/hooks/usePlatform.tsx";
 
 import vtex from "../sdk/cart/vtex/loader.ts";
 import vnda from "../sdk/cart/vnda/loader.ts";

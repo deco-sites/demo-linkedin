@@ -13,7 +13,7 @@ import {
   SEARCHBAR_INPUT_FORM_ID,
   SEARCHBAR_POPUP_ID,
 } from "../../../constants.ts";
-import { useId } from "../../../sdk/useId.ts";
+import { useId } from "../../../sdk/hooks/useId.ts";
 import { useComponent } from "../../../sections/Component.tsx";
 import Icon from "../../ui/Icon.tsx";
 import { Props as SuggestionProps } from "./Suggestions.tsx";

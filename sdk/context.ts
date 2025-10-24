@@ -4,7 +4,7 @@ import { withManifest } from "deco/clients/withManifest.ts";
 import type { Manifest } from "../manifest.gen.ts";
 import type { Wishlist } from "./types.ts";
 import type { AnalyticsItem, Person } from "apps/commerce/types.ts";
-import type { PlatformCartProps } from "./getPlatformCartProps.ts";
+import type { PlatformCartProps } from "./cart/getPlatformCartProps.ts";
 import { Minicart } from "./types.ts";
 
 interface Context {
@@ -216,10 +216,10 @@ const isInWishlist = (productID: string): boolean => {
 if (IS_BROWSER) {
   enqueue(load, { isInitialLoader: true });
 
-  document.addEventListener(
+  /*   document.addEventListener(
     "visibilitychange",
     () => document.visibilityState === "visible" && enqueue(load),
-  );
+  ); */
 }
 
 export const state = {

@@ -3,7 +3,7 @@ import Image from "apps/website/components/Image.tsx";
 import ProductImageZoom from "./ProductImageZoom.tsx";
 import Icon from "../ui/Icon.tsx";
 import { clx } from "../../sdk/clx.ts";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 
 export interface Props {
   /** @title Integration */

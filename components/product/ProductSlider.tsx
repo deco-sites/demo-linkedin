@@ -2,7 +2,7 @@ import { Product } from "apps/commerce/types.ts";
 import { clx } from "../../sdk/clx.ts";
 import Slider from "../ui/Slider.tsx";
 import ProductCard from "./ProductCard.tsx";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 
 interface Props {
   products: Product[];

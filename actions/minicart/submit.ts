@@ -1,6 +1,6 @@
 import { type AppContext } from "../../apps/site.ts";
 import { type Minicart } from "../../sdk/types.ts";
-import { usePlatform } from "../../sdk/usePlatform.tsx";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 import linx from "../../sdk/cart/linx/submit.ts";
 import vnda from "../../sdk/cart/vnda/submit.ts";

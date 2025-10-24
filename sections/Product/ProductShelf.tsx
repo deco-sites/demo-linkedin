@@ -4,7 +4,7 @@ import Section, {
   Props as SectionHeaderProps,
 } from "../../components/ui/Section.tsx";
 import { type LoadingFallbackProps } from "@deco/deco";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 import { clx } from "../../sdk/clx.ts";
 
 /* import { useOffer } from "../../sdk/useOffer.ts";

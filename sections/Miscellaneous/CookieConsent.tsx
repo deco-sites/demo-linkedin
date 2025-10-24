@@ -1,6 +1,6 @@
 import { HTMLWidget } from "apps/admin/widgets.ts";
 import { clx } from "../../sdk/clx.ts";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 import { useScript } from "@deco/deco/hooks";
 const script = (id: string) => {
   const handleScroll = () => {

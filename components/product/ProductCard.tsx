@@ -4,14 +4,14 @@ import Image from "apps/website/components/Image.tsx";
 import { clx } from "../../sdk/clx.ts";
 import { formatPrice } from "../../sdk/format.ts";
 import { relative } from "../../sdk/url.ts";
-import { useOffer } from "../../sdk/useOffer.ts";
-import { useSendEvent } from "../../sdk/useSendEvent.ts";
-import { useVariantPossibilities } from "../../sdk/useVariantPossiblities.ts";
+import { useOffer } from "../../sdk/hooks/useOffer.ts";
+import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
+import { useVariantPossibilities } from "../../sdk/hooks/useVariantPossiblities.ts";
 import WishlistButton from "../../islands/WishlistButton.tsx";
 import AddToCartButton from "../../islands/AddToCartButton.tsx";
 import { Ring } from "./ProductVariantSelector.tsx";
-import { useId } from "../../sdk/useId.ts";
-import { usePlatform } from "../../sdk/usePlatform.tsx";
+import { useId } from "../../sdk/hooks/useId.ts";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 interface Props {
   product: Product;
