@@ -7,10 +7,11 @@ import { clx } from "../../sdk/clx.ts";
 import { useId } from "../../sdk/hooks/useId.ts";
 import { useOffer } from "../../sdk/hooks/useOffer.ts";
 import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 import Breadcrumb from "../ui/Breadcrumb.tsx";
 import Drawer from "../ui/Drawer.tsx";
-import Sort from "./Sort.tsx";
-import { useDevice, useScript, useSection } from "@deco/deco/hooks";
+import Sort from "../../islands/Sort.tsx";
+import { useDevice, usePartialSection, useScript } from "@deco/deco/hooks";
 import { type SectionProps } from "@deco/deco";
 export interface Layout {
   /**
@@ -48,6 +49,7 @@ const useUrlRebased = (overrides: string | undefined, base: string) => {
     for (const [key, value] of temp.searchParams.entries()) {
       final.searchParams.set(key, value);
     }
+    final.searchParams.set("partial", "true");
     url = final.href;
   }
   return url;
@@ -61,15 +63,8 @@ function PageResult(props: SectionProps<typeof loader>) {
   const offset = zeroIndexedOffsetPage * perPage;
   const nextPageUrl = useUrlRebased(pageInfo.nextPage, url);
   const prevPageUrl = useUrlRebased(pageInfo.previousPage, url);
-  const partialPrev = useSection({
-    href: prevPageUrl,
-    props: { partial: "hideMore" },
-  });
-  const partialNext = useSection({
-    href: nextPageUrl,
-    props: { partial: "hideLess" },
-  });
   const infinite = layout?.pagination !== "pagination";
+  const platform = usePlatform();
   return (
     <div class="grid grid-flow-row grid-cols-1 place-items-center">
       <div
@@ -81,13 +76,14 @@ function PageResult(props: SectionProps<typeof loader>) {
         <a
           rel="prev"
           class="btn btn-ghost"
-          hx-swap="outerHTML show:parent:top"
-          hx-get={partialPrev}
+          {...usePartialSection({
+            href: prevPageUrl,
+            mode: "append",
+          })}
         >
-          <span class="inline [.htmx-request_&]:hidden">
+          <span class="inline">
             Show Less
           </span>
-          <span class="loading loading-spinner hidden [.htmx-request_&]:block" />
         </a>
       </div>
 
@@ -107,6 +103,7 @@ function PageResult(props: SectionProps<typeof loader>) {
             preload={index === 0}
             index={offset + index}
             class="h-full min-w-[160px] w-full"
+            platform={platform}
           />
         ))}
       </div>
@@ -115,20 +112,19 @@ function PageResult(props: SectionProps<typeof loader>) {
         {infinite
           ? (
             <div class="flex justify-center [&_section]:contents">
-              <a
-                rel="next"
-                class={clx(
-                  "btn btn-ghost",
-                  (!nextPageUrl || partial === "hideMore") && "hidden",
-                )}
-                hx-swap="outerHTML show:parent:top"
-                hx-get={partialNext}
-              >
-                <span class="inline [.htmx-request_&]:hidden">
-                  Show More
-                </span>
-                <span class="loading loading-spinner hidden [.htmx-request_&]:block" />
-              </a>
+              {nextPageUrl && partial !== "hideMore" && (
+                <button
+                  class="btn btn-ghost"
+                  {...usePartialSection({
+                    href: nextPageUrl,
+                    mode: "append",
+                  })}
+                >
+                  <span class="inline">
+                    Show More
+                  </span>
+                </button>
+              )}
             </div>
           )
           : (

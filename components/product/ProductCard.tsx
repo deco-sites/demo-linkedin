@@ -9,9 +9,8 @@ import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
 import { useVariantPossibilities } from "../../sdk/hooks/useVariantPossiblities.ts";
 import WishlistButton from "../../islands/WishlistButton.tsx";
 import AddToCartButton from "../../islands/AddToCartButton.tsx";
-import { Ring } from "./ProductVariantSelector.tsx";
+import VariantRing from "./VariantRing.tsx";
 import { useId } from "../../sdk/hooks/useId.ts";
-import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 interface Props {
   product: Product;
@@ -25,6 +24,9 @@ interface Props {
   index?: number;
 
   class?: string;
+
+  /** @description Platform for cart operations */
+  platform?: string;
 }
 
 const WIDTH = 287;
@@ -37,9 +39,9 @@ function ProductCard({
   itemListName,
   index,
   class: _class,
+  platform,
 }: Props) {
   const id = useId();
-  const platform = usePlatform();
   const { url, image: images, offers, isVariantOf } = product;
   const hasVariant = isVariantOf?.hasVariant ?? [];
   const title = isVariantOf?.name ?? product.name;
@@ -148,7 +150,7 @@ function ProductCard({
 
         <div class="flex gap-2 items-center justify-between">
           {/* SKU Selector */}
-          {false && variants.length > 1 &&
+          {variants.length > 1 &&
             firstVariantName !== shoeSizeVariant && (
             <ul class="flex items-center justify-start gap-2 overflow-x-auto">
               {variants.map(([value, link]) => [value, relative(link)] as const)
@@ -161,7 +163,10 @@ function ProductCard({
                         name={`${id}-${firstSkuVariations?.[0]}`}
                         checked={link === relativeUrl}
                       />
-                      <Ring value={value} checked={link === relativeUrl} />
+                      <VariantRing
+                        value={value}
+                        checked={link === relativeUrl}
+                      />
                     </a>
                   </li>
                 ))}
@@ -172,7 +177,7 @@ function ProductCard({
               product={product}
               seller={seller}
               item={item}
-              platform={platform}
+              platform={platform ?? ""}
               class={clx(
                 "flex justify-center items-center border-none !text-sm !font-medium px-0 no-animation w-full",
               )}

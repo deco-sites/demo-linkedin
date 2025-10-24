@@ -6,6 +6,11 @@ import * as $_app from "./routes/_app.tsx";
 import * as $AddToCartButton from "./islands/AddToCartButton.tsx";
 import * as $CartBag from "./islands/CartBag.tsx";
 import * as $MinicartContent from "./islands/MinicartContent.tsx";
+import * as $NewsletterForm from "./islands/NewsletterForm.tsx";
+import * as $OutOfStock from "./islands/OutOfStock.tsx";
+import * as $Searchbar from "./islands/Searchbar.tsx";
+import * as $ShippingForm from "./islands/ShippingForm.tsx";
+import * as $Sort from "./islands/Sort.tsx";
 import * as $WishlistButton from "./islands/WishlistButton.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
@@ -17,6 +22,11 @@ const manifest = {
     "./islands/AddToCartButton.tsx": $AddToCartButton,
     "./islands/CartBag.tsx": $CartBag,
     "./islands/MinicartContent.tsx": $MinicartContent,
+    "./islands/NewsletterForm.tsx": $NewsletterForm,
+    "./islands/OutOfStock.tsx": $OutOfStock,
+    "./islands/Searchbar.tsx": $Searchbar,
+    "./islands/ShippingForm.tsx": $ShippingForm,
+    "./islands/Sort.tsx": $Sort,
     "./islands/WishlistButton.tsx": $WishlistButton,
   },
   baseUrl: import.meta.url,

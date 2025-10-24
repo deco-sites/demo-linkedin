@@ -3,6 +3,7 @@ import { clx } from "../../sdk/clx.ts";
 import Slider from "../ui/Slider.tsx";
 import ProductCard from "./ProductCard.tsx";
 import { useId } from "../../sdk/hooks/useId.ts";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 interface Props {
   products: Product[];
@@ -11,6 +12,7 @@ interface Props {
 
 function ProductSlider({ products, itemListName }: Props) {
   const id = useId();
+  const platform = usePlatform();
 
   return (
     <>
@@ -37,6 +39,7 @@ function ProductSlider({ products, itemListName }: Props) {
                   product={product}
                   itemListName={itemListName}
                   class="w-full"
+                  platform={platform}
                 />
               </Slider.Item>
             ))}
