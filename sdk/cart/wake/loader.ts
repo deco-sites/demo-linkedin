@@ -1,7 +1,7 @@
 import { itemToAnalyticsItem } from "apps/wake/hooks/useCart.ts";
 import type a from "apps/wake/loaders/cart.ts";
 import { AppContext } from "apps/wake/mod.ts";
-import { Minicart } from "../../../components/minicart/Minicart.tsx";
+import { Minicart } from "../../types.ts";
 
 export type Cart = Awaited<ReturnType<typeof a>>;
 

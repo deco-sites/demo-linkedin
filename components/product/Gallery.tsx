@@ -3,7 +3,7 @@ import Image from "apps/website/components/Image.tsx";
 import ProductImageZoom from "./ProductImageZoom.tsx";
 import Icon from "../ui/Icon.tsx";
 import { clx } from "../../sdk/clx.ts";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 
 export interface Props {
   /** @title Integration */
@@ -36,10 +36,16 @@ export default function GallerySlider(props: Props) {
   const filtered = groupImages.filter((img) =>
     name?.includes(img.alternateName || "")
   );
-  
-  const isSmartphone = name?.includes("Smartphone") || isVariantOf?.name?.includes("Smartphone");
+
+  const isSmartphone = name?.includes("Smartphone") ||
+    isVariantOf?.name?.includes("Smartphone");
   console.log(isSmartphone);
-  const images = isSmartphone ? (filtered.length > 0 ? filtered : groupImages).toSpliced(1, 2).toSpliced(-2, 2) : (filtered.length > 0 ? filtered : groupImages);
+  const images = isSmartphone
+    ? (filtered.length > 0 ? filtered : groupImages).toSpliced(1, 2).toSpliced(
+      -2,
+      2,
+    )
+    : (filtered.length > 0 ? filtered : groupImages);
 
   return (
     <>
@@ -52,10 +58,12 @@ export default function GallerySlider(props: Props) {
           <div class="overflow-x-auto overflow-y-hidden w-full max-w-[100vw]">
             <div class="flex gap-4 pl-[calc(33.333333vw)] w-max">
               {images.map((img, index) => (
-                <div class={clx(
-                  "flex items-center w-[543px]  bg-[#EEEEEE] rounded-lg h-[885px]",
-                  isSmartphone && "px-20"
-                )}>
+                <div
+                  class={clx(
+                    "flex items-center w-[543px]  bg-[#EEEEEE] rounded-lg h-[885px]",
+                    isSmartphone && "px-20",
+                  )}
+                >
                   <Image
                     class="w-full"
                     sizes="(max-width: 640px) 100vw, 40vw"

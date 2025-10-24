@@ -1,6 +1,6 @@
 import type { HTMLWidget } from "apps/admin/widgets.ts";
 import Section from "../../components/ui/Section.tsx";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 import { useScript } from "@deco/deco/hooks";
 export interface Props {
   /**

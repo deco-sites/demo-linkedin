@@ -3,8 +3,8 @@ import { Picture, Source } from "apps/website/components/Picture.tsx";
 import Icon from "../../components/ui/Icon.tsx";
 import Slider from "../../components/ui/Slider.tsx";
 import { clx } from "../../sdk/clx.ts";
-import { useId } from "../../sdk/useId.ts";
-import { useSendEvent } from "../../sdk/useSendEvent.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
+import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
 
 /**
  * @titleBy alt

@@ -1,6 +1,6 @@
 import { type ComponentChildren } from "preact";
 import { clx } from "../../sdk/clx.ts";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 import Icon from "./Icon.tsx";
 import { useScript } from "@deco/deco/hooks";
 export interface Props {

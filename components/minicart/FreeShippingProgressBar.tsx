@@ -1,5 +1,5 @@
 import { formatPrice } from "../../sdk/format.ts";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 import Icon from "../ui/Icon.tsx";
 
 interface Props {

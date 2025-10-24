@@ -15,9 +15,6 @@
   },
   "global": [
     {
-      "__resolveType": "htmx/sections/htmx.tsx"
-    },
-    {
       "__resolveType": "website/sections/Analytics/Analytics.tsx",
       "dangerouslyRunOnMainThread": true,
       "trackingIds": []
@@ -27,11 +24,8 @@
       "domain": "storefront.deco.site"
     },
     {
-      "__resolveType": "site/sections/Session.tsx",
-      "minicart": null,
-      "wishlist": null,
-      "mode": "lazy",
-      "user": null
+      "__resolveType": "site/sections/Minicart.tsx",
+      "freeShippingTarget": 600
     }
   ],
   "routes": [
@@ -74,7 +68,7 @@
     }
   },
   "flavor": {
-    "framework": "htmx"
+    "framework": "fresh"
   },
   "whilelistURLs": [],
   "whitelistPatterns": []

@@ -1,6 +1,6 @@
 import { type AppContext } from "../../apps/site.ts";
-import { type Wishlist } from "../../components/wishlist/Provider.tsx";
-import { usePlatform } from "../../sdk/usePlatform.tsx";
+import { Wishlist } from "../../sdk/types.ts";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 import { AppContext as AppContextVTEX } from "apps/vtex/mod.ts";
 
