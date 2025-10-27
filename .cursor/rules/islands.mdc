@@ -1,0 +1,609 @@
+---
+alwaysApply: false
+description: This file describes Fresh Islands architecture and how to create interactive components in Deco Framework.
+---
+
+# Fresh Islands in Deco Framework
+
+## What are Islands?
+
+Islands are **interactive components** that enable client-side functionality in an otherwise server-rendered application. They implement the "Islands Architecture" pattern:
+
+- **Server-Side Rendering (SSR)**: Most of the page is rendered on the server
+- **Selective Hydration**: Only interactive parts (islands) are hydrated on the client
+- **Better Performance**: Smaller JavaScript bundles, faster page loads
+- **Progressive Enhancement**: The page works without JavaScript, islands add interactivity
+
+## Island Architecture
+
+### Directory Structure
+
+Islands must be placed in the `islands/` directory:
+
+```
+islands/
+  ├── header/
+  │   ├── AccountButton.tsx
+  │   ├── BagButton.tsx
+  │   └── Searchbar.tsx
+  ├── product/
+  │   ├── AddToCartButton.tsx
+  │   └── WishlistButton.tsx
+  ├── forms/
+  │   └── NewsletterForm.tsx
+  ├── ui/
+  │   └── Drawer.tsx
+  └── images/
+      └── ImageCarousel.tsx
+```
+
+### Naming Convention
+
+- Use PascalCase for island files: `AccountButton.tsx`
+- Group related islands in subdirectories: `islands/header/`, `islands/product/`
+- Export default function with same name as file
+
+## Creating Islands
+
+### Basic Island Example
+
+```tsx
+// islands/counter/CounterButton.tsx
+import { useSignal } from "@preact/signals";
+
+export default function CounterButton() {
+  const count = useSignal(0);
+
+  return (
+    <div class="flex items-center gap-4">
+      <button 
+        onClick={() => count.value--}
+        class="btn btn-primary"
+      >
+        -
+      </button>
+      <span class="text-xl font-bold">{count.value}</span>
+      <button 
+        onClick={() => count.value++}
+        class="btn btn-primary"
+      >
+        +
+      </button>
+    </div>
+  );
+}
+```
+
+### Island with Props
+
+```tsx
+// islands/ui/Modal.tsx
+import { useSignal } from "@preact/signals";
+
+interface Props {
+  title: string;
+  children: preact.ComponentChildren;
+}
+
+export default function Modal({ title, children }: Props) {
+  const isOpen = useSignal(false);
+
+  return (
+    <>
+      <button 
+        onClick={() => isOpen.value = true}
+        class="btn btn-primary"
+      >
+        Open Modal
+      </button>
+
+      {isOpen.value && (
+        <div class="fixed inset-0 bg-black/50 flex items-center justify-center">
+          <div class="bg-white p-6 rounded-lg max-w-md">
+            <h2 class="text-2xl font-bold mb-4">{title}</h2>
+            {children}
+            <button 
+              onClick={() => isOpen.value = false}
+              class="btn btn-ghost mt-4"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+## Using Islands in Sections
+
+### Basic Usage
+
+```tsx
+// sections/Interactive/Counter.tsx
+import CounterButton from "../../islands/counter/CounterButton.tsx";
+
+interface Props {
+  title?: string;
+}
+
+export default function CounterSection({ title = "Counter" }: Props) {
+  return (
+    <div class="container mx-auto p-8">
+      <h2 class="text-3xl font-bold mb-6">{title}</h2>
+      <CounterButton />
+    </div>
+  );
+}
+```
+
+### Islands with Server-Side Props
+
+**Pattern**: Process data server-side, pass to island
+
+```tsx
+// sections/Images/ImageCarousel.tsx
+import { useDevice } from "@deco/deco/hooks";
+import ImageCarouselIsland from "../../islands/images/ImageCarousel.tsx";
+import type { ImageWidget } from "apps/admin/widgets.ts";
+
+interface Item {
+  desktopImage: ImageWidget;
+  mobileImage: ImageWidget;
+  desktopWidth: number;
+  desktopHeight: number;
+  mobileWidth: number;
+  mobileHeight: number;
+  alt?: string;
+}
+
+interface Props {
+  images: Item[];
+}
+
+export default function ImageCarousel({ images }: Props) {
+  const device = useDevice(); // Server-side only
+  const isMobile = device === "mobile";
+
+  // Process images server-side based on device
+  const processedImages = images.map((img) => ({
+    src: isMobile ? img.mobileImage : img.desktopImage,
+    alt: img.alt,
+    width: isMobile ? img.mobileWidth : img.desktopWidth,
+    height: isMobile ? img.mobileHeight : img.desktopHeight,
+  }));
+
+  // Pass processed data to client-side Island
+  return <ImageCarouselIsland images={processedImages} />;
+}
+```
+
+## Common Patterns
+
+### 1. Form with State Management
+
+```tsx
+// islands/forms/ContactForm.tsx
+import { useState } from "preact/hooks";
+
+export default function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (submitted) {
+    return (
+      <div class="alert alert-success">
+        <h3 class="font-bold">Thank you!</h3>
+        <p>We'll get back to you soon.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} class="space-y-4">
+      <div>
+        <label class="label">Name</label>
+        <input
+          type="text"
+          value={formData.name}
+          onChange={(e) => setFormData({ 
+            ...formData, 
+            name: e.currentTarget.value 
+          })}
+          class="input input-bordered w-full"
+          required
+        />
+      </div>
+
+      <div>
+        <label class="label">Email</label>
+        <input
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ 
+            ...formData, 
+            email: e.currentTarget.value 
+          })}
+          class="input input-bordered w-full"
+          required
+        />
+      </div>
+
+      <div>
+        <label class="label">Message</label>
+        <textarea
+          value={formData.message}
+          onChange={(e) => setFormData({ 
+            ...formData, 
+            message: e.currentTarget.value 
+          })}
+          class="textarea textarea-bordered w-full"
+          rows={4}
+          required
+        />
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        disabled={loading}
+      >
+        {loading ? "Sending..." : "Send Message"}
+      </button>
+    </form>
+  );
+}
+```
+
+### 2. Interactive UI with useEffect
+
+```tsx
+// islands/ui/Drawer.tsx
+import { type ComponentChildren } from "preact";
+import { useEffect } from "preact/hooks";
+import { useId } from "../../sdk/hooks/useId.ts";
+
+export interface Props {
+  open?: boolean;
+  children?: ComponentChildren;
+  aside: ComponentChildren;
+  id?: string;
+}
+
+export default function Drawer({ children, aside, open, id = useId() }: Props) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        const input = document.getElementById(id) as HTMLInputElement;
+        if (input) {
+          input.checked = false;
+        }
+      }
+    };
+
+    addEventListener("keydown", handler);
+    
+    // Cleanup on unmount
+    return () => {
+      removeEventListener("keydown", handler);
+    };
+  }, [id]);
+
+  return (
+    <div class="drawer">
+      <input
+        id={id}
+        type="checkbox"
+        checked={open}
+        class="drawer-toggle"
+      />
+
+      <div class="drawer-content">
+        {children}
+      </div>
+
+      <aside class="drawer-side">
+        <label for={id} class="drawer-overlay" />
+        {aside}
+      </aside>
+    </div>
+  );
+}
+```
+
+### 3. Global State with Signals
+
+```tsx
+// islands/header/AccountButton.tsx
+import { useEffect, useState } from "preact/hooks";
+import { state as storeState } from "../../sdk/context.ts";
+
+export default function AccountButton() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const updateUserState = () => {
+      const user = storeState.user.value;
+      setIsLoggedIn(user !== null);
+      setUserName(user?.givenName || "");
+    };
+
+    // Initial update
+    updateUserState();
+
+    // Subscribe to changes
+    const unsubscribe = storeState.user.subscribe(updateUserState);
+
+    // Cleanup subscription
+    return unsubscribe;
+  }, []);
+
+  return (
+    <a 
+      href={isLoggedIn ? "/account" : "/login"}
+      class="btn btn-primary"
+    >
+      {isLoggedIn ? `Hi, ${userName}` : "Sign In"}
+    </a>
+  );
+}
+```
+
+### 4. Complex Interactive Component
+
+```tsx
+// islands/images/ImageCarousel.tsx
+import { useEffect } from "preact/hooks";
+import { useId } from "../../sdk/hooks/useId.ts";
+import Image from "apps/website/components/Image.tsx";
+
+interface CarouselImage {
+  src: string;
+  alt?: string;
+  width: number;
+  height: number;
+}
+
+interface Props {
+  images: CarouselImage[];
+}
+
+export default function ImageCarousel({ images }: Props) {
+  const id = useId();
+
+  useEffect(() => {
+    const container = document.getElementById(id);
+    if (!container) return;
+
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      isDragging = true;
+      startX = e.pageX;
+      scrollLeft = container.scrollLeft;
+      container.style.cursor = "grabbing";
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX;
+      const walk = (x - startX) * 2;
+      container.scrollLeft = scrollLeft - walk;
+    };
+
+    const handleMouseUp = () => {
+      isDragging = false;
+      container.style.cursor = "grab";
+    };
+
+    container.addEventListener("mousedown", handleMouseDown);
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mouseup", handleMouseUp);
+    container.addEventListener("mouseleave", handleMouseUp);
+
+    container.style.cursor = "grab";
+
+    // Cleanup
+    return () => {
+      container.removeEventListener("mousedown", handleMouseDown);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseup", handleMouseUp);
+      container.removeEventListener("mouseleave", handleMouseUp);
+    };
+  }, [id]);
+
+  return (
+    <div
+      id={id}
+      class="overflow-x-auto scroll-smooth"
+      style={{ scrollbarWidth: "thin" }}
+    >
+      <div class="inline-flex gap-4 p-4">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            style={{
+              width: image.width,
+              height: image.height,
+            }}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              class="rounded-lg"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+## Preact Hooks Reference
+
+### useState
+
+Manage local component state:
+
+```tsx
+const [count, setCount] = useState(0);
+const [text, setText] = useState("");
+const [items, setItems] = useState<string[]>([]);
+```
+
+### useEffect
+
+Run side effects and cleanup:
+
+```tsx
+useEffect(() => {
+  // Effect runs after render
+  const interval = setInterval(() => {
+    console.log("Tick");
+  }, 1000);
+
+  // Cleanup function
+  return () => {
+    clearInterval(interval);
+  };
+}, [dependencies]); // Re-run when dependencies change
+```
+
+### useSignal
+
+Reactive state from @preact/signals:
+
+```tsx
+import { useSignal } from "@preact/signals";
+
+const count = useSignal(0);
+// Read: count.value
+// Write: count.value = 10
+```
+
+### useId
+
+Generate unique IDs (from SDK):
+
+```tsx
+import { useId } from "../../sdk/hooks/useId.ts";
+
+const id = useId(); // unique-id-123
+```
+
+## Best Practices
+
+### ✅ Do
+
+- **Use Islands for all client-side interactivity**
+- **Import from `preact`, `preact/hooks`, `@preact/signals`**
+- **Process data server-side when possible** (useDevice, loaders)
+- **Add cleanup functions in useEffect**
+- **Use TypeScript for type safety**
+- **Group related islands in subdirectories**
+- **Keep islands focused and small**
+- **Use signals for reactive state**
+
+### ❌ Don't
+
+- **Don't use `useScript` for new code** (legacy pattern)
+- **Don't put business logic in islands** when it can be server-side
+- **Don't forget to cleanup event listeners**
+- **Don't use external state management** (use Preact signals)
+- **Don't mix server-side hooks** (like `useDevice`) inside islands
+- **Don't create large, monolithic islands**
+- **Don't forget error handling in async operations**
+
+## When to Use Islands
+
+### Use Islands For:
+- Forms with validation
+- Interactive UI elements (drawers, modals, dropdowns)
+- Client-side state management
+- Event handlers (click, hover, scroll)
+- Real-time updates
+- Animations and transitions
+- Third-party widget integration
+
+### Keep Server-Side For:
+- Data fetching (use loaders)
+- Device detection (useDevice)
+- Authentication checks
+- SEO content
+- Static content rendering
+- Initial page state
+
+## Migration from useScript
+
+**Old Pattern (useScript):**
+```tsx
+import { useScript } from "@deco/deco/hooks";
+
+return (
+  <div>
+    <button id="my-button">Click</button>
+    <script
+      dangerouslySetInnerHTML={{
+        __html: useScript(() => {
+          const btn = document.getElementById("my-button");
+          btn?.addEventListener("click", () => alert("Clicked!"));
+        }),
+      }}
+    />
+  </div>
+);
+```
+
+**New Pattern (Island):**
+```tsx
+// islands/ui/ClickButton.tsx
+export default function ClickButton() {
+  return (
+    <button 
+      onClick={() => alert("Clicked!")}
+      class="btn btn-primary"
+    >
+      Click
+    </button>
+  );
+}
+```
+
+## Performance Considerations
+
+- **Islands are hydrated on the client**: Keep them small
+- **Lazy load heavy islands**: Use dynamic imports if needed
+- **Minimize props passed to islands**: Large props increase bundle size
+- **Use signals for shared state**: Avoid prop drilling
+- **Cleanup resources**: Always cleanup in useEffect returns
