@@ -1,11 +1,13 @@
 import type { HTMLWidget, ImageWidget } from "apps/admin/widgets.ts";
 import type { SiteNavigationElement } from "apps/commerce/types.ts";
 import Image from "apps/website/components/Image.tsx";
-import Bag from "../../islands/CartBag.tsx";
-import AccountButton from "../../islands/AccountButton.tsx";
+import BagButton from "../../islands/header/BagButton.tsx";
+import AccountButton from "../../islands/header/AccountButton.tsx";
 import Menu from "../../components/header/Menu.tsx";
 import NavItem from "../../components/header/NavItem.tsx";
-import Searchbar, { type SearchbarProps } from "../../islands/Searchbar.tsx";
+import Searchbar, {
+  type SearchbarProps,
+} from "../../islands/header/Searchbar.tsx";
 import Drawer from "../../components/ui/Drawer.tsx";
 import Icon from "../../components/ui/Icon.tsx";
 import Modal from "../../components/ui/Modal.tsx";
@@ -114,7 +116,7 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => {
 
           <div class="flex gap-4 place-self-end">
             <AccountButton />
-            <Bag />
+            <BagButton />
           </div>
         </div>
       </div>
@@ -198,7 +200,7 @@ const Mobile = ({ logo, searchbar, navItems, loading }: Props) => {
         >
           <Icon id="search" />
         </label>
-        <Bag />
+        <BagButton />
       </div>
     </>
   );

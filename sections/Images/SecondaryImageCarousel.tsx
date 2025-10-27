@@ -1,6 +1,6 @@
 import { ImageWidget } from "apps/admin/widgets.ts";
 import { useDevice } from "@deco/deco/hooks";
-import ImageCarousel from "../../islands/ImageCarousel.tsx";
+import ImageCarousel from "../../islands/images/ImageCarousel.tsx";
 
 interface Item {
   /**

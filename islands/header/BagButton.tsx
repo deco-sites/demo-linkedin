@@ -1,8 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
-import { state as storeState } from "../sdk/context.ts";
-import { MINICART_DRAWER_ID } from "../constants.ts";
+import { state as storeState } from "../../sdk/context.ts";
+import { MINICART_DRAWER_ID } from "../../constants.ts";
 
-export default function CartBag() {
+export default function BagButton() {
   const [itemCount, setItemCount] = useState(0);
 
   useEffect(() => {

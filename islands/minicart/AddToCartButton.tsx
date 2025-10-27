@@ -1,9 +1,9 @@
 import { useState } from "preact/hooks";
 import { JSX } from "preact";
 import type { AnalyticsItem, Product } from "apps/commerce/types.ts";
-import { state as storeState } from "../sdk/context.ts";
-import { clx } from "../sdk/clx.ts";
-import { getPlatformCartProps } from "../sdk/cart/getPlatformCartProps.ts";
+import { state as storeState } from "../../sdk/context.ts";
+import { clx } from "../../sdk/clx.ts";
+import { getPlatformCartProps } from "../../sdk/cart/getPlatformCartProps.ts";
 
 export interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
   product: Product;

@@ -1,6 +1,6 @@
 import { MINICART_DRAWER_ID } from "../../constants.ts";
 import Drawer from "../ui/Drawer.tsx";
-import MinicartContent from "../../islands/MinicartContent.tsx";
+import MinicartContent from "../../islands/minicart/Minicart.tsx";
 
 export default function MinicartDrawer({
   freeShippingTarget: _freeShippingTarget,

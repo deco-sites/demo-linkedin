@@ -1,11 +1,14 @@
 import { useEffect, useState } from "preact/hooks";
 import { Suggestion } from "apps/commerce/types.ts";
-import { SEARCHBAR_INPUT_FORM_ID, SEARCHBAR_POPUP_ID } from "../constants.ts";
-import Icon from "../components/ui/Icon.tsx";
+import {
+  SEARCHBAR_INPUT_FORM_ID,
+  SEARCHBAR_POPUP_ID,
+} from "../../constants.ts";
+import Icon from "../../components/ui/Icon.tsx";
 import { Resolved } from "@deco/deco";
-import { invoke } from "../runtime.ts";
-import { clx } from "../sdk/clx.ts";
-import ProductCard from "../components/product/ProductCard.tsx";
+import { invoke } from "../../runtime.ts";
+import { clx } from "../../sdk/clx.ts";
+import ProductCard from "../../components/product/ProductCard.tsx";
 
 // When user clicks on the search button, navigate it to
 export const ACTION = "/s";

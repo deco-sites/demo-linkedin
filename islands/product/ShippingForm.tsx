@@ -1,7 +1,7 @@
 import { useState } from "preact/hooks";
 import type { SimulationOrderForm, SKU, Sla } from "apps/vtex/utils/types.ts";
-import { invoke } from "../runtime.ts";
-import { formatPrice } from "../sdk/format.ts";
+import { invoke } from "../../runtime.ts";
+import { formatPrice } from "../../sdk/format.ts";
 
 export interface Props {
   items: SKU[];

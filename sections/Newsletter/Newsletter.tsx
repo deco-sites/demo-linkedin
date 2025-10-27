@@ -1,5 +1,5 @@
 import Section from "../../components/ui/Section.tsx";
-import NewsletterForm from "../../islands/NewsletterForm.tsx";
+import NewsletterForm from "../../islands/newsletter/NewsletterForm.tsx";
 
 export interface Props {
   /** @title Newsletter title */

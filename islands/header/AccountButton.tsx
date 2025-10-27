@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import { state as storeState } from "../sdk/context.ts";
+import { state as storeState } from "../../sdk/context.ts";
 
 export default function AccountButton() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

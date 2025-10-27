@@ -7,8 +7,8 @@ import { relative } from "../../sdk/url.ts";
 import { useOffer } from "../../sdk/hooks/useOffer.ts";
 import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
 import { useVariantPossibilities } from "../../sdk/hooks/useVariantPossiblities.ts";
-import WishlistButton from "../../islands/WishlistButton.tsx";
-import AddToCartButton from "../../islands/AddToCartButton.tsx";
+import WishlistButton from "../../islands/product/WishlistButton.tsx";
+import AddToCartButton from "../../islands/minicart/AddToCartButton.tsx";
 import VariantRing from "./VariantRing.tsx";
 import { useId } from "../../sdk/hooks/useId.ts";
 

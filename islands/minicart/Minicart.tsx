@@ -1,13 +1,13 @@
 import { useEffect, useState } from "preact/hooks";
-import { state as storeState } from "../sdk/context.ts";
-import { MINICART_DRAWER_ID } from "../constants.ts";
-import { clx } from "../sdk/clx.ts";
-import { formatPrice } from "../sdk/format.ts";
-import CartItem from "../components/minicart/Item.tsx";
-import Coupon from "../components/minicart/Coupon.tsx";
-import FreeShippingProgressBar from "../components/minicart/FreeShippingProgressBar.tsx";
+import { state as storeState } from "../../sdk/context.ts";
+import { MINICART_DRAWER_ID } from "../../constants.ts";
+import { clx } from "../../sdk/clx.ts";
+import { formatPrice } from "../../sdk/format.ts";
+import CartItem from "../../components/minicart/Item.tsx";
+import Coupon from "../../components/minicart/Coupon.tsx";
+import FreeShippingProgressBar from "../../components/minicart/FreeShippingProgressBar.tsx";
 
-export default function MinicartContent(
+export default function Minicart(
   { freeShippingTarget: _freeShippingTarget }: { freeShippingTarget?: number },
 ) {
   const [cart, setCart] = useState(storeState.cart.value);

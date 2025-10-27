@@ -1,5 +1,5 @@
 import { useEffect } from "preact/hooks";
-import { useId } from "../sdk/hooks/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 import Image from "apps/website/components/Image.tsx";
 
 interface CarouselImage {

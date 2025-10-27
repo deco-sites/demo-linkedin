@@ -4,10 +4,10 @@ import { formatPrice } from "../../sdk/format.ts";
 import { useId } from "../../sdk/hooks/useId.ts";
 import { useOffer } from "../../sdk/hooks/useOffer.ts";
 import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
-import ShippingSimulationForm from "../../islands/ShippingForm.tsx";
-import WishlistButton from "../../islands/WishlistButton.tsx";
-import AddToCartButton from "../../islands/AddToCartButton.tsx";
-import OutOfStock from "../../islands/OutOfStock.tsx";
+import ShippingSimulationForm from "../../islands/product/ShippingForm.tsx";
+import WishlistButton from "../../islands/product/WishlistButton.tsx";
+import AddToCartButton from "../../islands/minicart/AddToCartButton.tsx";
+import OutOfStock from "../../islands/product/OutOfStock.tsx";
 import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 interface Props {

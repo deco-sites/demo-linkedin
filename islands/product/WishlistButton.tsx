@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
-import { state as storeState } from "../sdk/context.ts";
-import { clx } from "../sdk/clx.ts";
-import Icon from "../components/ui/Icon.tsx";
+import { state as storeState } from "../../sdk/context.ts";
+import { clx } from "../../sdk/clx.ts";
+import Icon from "../../components/ui/Icon.tsx";
 import { AnalyticsItem } from "apps/commerce/types.ts";
 
 interface Props {

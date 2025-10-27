@@ -10,10 +10,10 @@ import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
 import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 import Breadcrumb from "../ui/Breadcrumb.tsx";
 import Drawer from "../ui/Drawer.tsx";
-import Sort from "../../islands/Sort.tsx";
+import Sort from "../../islands/listingPage/Sort.tsx";
 import { useDevice, usePartialSection } from "@deco/deco/hooks";
 import { type SectionProps } from "@deco/deco";
-import ShowMoreButton from "../../islands/ShowMoreButton.tsx";
+import ShowMoreButton from "../../islands/listingPage/ShowMoreButton.tsx";
 
 export interface Layout {
   /**

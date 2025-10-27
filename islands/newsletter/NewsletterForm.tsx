@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
-import Icon from "../components/ui/Icon.tsx";
-import { invoke } from "../runtime.ts";
+import Icon from "../../components/ui/Icon.tsx";
+import { invoke } from "../../runtime.ts";
 
 interface Props {
   title?: string;
