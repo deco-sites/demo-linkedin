@@ -2480,6 +2480,9 @@ details.collapse summary::-webkit-details-marker {
 .loading-sm {
   width: 1.25rem;
 }
+.loading-md {
+  width: 1.5rem;
+}
 :where(.menu li:empty) {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-bc,oklch(var(--bc)/var(--tw-bg-opacity)));

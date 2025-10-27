@@ -10,7 +10,6 @@ export interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
   seller: string;
   item: AnalyticsItem;
   platform: string;
-  children?: JSX.Element;
 }
 
 export default function AddToCartButton({
@@ -19,7 +18,6 @@ export default function AddToCartButton({
   item,
   platform,
   class: _class,
-  children,
   ...props
 }: Props) {
   const [isAdding, setIsAdding] = useState(false);
@@ -47,7 +45,11 @@ export default function AddToCartButton({
     >
       {isAdding || storeState.loading.value
         ? <span class="loading loading-spinner loading-sm" />
-        : children}
+        : (
+          <span class="w-[17px] h-[17px] bg-[#fff] rounded-full flex items-center justify-center">
+            +
+          </span>
+        )}
     </button>
   );
 }

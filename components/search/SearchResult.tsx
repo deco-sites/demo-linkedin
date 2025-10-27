@@ -11,7 +11,7 @@ import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 import Breadcrumb from "../ui/Breadcrumb.tsx";
 import Drawer from "../ui/Drawer.tsx";
 import Sort from "../../islands/Sort.tsx";
-import { useDevice, usePartialSection, useScript } from "@deco/deco/hooks";
+import { useDevice, usePartialSection } from "@deco/deco/hooks";
 import { type SectionProps } from "@deco/deco";
 import ShowMoreButton from "../../islands/ShowMoreButton.tsx";
 
@@ -70,7 +70,7 @@ function PageResult(props: SectionProps<typeof loader>) {
   return (
     <div class="grid grid-flow-row grid-cols-1 place-items-center">
       <div
-        data-product-list
+        data-product-list={pageInfo.currentPage}
         class={clx(
           "grid items-center",
           "grid-cols-2 gap-2",
@@ -91,7 +91,7 @@ function PageResult(props: SectionProps<typeof loader>) {
       </div>
       {infinite
         ? (
-          <ShowMoreButton>
+          <ShowMoreButton productsPerPage={perPage}>
             <div class="flex justify-center [&_section]:contents pt-2 sm:pt-10 w-full">
               {nextPageUrl && (
                 <button
@@ -139,29 +139,7 @@ function PageResult(props: SectionProps<typeof loader>) {
     </div>
   );
 }
-const setPageQuerystring = (page: string, id: string) => {
-  const element = document.getElementById(id)?.querySelector(
-    "[data-product-list]",
-  );
-  if (!element) {
-    return;
-  }
-  new IntersectionObserver((entries) => {
-    const url = new URL(location.href);
-    const prevPage = url.searchParams.get("page");
-    for (let it = 0; it < entries.length; it++) {
-      if (entries[it].isIntersecting) {
-        url.searchParams.set("page", page);
-      } else if (
-        typeof history.state?.prevPage === "string" &&
-        history.state?.prevPage !== page
-      ) {
-        url.searchParams.set("page", history.state.prevPage);
-      }
-    }
-    history.replaceState({ prevPage }, "", url.href);
-  }).observe(element);
-};
+
 function Result(props: SectionProps<typeof loader>) {
   const container = useId();
   const controls = useId();
@@ -192,7 +170,7 @@ function Result(props: SectionProps<typeof loader>) {
     },
   });
   const results = (
-    <span class="text-sm font-normal">
+    <span class="text-sm font-normal" data-results-count>
       {page.pageInfo.recordPerPage} of {page.pageInfo.records} results
     </span>
   );
@@ -275,17 +253,6 @@ function Result(props: SectionProps<typeof loader>) {
             </div>
           )}
       </div>
-
-      <script
-        type="module"
-        dangerouslySetInnerHTML={{
-          __html: useScript(
-            setPageQuerystring,
-            `${pageInfo.currentPage}`,
-            container,
-          ),
-        }}
-      />
     </>
   );
 }

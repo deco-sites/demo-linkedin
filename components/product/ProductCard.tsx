@@ -181,11 +181,7 @@ function ProductCard({
               class={clx(
                 "flex justify-center items-center border-none !text-sm !font-medium px-0 no-animation w-full",
               )}
-            >
-              <span class="w-[17px] h-[17px] bg-[#fff] rounded-full flex items-center justify-center">
-                +
-              </span>
-            </AddToCartButton>
+            />
           </div>
         </div>
       </div>
