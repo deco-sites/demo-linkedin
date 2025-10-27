@@ -1,3 +1,4 @@
+// Keeping the Vanilla JS approach, because it works fine and is easy to understand.
 import { type ComponentChildren } from "preact";
 import { clx } from "../../sdk/clx.ts";
 import { useId } from "../../sdk/hooks/useId.ts";

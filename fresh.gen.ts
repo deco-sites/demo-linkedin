@@ -11,6 +11,8 @@ import * as $listingPage_ShowMoreButton from "./islands/listingPage/ShowMoreButt
 import * as $listingPage_Sort from "./islands/listingPage/Sort.tsx";
 import * as $minicart_AddToCartButton from "./islands/minicart/AddToCartButton.tsx";
 import * as $minicart_Minicart from "./islands/minicart/Minicart.tsx";
+import * as $miscellaneous_CampaignTimer from "./islands/miscellaneous/CampaignTimer.tsx";
+import * as $miscellaneous_CookieConsent from "./islands/miscellaneous/CookieConsent.tsx";
 import * as $newsletter_NewsletterForm from "./islands/newsletter/NewsletterForm.tsx";
 import * as $product_OutOfStock from "./islands/product/OutOfStock.tsx";
 import * as $product_ShippingForm from "./islands/product/ShippingForm.tsx";
@@ -30,6 +32,8 @@ const manifest = {
     "./islands/listingPage/Sort.tsx": $listingPage_Sort,
     "./islands/minicart/AddToCartButton.tsx": $minicart_AddToCartButton,
     "./islands/minicart/Minicart.tsx": $minicart_Minicart,
+    "./islands/miscellaneous/CampaignTimer.tsx": $miscellaneous_CampaignTimer,
+    "./islands/miscellaneous/CookieConsent.tsx": $miscellaneous_CookieConsent,
     "./islands/newsletter/NewsletterForm.tsx": $newsletter_NewsletterForm,
     "./islands/product/OutOfStock.tsx": $product_OutOfStock,
     "./islands/product/ShippingForm.tsx": $product_ShippingForm,

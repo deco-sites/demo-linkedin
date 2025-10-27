@@ -1,3 +1,4 @@
+// Keeping the Vanilla JS approach, because it works fine and is easy to understand. (Praise @tlgimenes)
 import type { JSX } from "preact";
 import { clx } from "../../sdk/clx.ts";
 import { useScript } from "@deco/deco/hooks";
