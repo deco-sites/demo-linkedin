@@ -1,6 +1,6 @@
 import { ImageWidget } from "apps/admin/widgets.ts";
 import Image from "apps/website/components/Image.tsx";
-import { useScript } from "@deco/deco/hooks";
+import { useScript, useDevice } from "@deco/deco/hooks";
 import { useId } from "../../sdk/hooks/useId.ts";
 
 interface Item {
@@ -9,17 +9,25 @@ interface Item {
    */
   image: ImageWidget;
   /**
+   * @title Desktop Width
+   */
+  width: number;
+  /**
+   * @title Desktop Height
+   */
+  height: number;
+  /**
    * @title Mobile Image
    */
   mobileImage: ImageWidget;
   /**
-   * @title Width
+   * @title Mobile Width
    */
-  width: number;
+  mobileWidth: number;
   /**
-   * @title Height
+   * @title Mobile Height
    */
-  height: number;
+  mobileHeight: number;
   /**
    * @title Alt
    */
@@ -31,21 +39,22 @@ interface Props {
 }
 
 function ImageItem({ image }: { image: Item }) {
+  const device = useDevice();
+  const isMobile = device === "mobile";
+  
   return (
-    <div style={{ width: image.width, height: image.height }}>
+    <div 
+      style={{ 
+        width: isMobile ? image.mobileWidth : image.width, 
+        height: isMobile ? image.mobileHeight : image.height 
+      }}
+    >
       <Image
-        class="w-full h-full block sm:hidden rounded-lg"
-        src={image.mobileImage}
+        class="w-full h-full rounded-lg"
+        src={isMobile ? image.mobileImage : image.image}
         alt={image.alt}
-        width={image.width}
-        height={image.height}
-      />
-      <Image
-        class="w-full h-full hidden sm:block rounded-lg"
-        src={image.image}
-        alt={image.alt}
-        width={image.width}
-        height={image.height}
+        width={isMobile ? image.mobileWidth : image.width}
+        height={isMobile ? image.mobileHeight : image.height}
       />
     </div>
   );

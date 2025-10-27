@@ -137,7 +137,7 @@ function ProductCard({
 
       <div class="absolute bottom-0 left-0 w-full flex items-end justify-between p-4">
         <div class="pt-5">
-          <span class="font-medium text-sm text-base-200">
+          <span class="font-medium text-sm text-base-200 line-clamp-3">
             {title}
           </span>
 

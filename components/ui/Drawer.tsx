@@ -68,7 +68,7 @@ function Aside({ title, drawer, children }: {
   return (
     <div
       data-aside
-      class="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y max-h-[98%] rounded-lg overflow-hidden"
+      class="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y max-h-[calc(100dvh-0.5rem)] sm:max-h-[98%] rounded-lg overflow-hidden max-sm:!mr-0.5 max-sm:!mt-1"
       style={{ maxWidth: "100vw" }}
     >
       <div class="flex justify-between items-center">

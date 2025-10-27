@@ -1,5 +1,6 @@
 import type { ImageWidget, VideoWidget } from "apps/admin/widgets.ts";
 import Image from "apps/website/components/Image.tsx";
+import { useDevice } from "@deco/deco/hooks";
 
 /**
  * @titleBy alt
@@ -75,6 +76,8 @@ interface Props {
 }
 
 function MediaItem({ item }: { item: Item }) {
+  const device = useDevice();
+  const isMobile = device === "mobile";
   const { alt, width, height } = item;
 
   // Check if it's a video by looking for src field
@@ -84,64 +87,48 @@ function MediaItem({ item }: { item: Item }) {
       videoItem;
 
     return (
-      <div class="w-1/3">
-        <video
-          class="w-full h-full block sm:hidden rounded-lg object-cover"
-          src={src}
-          title={alt}
-          width={width}
-          height={height}
-          autoplay={autoplay}
-          muted={muted}
-          loop={loop}
-          poster={poster}
-          playsInline
-        />
-        <video
-          class="w-full h-full hidden sm:block rounded-lg object-cover"
-          src={src}
-          title={alt}
-          width={width}
-          height={height}
-          autoplay={autoplay}
-          muted={muted}
-          loop={loop}
-          poster={poster}
-          playsInline
-        />
-      </div>
+      <video
+        class="w-full h-full rounded-lg object-cover"
+        src={src}
+        title={alt}
+        width={width}
+        height={height}
+        autoplay={autoplay}
+        muted={muted}
+        loop={loop}
+        poster={poster}
+        playsInline
+      />
     );
   }
 
-  // It's an image - check for desktop and mobile fields
+  // It's an image
   const imageItem = item as ImageItem;
   const { desktop, mobile } = imageItem;
 
   return (
-    <div class="w-1/3">
-      <Image
-        class="w-full h-full block sm:hidden rounded-lg"
-        src={mobile}
-        alt={alt}
-        width={width}
-        height={height}
-      />
-      <Image
-        class="w-full h-full hidden sm:block rounded-lg"
-        src={desktop}
-        alt={alt}
-        width={width}
-        height={height}
-      />
-    </div>
+    <Image
+      class="w-full h-full rounded-lg"
+      src={isMobile ? mobile : desktop}
+      alt={alt}
+      width={width}
+      height={height}
+    />
   );
 }
 
 export default function ImageGrid({ images }: Props) {
+  const device = useDevice();
+  const isMobile = device === "mobile";
+  
   return (
     <div class="px-4 py-2">
-      <div class="flex flex-nowrap gap-4">
-        {images.map((item, index) => <MediaItem key={index} item={item} />)}
+      <div class={`flex gap-4 ${isMobile ? 'flex-col' : 'flex-nowrap'}`}>
+        {images.map((item, index) => (
+          <div key={index} class={isMobile ? 'w-full' : 'w-1/3'}>
+            <MediaItem item={item} />
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -117,7 +117,7 @@ export default function Searchbar(
 
   return (
     <div
-      class="w-full grid gap-8 px-4 py-6 background rounded-lg"
+      class="w-full grid gap-8 px-4 py-6 sm:background sm:rounded-lg"
       style={{ gridTemplateRows: "min-content auto" }}
     >
       <form id={SEARCHBAR_INPUT_FORM_ID} action={ACTION} class="join">
