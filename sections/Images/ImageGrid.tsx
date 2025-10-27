@@ -120,12 +120,12 @@ function MediaItem({ item }: { item: Item }) {
 export default function ImageGrid({ images }: Props) {
   const device = useDevice();
   const isMobile = device === "mobile";
-  
+
   return (
     <div class="px-4 py-2">
-      <div class={`flex gap-4 ${isMobile ? 'flex-col' : 'flex-nowrap'}`}>
+      <div class={`flex gap-4 ${isMobile ? "flex-col" : "flex-nowrap"}`}>
         {images.map((item, index) => (
-          <div key={index} class={isMobile ? 'w-full' : 'w-1/3'}>
+          <div key={index} class={isMobile ? "w-full" : "w-1/3"}>
             <MediaItem item={item} />
           </div>
         ))}

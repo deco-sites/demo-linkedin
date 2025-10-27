@@ -3,8 +3,10 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $_app from "./routes/_app.tsx";
+import * as $AccountButton from "./islands/AccountButton.tsx";
 import * as $AddToCartButton from "./islands/AddToCartButton.tsx";
 import * as $CartBag from "./islands/CartBag.tsx";
+import * as $ImageCarousel from "./islands/ImageCarousel.tsx";
 import * as $MinicartContent from "./islands/MinicartContent.tsx";
 import * as $NewsletterForm from "./islands/NewsletterForm.tsx";
 import * as $OutOfStock from "./islands/OutOfStock.tsx";
@@ -20,8 +22,10 @@ const manifest = {
     "./routes/_app.tsx": $_app,
   },
   islands: {
+    "./islands/AccountButton.tsx": $AccountButton,
     "./islands/AddToCartButton.tsx": $AddToCartButton,
     "./islands/CartBag.tsx": $CartBag,
+    "./islands/ImageCarousel.tsx": $ImageCarousel,
     "./islands/MinicartContent.tsx": $MinicartContent,
     "./islands/NewsletterForm.tsx": $NewsletterForm,
     "./islands/OutOfStock.tsx": $OutOfStock,

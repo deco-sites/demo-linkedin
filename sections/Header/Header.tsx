@@ -2,6 +2,7 @@ import type { HTMLWidget, ImageWidget } from "apps/admin/widgets.ts";
 import type { SiteNavigationElement } from "apps/commerce/types.ts";
 import Image from "apps/website/components/Image.tsx";
 import Bag from "../../islands/CartBag.tsx";
+import AccountButton from "../../islands/AccountButton.tsx";
 import Menu from "../../components/header/Menu.tsx";
 import NavItem from "../../components/header/NavItem.tsx";
 import Searchbar, { type SearchbarProps } from "../../islands/Searchbar.tsx";
@@ -112,12 +113,7 @@ const Desktop = ({ navItems, logo, searchbar, loading }: Props) => {
           </div>
 
           <div class="flex gap-4 place-self-end">
-            <a
-              href="/account"
-              class="background text-[14px] flex justify-center items-center h-[40px] px-3 rounded-lg"
-            >
-              Account
-            </a>
+            <AccountButton />
             <Bag />
           </div>
         </div>
