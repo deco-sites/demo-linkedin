@@ -68,8 +68,8 @@ export default function NewsletterForm({
   }
 
   return (
-    <div class="w-full flex justify-center items-center p-64">
-      <div class="background rounded-lg w-[525px] p-4 flex flex-col items-start justify-center gap-4 max-w-2xl mx-auto">
+    <div class="w-full flex justify-center items-center p-4 md:p-64">
+      <div class="background rounded-lg w-full md:w-[525px] p-4 flex flex-col items-start justify-center gap-4 max-w-2xl mx-auto">
         <form class="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
           <h2 class="text-sm">{title}</h2>
           <div class="flex gap-1">
