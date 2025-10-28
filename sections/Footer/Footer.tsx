@@ -103,13 +103,21 @@ function Footer({
           </ul>
 
           <div class="flex flex-nowrap items-center justify-between sm:justify-center gap-4">
-            <div>
-              <img loading="lazy" src={logo} />
-            </div>
+            {logo && (
+              <div>
+                <Image 
+                  src={logo} 
+                  alt="Logo" 
+                  loading="lazy"
+                  width={100}
+                  height={40}
+                />
+              </div>
+            )}
             <span class="text-xs font-normal text-base-400">{trademark}</span>
           </div>
 
-          <div class="flex flex-nowrap items-center justify-center gap-4">
+          <div class="flex flex-nowrap items-center gap-4 justify-end">
             <span class="text-sm font-normal text-base-400">Powered by</span>
             <PoweredByDeco />
           </div>
