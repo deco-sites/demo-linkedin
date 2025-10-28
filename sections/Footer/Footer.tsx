@@ -105,9 +105,9 @@ function Footer({
           <div class="flex flex-nowrap items-center justify-between sm:justify-center gap-4">
             {logo && (
               <div>
-                <Image 
-                  src={logo} 
-                  alt="Logo" 
+                <Image
+                  src={logo}
+                  alt="Logo"
                   loading="lazy"
                   width={100}
                   height={40}

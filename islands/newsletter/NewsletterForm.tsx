@@ -25,6 +25,7 @@ export default function NewsletterForm({
 
     setIsLoading(true);
     try {
+      // There is support for other platforms, but the types returned for each one is different. So, we are using VTEX as the default.
       await invoke.vtex.actions.newsletter.subscribe({
         email: email.trim(),
         name: name.trim(),
