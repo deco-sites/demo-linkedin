@@ -4,14 +4,17 @@ import ProductCard from "../../components/product/ProductCard.tsx";
 import Filters from "../../components/search/Filters.tsx";
 import Icon from "../../components/ui/Icon.tsx";
 import { clx } from "../../sdk/clx.ts";
-import { useId } from "../../sdk/useId.ts";
-import { useOffer } from "../../sdk/useOffer.ts";
-import { useSendEvent } from "../../sdk/useSendEvent.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
+import { useOffer } from "../../sdk/hooks/useOffer.ts";
+import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 import Breadcrumb from "../ui/Breadcrumb.tsx";
 import Drawer from "../ui/Drawer.tsx";
-import Sort from "./Sort.tsx";
-import { useDevice, useScript, useSection } from "@deco/deco/hooks";
+import Sort from "../../islands/listingPage/Sort.tsx";
+import { useDevice, usePartialSection } from "@deco/deco/hooks";
 import { type SectionProps } from "@deco/deco";
+import ShowMoreButton from "../../islands/listingPage/ShowMoreButton.tsx";
+
 export interface Layout {
   /**
    * @title Pagination
@@ -30,7 +33,7 @@ export interface Props {
   /** @description 0 for ?page=0 as your first page */
   startingPage?: 0 | 1;
   /** @hidden */
-  partial?: "hideMore" | "hideLess";
+  partial?: boolean;
 }
 function NotFound() {
   return (
@@ -48,12 +51,13 @@ const useUrlRebased = (overrides: string | undefined, base: string) => {
     for (const [key, value] of temp.searchParams.entries()) {
       final.searchParams.set(key, value);
     }
+    final.searchParams.set("partial", "true");
     url = final.href;
   }
   return url;
 };
 function PageResult(props: SectionProps<typeof loader>) {
-  const { layout, startingPage = 0, url, partial } = props;
+  const { layout, startingPage = 0, url } = props;
   const page = props.page!;
   const { products, pageInfo } = page;
   const perPage = pageInfo?.recordPerPage || products.length;
@@ -61,38 +65,12 @@ function PageResult(props: SectionProps<typeof loader>) {
   const offset = zeroIndexedOffsetPage * perPage;
   const nextPageUrl = useUrlRebased(pageInfo.nextPage, url);
   const prevPageUrl = useUrlRebased(pageInfo.previousPage, url);
-  const partialPrev = useSection({
-    href: prevPageUrl,
-    props: { partial: "hideMore" },
-  });
-  const partialNext = useSection({
-    href: nextPageUrl,
-    props: { partial: "hideLess" },
-  });
   const infinite = layout?.pagination !== "pagination";
+  const platform = usePlatform();
   return (
     <div class="grid grid-flow-row grid-cols-1 place-items-center">
       <div
-        class={clx(
-          "pb-2 sm:pb-10",
-          (!prevPageUrl || partial === "hideLess") && "hidden",
-        )}
-      >
-        <a
-          rel="prev"
-          class="btn btn-ghost"
-          hx-swap="outerHTML show:parent:top"
-          hx-get={partialPrev}
-        >
-          <span class="inline [.htmx-request_&]:hidden">
-            Show Less
-          </span>
-          <span class="loading loading-spinner hidden [.htmx-request_&]:block" />
-        </a>
-      </div>
-
-      <div
-        data-product-list
+        data-product-list={pageInfo.currentPage}
         class={clx(
           "grid items-center",
           "grid-cols-2 gap-2",
@@ -107,82 +85,61 @@ function PageResult(props: SectionProps<typeof loader>) {
             preload={index === 0}
             index={offset + index}
             class="h-full min-w-[160px] w-full"
+            platform={platform}
           />
         ))}
       </div>
-
-      <div class={clx("pt-2 sm:pt-10 w-full", "")}>
-        {infinite
-          ? (
-            <div class="flex justify-center [&_section]:contents">
-              <a
-                rel="next"
-                class={clx(
-                  "btn btn-ghost",
-                  (!nextPageUrl || partial === "hideMore") && "hidden",
-                )}
-                hx-swap="outerHTML show:parent:top"
-                hx-get={partialNext}
-              >
-                <span class="inline [.htmx-request_&]:hidden">
-                  Show More
-                </span>
-                <span class="loading loading-spinner hidden [.htmx-request_&]:block" />
-              </a>
+      {infinite
+        ? (
+          <ShowMoreButton productsPerPage={perPage}>
+            <div class="flex justify-center [&_section]:contents pt-2 sm:pt-10 w-full">
+              {nextPageUrl && (
+                <button
+                  class="btn btn-ghost"
+                  {...usePartialSection({
+                    href: nextPageUrl,
+                    mode: "append",
+                  })}
+                >
+                  <span class="inline">
+                    Show More
+                  </span>
+                </button>
+              )}
             </div>
-          )
-          : (
-            <div class={clx("join", infinite && "hidden")}>
-              <a
-                rel="prev"
-                aria-label="previous page link"
-                href={prevPageUrl ?? "#"}
-                disabled={!prevPageUrl}
-                class="btn btn-ghost join-item"
-              >
-                <Icon id="chevron-right" class="rotate-180" />
-              </a>
-              <span class="btn btn-ghost join-item">
-                Page {zeroIndexedOffsetPage + 1}
-              </span>
-              <a
-                rel="next"
-                aria-label="next page link"
-                href={nextPageUrl ?? "#"}
-                disabled={!nextPageUrl}
-                class="btn btn-ghost join-item"
-              >
-                <Icon id="chevron-right" />
-              </a>
-            </div>
-          )}
-      </div>
+          </ShowMoreButton>
+        )
+        : (
+          <div
+            class={clx("join", infinite && "hidden", "pt-2 sm:pt-10 w-full")}
+          >
+            <a
+              rel="prev"
+              aria-label="previous page link"
+              href={prevPageUrl ?? "#"}
+              disabled={!prevPageUrl}
+              class="btn btn-ghost join-item"
+            >
+              <Icon id="chevron-right" class="rotate-180" />
+            </a>
+            <span class="btn btn-ghost join-item">
+              Page {zeroIndexedOffsetPage + 1}
+            </span>
+            <a
+              rel="next"
+              aria-label="next page link"
+              href={nextPageUrl ?? "#"}
+              disabled={!nextPageUrl}
+              class="btn btn-ghost join-item"
+            >
+              <Icon id="chevron-right" />
+            </a>
+          </div>
+        )}
     </div>
   );
 }
-const setPageQuerystring = (page: string, id: string) => {
-  const element = document.getElementById(id)?.querySelector(
-    "[data-product-list]",
-  );
-  if (!element) {
-    return;
-  }
-  new IntersectionObserver((entries) => {
-    const url = new URL(location.href);
-    const prevPage = url.searchParams.get("page");
-    for (let it = 0; it < entries.length; it++) {
-      if (entries[it].isIntersecting) {
-        url.searchParams.set("page", page);
-      } else if (
-        typeof history.state?.prevPage === "string" &&
-        history.state?.prevPage !== page
-      ) {
-        url.searchParams.set("page", history.state.prevPage);
-      }
-    }
-    history.replaceState({ prevPage }, "", url.href);
-  }).observe(element);
-};
+
 function Result(props: SectionProps<typeof loader>) {
   const container = useId();
   const controls = useId();
@@ -213,7 +170,7 @@ function Result(props: SectionProps<typeof loader>) {
     },
   });
   const results = (
-    <span class="text-sm font-normal">
+    <span class="text-sm font-normal" data-results-count>
       {page.pageInfo.recordPerPage} of {page.pageInfo.records} results
     </span>
   );
@@ -224,9 +181,17 @@ function Result(props: SectionProps<typeof loader>) {
     <>
       <div id={container} {...viewItemListEvent} class="w-full">
         {partial
-          ? <PageResult {...props} />
+          ? (
+            <div class="px-4 flex flex-col gap-4 sm:gap-5 w-full sm:pb-2">
+              <div class="grid grid-cols-1 sm:grid-cols-[250px_1fr] gap-2">
+                <div class="">
+                </div>
+                <PageResult {...props} />
+              </div>
+            </div>
+          )
           : (
-            <div class="px-4 flex flex-col gap-4 sm:gap-5 w-full py-4 sm:py-5">
+            <div class="px-4 flex flex-col gap-4 sm:gap-5 w-full max-sm:py-4 sm:pt-5 sm:pb-2">
               <Breadcrumb itemListElement={breadcrumb?.itemListElement} />
 
               {device === "mobile" && (
@@ -267,7 +232,7 @@ function Result(props: SectionProps<typeof loader>) {
                     <span class="text-base h-12 flex items-center">
                       Filters
                     </span>
-                    <div class="background rounded-lg p-4">
+                    <div class="background rounded-lg p-4 2xl:max-h-[1400px] xl:max-h-[1000px] lg:max-h-[800px] md:max-h-[600px] sm:max-h-[400px] overflow-y-scroll">
                       <Filters filters={filters} />
                     </div>
                   </aside>
@@ -288,17 +253,6 @@ function Result(props: SectionProps<typeof loader>) {
             </div>
           )}
       </div>
-
-      <script
-        type="module"
-        dangerouslySetInnerHTML={{
-          __html: useScript(
-            setPageQuerystring,
-            `${pageInfo.currentPage}`,
-            container,
-          ),
-        }}
-      />
     </>
   );
 }
@@ -309,9 +263,12 @@ function SearchResult({ page, ...props }: SectionProps<typeof loader>) {
   return <Result {...props} page={page} />;
 }
 export const loader = (props: Props, req: Request) => {
+  const url = new URL(req.url);
+  const partialFromUrl = url.searchParams.get("partial");
   return {
     ...props,
     url: req.url,
+    partial: props.partial ?? partialFromUrl === "true",
   };
 };
 export default SearchResult;

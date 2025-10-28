@@ -3,7 +3,7 @@ import Image from "apps/website/components/Image.tsx";
 import Icon from "../../components/ui/Icon.tsx";
 import Modal from "../../components/ui/Modal.tsx";
 import Slider from "../../components/ui/Slider.tsx";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 
 export interface Props {
   id?: string;

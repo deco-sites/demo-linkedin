@@ -12,12 +12,12 @@ alwaysApply: true
 ## Technology Stack
 
 - **Preact** - UI Framework
-- **HTMX** - Interactivity
+- **Fresh Islands** - Client-side interactivity
 - **Deco Framework** - Core
 - **Tailwind CSS** - Styling
 - **Deno** - Runtime
 
-**Important**: All pages are server-side rendered (SSR)
+**Important**: All pages are server-side rendered (SSR) with selective client-side hydration through Islands
 
 ### User prompt
 
@@ -608,58 +608,241 @@ function formatPrice(price: number, currency = "BRL", locale = "pt-BR") {
   }
   ```
 
-### Running client-side code
+### Client-side Interactivity with Fresh Islands
 
-All sections run on the server side. To run client-side code, use the
-`useScript` function to transform the function into a string, then use
-`dangerouslySetInnerHTML` to add the useScript to the HTML.
+All sections run on the server side (SSR). For client-side interactivity, use **Fresh Islands** instead of inline scripts.
 
-All props will be passed through `JSON.stringify`
+#### What are Islands?
 
-```tsx
-import { useScript } from "@deco/deco/hooks";
+- Islands allow **partial hydration** - only interactive parts are hydrated on the client
+- Better performance than full page hydration
+- Cleaner, more maintainable code
+- Type-safe with TypeScript
 
-return (
-  <div>
-    <script
-      dangerouslySetInnerHTML={{
-        __html: useScript(({ a, b }: { a: string; b: number }) => {
-          console.log(a, b);
-        }, { a: "Hello", b: 123 }),
-      }}
-    />
-  </div>
-);
+#### Island Architecture
+
+Islands are placed in the `islands/` directory and are automatically hydrated by Fresh.
+
+**Directory Structure:**
+```
+islands/
+  ├── header/
+  │   ├── AccountButton.tsx
+  │   └── BagButton.tsx
+  ├── product/
+  │   └── AddToCartButton.tsx
+  └── ui/
+      └── Drawer.tsx
 ```
 
-### Running client-side code with fresh islands
+#### Creating an Island
 
-- Always import from `preact`, `preact/hooks`, `@preact/signals` or `preact/compat`, because Deco (via Fresh) depends on Preact internally.
-- Prioritizing the use of Fresh islands for interactive resources, as we rely less and less on htmx.
-- Islands allow partial hydration, which means that only specific parts of the page are hydrated on the client side while most of the content remains rendered on the server.
-- This hybrid model offers better performance and scalability, reduces code complexity and provides a cleaner, more maintainable foundation for advanced interactions.
+Islands use Preact hooks for state management:
 
 ```tsx
+// islands/counter/CounterButton.tsx
 import { useSignal } from "@preact/signals";
 
-export default function MyIsland() {
+export default function CounterButton() {
   const count = useSignal(0);
 
   return (
-    <div>
-      Counter is at {count}.{" "}
-      <button onClick={() => (count.value += 1)}>+</button>
+    <div class="flex items-center gap-4">
+      <button 
+        onClick={() => count.value--}
+        class="btn btn-primary"
+      >
+        -
+      </button>
+      <span class="text-xl">{count.value}</span>
+      <button 
+        onClick={() => count.value++}
+        class="btn btn-primary"
+      >
+        +
+      </button>
     </div>
   );
 }
 ```
-An island can be used in a page like a regular Preact component. Fresh will take care of automatically re-hydrating the island on the client.
-```tsx
-import MyIsland from "site/islands/my-island.tsx";
 
-export default function Home() {
-  return <MyIsland />;
+#### Using Islands in Sections
+
+Sections (SSR) can import and use Islands:
+
+```tsx
+// sections/Interactive/Counter.tsx
+import CounterButton from "../../islands/counter/CounterButton.tsx";
+
+interface Props {
+  title: string;
 }
+
+export default function CounterSection({ title }: Props) {
+  return (
+    <div class="container mx-auto p-4">
+      <h2 class="text-2xl mb-4">{title}</h2>
+      <CounterButton />
+    </div>
+  );
+}
+```
+
+#### Islands with Server-Side Props
+
+Use `useDevice` or other server-side hooks in the Section, then pass processed data to Islands:
+
+```tsx
+// sections/Images/ImageCarousel.tsx
+import { useDevice } from "@deco/deco/hooks";
+import ImageCarouselIsland from "../../islands/images/ImageCarousel.tsx";
+
+interface Item {
+  desktopImage: ImageWidget;
+  mobileImage: ImageWidget;
+  width: number;
+  height: number;
+}
+
+interface Props {
+  images: Item[];
+}
+
+export default function ImageCarousel({ images }: Props) {
+  const device = useDevice();
+  const isMobile = device === "mobile";
+
+  // Process images server-side based on device
+  const processedImages = images.map((img) => ({
+    src: isMobile ? img.mobileImage : img.desktopImage,
+    width: img.width,
+    height: img.height,
+  }));
+
+  // Pass processed data to client-side Island
+  return <ImageCarouselIsland images={processedImages} />;
+}
+```
+
+#### Common Island Patterns
+
+**1. Form with State**
+```tsx
+// islands/forms/NewsletterForm.tsx
+import { useState } from "preact/hooks";
+
+export default function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault();
+    await fetch("/api/newsletter", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    });
+    setSubmitted(true);
+  };
+
+  if (submitted) {
+    return <div class="alert alert-success">Thanks for subscribing!</div>;
+  }
+
+  return (
+    <form onSubmit={handleSubmit} class="flex gap-2">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.currentTarget.value)}
+        placeholder="Enter your email"
+        class="input input-bordered"
+        required
+      />
+      <button type="submit" class="btn btn-primary">
+        Subscribe
+      </button>
+    </form>
+  );
+}
+```
+
+**2. Interactive UI with useEffect**
+```tsx
+// islands/ui/Drawer.tsx
+import { useEffect } from "preact/hooks";
+import { useId } from "../../sdk/hooks/useId.ts";
+
+export default function Drawer({ children, aside }: Props) {
+  const id = useId();
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        const input = document.getElementById(id) as HTMLInputElement;
+        if (input) input.checked = false;
+      }
+    };
+
+    addEventListener("keydown", handler);
+    return () => removeEventListener("keydown", handler);
+  }, [id]);
+
+  return (
+    <div class="drawer">
+      <input id={id} type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">{children}</div>
+      <aside class="drawer-side">{aside}</aside>
+    </div>
+  );
+}
+```
+
+**3. Reactive State with Signals**
+```tsx
+// islands/header/AccountButton.tsx
+import { useEffect, useState } from "preact/hooks";
+import { state as storeState } from "../../sdk/context.ts";
+
+export default function AccountButton() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const updateUserState = () => {
+      const user = storeState.user.value;
+      setIsLoggedIn(user !== null);
+    };
+
+    updateUserState();
+    return storeState.user.subscribe(updateUserState);
+  }, []);
+
+  return (
+    <a 
+      href={isLoggedIn ? "/account" : "/login"}
+      class="btn btn-primary"
+    >
+      {isLoggedIn ? "Account" : "Sign In"}
+    </a>
+  );
+}
+```
+
+#### Best Practices
+
+**✅ Do:**
+- Use Islands for all client-side interactivity
+- Import from `preact`, `preact/hooks`, `@preact/signals`
+- Process data server-side when possible (useDevice, loaders, etc.)
+- Use appropriate hooks: `useState`, `useEffect`, `useSignal`
+- Add cleanup in `useEffect` return functions
+- Use TypeScript for type safety
+
+**❌ Don't:**
+- Use `useScript` for new code (legacy pattern)
+- Put business logic in Islands when it can be server-side
+- Forget to cleanup event listeners
+- Use external state management libraries (use Preact signals)
+- Mix server-side hooks (like `useDevice`) inside Islands
 ```
 
 ### Loaders

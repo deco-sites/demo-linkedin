@@ -1,5 +1,6 @@
+// Keeping the Vanilla JS approach, because it works fine and is easy to understand
 import { ComponentChildren } from "preact";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 import { useScript } from "@deco/deco/hooks";
 interface Props {
   open?: boolean;

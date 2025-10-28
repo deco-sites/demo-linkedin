@@ -17,7 +17,7 @@ interface Props {
 export default function Benefits({ benefits }: Props) {
   return (
     <div class="px-4">
-      <div class="flex justify-between background p-3 rounded-lg">
+      <div class="grid grid-cols-2 sm:flex sm:justify-between background p-3 rounded-lg gap-4 sm:gap-2">
         {benefits.map((benefit) => (
           <div class="col-span-1">
             <p class="text-xs">{benefit.text}</p>

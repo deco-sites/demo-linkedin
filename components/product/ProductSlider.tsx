@@ -2,7 +2,8 @@ import { Product } from "apps/commerce/types.ts";
 import { clx } from "../../sdk/clx.ts";
 import Slider from "../ui/Slider.tsx";
 import ProductCard from "./ProductCard.tsx";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 interface Props {
   products: Product[];
@@ -11,6 +12,7 @@ interface Props {
 
 function ProductSlider({ products, itemListName }: Props) {
   const id = useId();
+  const platform = usePlatform();
 
   return (
     <>
@@ -27,7 +29,7 @@ function ProductSlider({ products, itemListName }: Props) {
               <Slider.Item
                 index={index}
                 class={clx(
-                  "carousel-item w-[calc(25%-6px)]",
+                  "carousel-item w-[calc(50%-4px)] sm:w-[calc(33.33%-5.33px)] md:w-[calc(25%-6px)]",
                   "first:pl-5 first:sm:pl-0",
                   "last:pr-5 last:sm:pr-0",
                 )}
@@ -37,6 +39,7 @@ function ProductSlider({ products, itemListName }: Props) {
                   product={product}
                   itemListName={itemListName}
                   class="w-full"
+                  platform={platform}
                 />
               </Slider.Item>
             ))}

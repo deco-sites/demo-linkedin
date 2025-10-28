@@ -95,58 +95,95 @@ export default function MyComponent(props: Awaited<ReturnType<typeof action>>) {
 
 ### Example: Out of Stock Notification
 
-```tsx
-// components/product/OutOfStock.tsx
-export const action = async (props: Props, req: Request, ctx: AppContext) => {
-  const form = await req.formData();
-  
-  const name = `${form.get("name") ?? ""}`;
-  const email = `${form.get("email") ?? ""}`;
-  
-  // deno-lint-ignore no-explicit-any
-  await (ctx as any).invoke("vtex/actions/notifyme.ts", {
-    skuId: props.productID,
-    name,
-    email,
-  });
-  
-  return props;
-};
+For interactive forms, use Islands architecture:
 
-export default function Notify({ productID }: Props) {
+```tsx
+// sections/Product/OutOfStock.tsx (SSR wrapper)
+import OutOfStockIsland from "../../islands/product/OutOfStock.tsx";
+
+export interface Props {
+  productID: string;
+}
+
+export default function OutOfStock({ productID }: Props) {
+  return <OutOfStockIsland productID={productID} />;
+}
+```
+
+```tsx
+// islands/product/OutOfStock.tsx (Island)
+import { useState } from "preact/hooks";
+
+interface Props {
+  productID: string;
+}
+
+export default function OutOfStock({ productID }: Props) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await fetch("/api/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productID, name, email }),
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (submitted) {
+    return (
+      <div class="alert alert-success">
+        Você será notificado quando o produto estiver disponível!
+      </div>
+    );
+  }
+
   return (
     <form
+      onSubmit={handleSubmit}
       class="form-control justify-start gap-2"
-      hx-sync="this:replace"
-      hx-indicator="this"
-      hx-swap="none"
-      hx-post={useComponent<Props>(import.meta.url, { productID })}
     >
       <span class="text-base">Este produto está indisponivel no momento</span>
       <span class="text-sm">Avise-me quando estiver disponivel</span>
       
-      <input placeholder="Nome" class="input input-bordered" name="name" />
-      <input placeholder="Email" class="input input-bordered" name="email" />
+      <input 
+        placeholder="Nome" 
+        class="input input-bordered" 
+        value={name}
+        onChange={(e) => setName(e.currentTarget.value)}
+        required
+      />
+      <input 
+        placeholder="Email" 
+        class="input input-bordered" 
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.currentTarget.value)}
+        required
+      />
       
-      <button type="button" class="btn btn-primary no-animation">
-        <span class="[.htmx-request_&]:hidden inline">Enviar</span>
-        <span class="[.htmx-request_&]:inline hidden loading loading-spinner loading-xs" />
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        disabled={loading}
+      >
+        {loading ? "Enviando..." : "Enviar"}
       </button>
     </form>
   );
 }
-```
-
-## Using useComponent for Actions
-
-The `useComponent` hook allows you to POST or GET to the same component, ensuring:
-
-- The component will be re-rendered
-- The inline action will be executed before re-rendering
-
-```tsx
-// POST to the same component
-hx-post={useComponent<Props>(import.meta.url, { productID })}
 ```
 
 ## Type Safety with Inline Functions
@@ -198,8 +235,8 @@ export default function MyComponent(
 - Use inline loaders for data fetching that needs to happen before rendering
 - Use inline actions for form submissions and data mutations
 - Always type your component props with the return type of your loader/action
-- Use `useComponent` for self-contained components with actions
-- Handle loading states with HTMX indicators
+- Use Islands for interactive forms and client-side state
+- Handle loading states in Islands with useState
 - Use proper error handling in your server-side functions
 
 ### ❌ Don't
@@ -212,23 +249,46 @@ export default function MyComponent(
 
 ## Common Patterns
 
-### Form with Action
+### Form with Interactive State (Use Islands)
+
+For forms that require client-side interactivity, use Islands:
 
 ```tsx
-export const action = async (props: Props, req: Request) => {
-  const form = await req.formData();
-  const data = Object.fromEntries(form.entries());
-  
-  // Process data
-  const result = await processData(data);
-  
-  return { ...props, result };
-};
+// islands/forms/ContactForm.tsx
+import { useState } from "preact/hooks";
 
-export default function FormComponent({ result }: Awaited<ReturnType<typeof action>>) {
+export default function ContactForm() {
+  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState("");
+
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      setResult(data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form hx-post={useComponent<Props>(import.meta.url, {})}>
-      {/* Form fields */}
+    <form onSubmit={handleSubmit} class="space-y-4">
+      <input
+        value={formData.name}
+        onChange={(e) => setFormData({ ...formData, name: e.currentTarget.value })}
+        class="input input-bordered"
+      />
+      <button type="submit" disabled={loading} class="btn btn-primary">
+        {loading ? "Sending..." : "Submit"}
+      </button>
+      {result && <p>{result}</p>}
     </form>
   );
 }

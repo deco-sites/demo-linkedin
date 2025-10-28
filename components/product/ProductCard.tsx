@@ -4,13 +4,13 @@ import Image from "apps/website/components/Image.tsx";
 import { clx } from "../../sdk/clx.ts";
 import { formatPrice } from "../../sdk/format.ts";
 import { relative } from "../../sdk/url.ts";
-import { useOffer } from "../../sdk/useOffer.ts";
-import { useSendEvent } from "../../sdk/useSendEvent.ts";
-import { useVariantPossibilities } from "../../sdk/useVariantPossiblities.ts";
-import WishlistButton from "../wishlist/WishlistButton.tsx";
-import AddToCartButton from "./AddToCartButton.tsx";
-import { Ring } from "./ProductVariantSelector.tsx";
-import { useId } from "../../sdk/useId.ts";
+import { useOffer } from "../../sdk/hooks/useOffer.ts";
+import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
+import { useVariantPossibilities } from "../../sdk/hooks/useVariantPossiblities.ts";
+import WishlistButton from "../../islands/product/WishlistButton.tsx";
+import AddToCartButton from "../../islands/minicart/AddToCartButton.tsx";
+import VariantRing from "./VariantRing.tsx";
+import { useId } from "../../sdk/hooks/useId.ts";
 
 interface Props {
   product: Product;
@@ -24,6 +24,9 @@ interface Props {
   index?: number;
 
   class?: string;
+
+  /** @description Platform for cart operations */
+  platform?: string;
 }
 
 const WIDTH = 287;
@@ -36,9 +39,9 @@ function ProductCard({
   itemListName,
   index,
   class: _class,
+  platform,
 }: Props) {
   const id = useId();
-
   const { url, image: images, offers, isVariantOf } = product;
   const hasVariant = isVariantOf?.hasVariant ?? [];
   const title = isVariantOf?.name ?? product.name;
@@ -134,7 +137,7 @@ function ProductCard({
 
       <div class="absolute bottom-0 left-0 w-full flex items-end justify-between p-4">
         <div class="pt-5">
-          <span class="font-medium text-sm text-base-200">
+          <span class="font-medium text-sm text-base-200 line-clamp-3">
             {title}
           </span>
 
@@ -147,7 +150,8 @@ function ProductCard({
 
         <div class="flex gap-2 items-center justify-between">
           {/* SKU Selector */}
-          {false && variants.length > 1 && firstVariantName !== shoeSizeVariant && (
+          {variants.length > 1 &&
+            firstVariantName !== shoeSizeVariant && (
             <ul class="flex items-center justify-start gap-2 overflow-x-auto">
               {variants.map(([value, link]) => [value, relative(link)] as const)
                 .map(([value, link]) => (
@@ -159,7 +163,10 @@ function ProductCard({
                         name={`${id}-${firstSkuVariations?.[0]}`}
                         checked={link === relativeUrl}
                       />
-                      <Ring value={value} checked={link === relativeUrl} />
+                      <VariantRing
+                        value={value}
+                        checked={link === relativeUrl}
+                      />
                     </a>
                   </li>
                 ))}
@@ -170,14 +177,11 @@ function ProductCard({
               product={product}
               seller={seller}
               item={item}
+              platform={platform ?? ""}
               class={clx(
                 "flex justify-center items-center border-none !text-sm !font-medium px-0 no-animation w-full",
               )}
-            >
-              <span class="w-[17px] h-[17px] bg-[#fff] rounded-full flex items-center justify-center">
-                +
-              </span>
-            </AddToCartButton>
+            />
           </div>
         </div>
       </div>

@@ -2,10 +2,7 @@
   "name": "Home Page!!!",
   "sections": [
     {
-      "__resolveType": "website/sections/Rendering/Lazy.tsx",
-      "section": {
-        "__resolveType": "Header"
-      }
+      "__resolveType": "Header"
     },
     {
       "__resolveType": "site/sections/Images/Carousel.tsx",
@@ -48,27 +45,28 @@
           "mobileImage": "https://assets.decocache.com/demo-linkedin/202e4c27-61e8-47bf-b490-9e54600c070c/c2d91fdeca1169db15d499a27652282f1bf85fb3.png",
           "width": 1000,
           "height": 461,
-          "alt": "Image 1"
+          "alt": "Image 1",
+          "mobileWidth": 400,
+          "mobileHeight": 200
         },
         {
           "image": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
           "mobileImage": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
           "width": 1000,
           "height": 461,
-          "alt": "Image 2"
+          "alt": "Image 2",
+          "mobileWidth": 400,
+          "mobileHeight": 200
         }
       ]
     },
     {
-      "__resolveType": "website/sections/Rendering/Lazy.tsx",
-      "section": {
-        "__resolveType": "site/sections/Product/ProductShelf.tsx",
-        "products": {
-          "__resolveType": "vtex/loaders/legacy/productList.ts",
-          "props": {
-            "term": " ",
-            "sort": ""
-          }
+      "__resolveType": "site/sections/Product/ProductShelf.tsx",
+      "products": {
+        "__resolveType": "vtex/loaders/legacy/productList.ts",
+        "props": {
+          "term": " ",
+          "sort": ""
         }
       }
     },
@@ -106,10 +104,7 @@
       "__resolveType": "site/sections/Newsletter/Newsletter.tsx"
     },
     {
-      "__resolveType": "website/sections/Rendering/Lazy.tsx",
-      "section": {
-        "__resolveType": "Footer"
-      }
+      "__resolveType": "Footer"
     }
   ],
   "__resolveType": "website/pages/Page.tsx",

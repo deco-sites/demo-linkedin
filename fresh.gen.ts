@@ -3,14 +3,42 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $_app from "./routes/_app.tsx";
-
+import * as $header_AccountButton from "./islands/header/AccountButton.tsx";
+import * as $header_BagButton from "./islands/header/BagButton.tsx";
+import * as $header_Searchbar from "./islands/header/Searchbar.tsx";
+import * as $images_ImageCarousel from "./islands/images/ImageCarousel.tsx";
+import * as $listingPage_ShowMoreButton from "./islands/listingPage/ShowMoreButton.tsx";
+import * as $listingPage_Sort from "./islands/listingPage/Sort.tsx";
+import * as $minicart_AddToCartButton from "./islands/minicart/AddToCartButton.tsx";
+import * as $minicart_Minicart from "./islands/minicart/Minicart.tsx";
+import * as $miscellaneous_CampaignTimer from "./islands/miscellaneous/CampaignTimer.tsx";
+import * as $miscellaneous_CookieConsent from "./islands/miscellaneous/CookieConsent.tsx";
+import * as $newsletter_NewsletterForm from "./islands/newsletter/NewsletterForm.tsx";
+import * as $product_OutOfStock from "./islands/product/OutOfStock.tsx";
+import * as $product_ShippingForm from "./islands/product/ShippingForm.tsx";
+import * as $product_WishlistButton from "./islands/product/WishlistButton.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
     "./routes/_app.tsx": $_app,
   },
-  islands: {},
+  islands: {
+    "./islands/header/AccountButton.tsx": $header_AccountButton,
+    "./islands/header/BagButton.tsx": $header_BagButton,
+    "./islands/header/Searchbar.tsx": $header_Searchbar,
+    "./islands/images/ImageCarousel.tsx": $images_ImageCarousel,
+    "./islands/listingPage/ShowMoreButton.tsx": $listingPage_ShowMoreButton,
+    "./islands/listingPage/Sort.tsx": $listingPage_Sort,
+    "./islands/minicart/AddToCartButton.tsx": $minicart_AddToCartButton,
+    "./islands/minicart/Minicart.tsx": $minicart_Minicart,
+    "./islands/miscellaneous/CampaignTimer.tsx": $miscellaneous_CampaignTimer,
+    "./islands/miscellaneous/CookieConsent.tsx": $miscellaneous_CookieConsent,
+    "./islands/newsletter/NewsletterForm.tsx": $newsletter_NewsletterForm,
+    "./islands/product/OutOfStock.tsx": $product_OutOfStock,
+    "./islands/product/ShippingForm.tsx": $product_ShippingForm,
+    "./islands/product/WishlistButton.tsx": $product_WishlistButton,
+  },
   baseUrl: import.meta.url,
 } satisfies Manifest;
 

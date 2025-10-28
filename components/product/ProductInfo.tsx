@@ -1,14 +1,14 @@
 import { ProductDetailsPage } from "apps/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "apps/commerce/utils/productToAnalyticsItem.ts";
 import { formatPrice } from "../../sdk/format.ts";
-import { useId } from "../../sdk/useId.ts";
-import { useOffer } from "../../sdk/useOffer.ts";
-import { useSendEvent } from "../../sdk/useSendEvent.ts";
-import ShippingSimulationForm from "../shipping/Form.tsx";
-import WishlistButton from "../wishlist/WishlistButton.tsx";
-import AddToCartButton from "./AddToCartButton.tsx";
-import OutOfStock from "./OutOfStock.tsx";
-import ProductSelector from "./ProductVariantSelector.tsx";
+import { useId } from "../../sdk/hooks/useId.ts";
+import { useOffer } from "../../sdk/hooks/useOffer.ts";
+import { useSendEvent } from "../../sdk/hooks/useSendEvent.ts";
+import ShippingSimulationForm from "../../islands/product/ShippingForm.tsx";
+import WishlistButton from "../../islands/product/WishlistButton.tsx";
+import AddToCartButton from "../../islands/minicart/AddToCartButton.tsx";
+import OutOfStock from "../../islands/product/OutOfStock.tsx";
+import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 interface Props {
   page: ProductDetailsPage | null;
@@ -16,6 +16,7 @@ interface Props {
 
 function ProductInfo({ page }: Props) {
   const id = useId();
+  const platform = usePlatform();
 
   if (page === null) {
     throw new Error("Missing Product Details Page Info");
@@ -63,11 +64,11 @@ function ProductInfo({ page }: Props) {
   });
 
   //Checks if the variant name is "title"/"default title" and if so, the SKU Selector div doesn't render
-  const hasValidVariants = isVariantOf?.hasVariant?.some(
+  /*   const hasValidVariants = isVariantOf?.hasVariant?.some(
     (variant) =>
       variant?.name?.toLowerCase() !== "title" &&
       variant?.name?.toLowerCase() !== "default title",
-  ) ?? false;
+  ) ?? false; */
 
   return (
     <div
@@ -94,11 +95,13 @@ function ProductInfo({ page }: Props) {
       </div>
 
       {/* Sku Selector */}
-      {hasValidVariants && (
+      {
+        /*       {hasValidVariants && (
         <div className="hidden mt-4 sm:mt-8">
           <ProductSelector product={product} />
         </div>
-      )}
+      )} */
+      }
 
       {/* Add to Cart and Favorites button */}
       <div class="mt-4 sm:mt-10 flex flex-col gap-2">
@@ -107,6 +110,7 @@ function ProductInfo({ page }: Props) {
             <div class="flex flex-nowrap gap-2">
               <WishlistButton item={item} variant="icon" />
               <AddToCartButton
+                platform={platform}
                 item={item}
                 seller={seller}
                 product={product}
@@ -123,7 +127,7 @@ function ProductInfo({ page }: Props) {
       </div>
 
       {/* Shipping Simulation */}
-      <div class="mt-8 hidden">
+      <div class="mt-8">
         <ShippingSimulationForm
           items={[{ id: Number(product.sku), quantity: 1, seller: seller }]}
         />

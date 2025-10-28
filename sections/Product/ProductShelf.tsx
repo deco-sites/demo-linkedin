@@ -4,7 +4,7 @@ import Section, {
   Props as SectionHeaderProps,
 } from "../../components/ui/Section.tsx";
 import { type LoadingFallbackProps } from "@deco/deco";
-import { useId } from "../../sdk/useId.ts";
+import { useId } from "../../sdk/hooks/useId.ts";
 import { clx } from "../../sdk/clx.ts";
 
 /* import { useOffer } from "../../sdk/useOffer.ts";
@@ -64,7 +64,7 @@ export const LoadingFallback = (
               <div
                 key={index}
                 class={clx(
-                  "carousel-item w-[calc(25%-6px)]",
+                  "carousel-item w-[calc(50%-4px)] sm:w-[calc(33.33%-5.33px)] md:w-[calc(25%-6px)]",
                   "first:pl-5 first:sm:pl-0",
                   "last:pr-5 last:sm:pr-0",
                 )}
