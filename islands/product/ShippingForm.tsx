@@ -15,23 +15,45 @@ const formatShippingEstimate = (estimate: string) => {
   if (type === "h") return `${time} horas`;
 };
 
+const applyCepMask = (value: string) => {
+  const numbers = value.replace(/\D/g, "");
+
+  if (numbers.length <= 5) {
+    return numbers;
+  }
+
+  return `${numbers.slice(0, 5)}-${numbers.slice(5, 8)}`;
+};
+
+const removeCepMask = (value: string) => {
+  return value.replace(/\D/g, "");
+};
+
 export default function ShippingForm({ items }: Props) {
   const [postalCode, setPostalCode] = useState("");
   const [result, setResult] = useState<SimulationOrderForm | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
 
+  const handleInputChange = (e: Event) => {
+    const input = e.target as HTMLInputElement;
+    const masked = applyCepMask(input.value);
+    setPostalCode(masked);
+  };
+
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
 
-    if (!postalCode.trim()) return;
+    const cleanCep = removeCepMask(postalCode);
+    if (!cleanCep || cleanCep.length !== 8) return;
 
     setIsLoading(true);
     setHasError(false);
     try {
+      // There is support for other platforms, but the types returned for each one is different. So, we are using VTEX as the default.
       const simulation = await invoke.vtex.actions.cart.simulation({
         items: items,
-        postalCode: postalCode.trim(),
+        postalCode: cleanCep,
         country: "BRA",
       }) as SimulationOrderForm | null;
 
@@ -54,66 +76,103 @@ export default function ShippingForm({ items }: Props) {
   ) ?? [];
 
   return (
-    <div class="flex flex-col gap-2">
-      <div class="flex flex-col">
-        <span class="text-[#616B6B] text-sm pt-5 border-t-[1px] border-gray-300">
-          Informe seu CEP para consultar os prazos de entrega.
-        </span>
+    <div class="flex flex-col gap-4 w-full">
+      {/* Header */}
+      <div class="pt-6 border-t border-gray-200">
+        <h3 class="text-base font-semibold text-gray-900 mb-1">
+          Calcular Frete
+        </h3>
+        <p class="text-sm text-gray-600">
+          Informe seu CEP para consultar os prazos de entrega
+        </p>
       </div>
 
-      <form class="relative join" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          class="input input-bordered join-item w-48"
-          placeholder="00000000"
-          name="postalCode"
-          maxLength={8}
-          size={8}
-          value={postalCode}
-          onInput={(e) => setPostalCode((e.target as HTMLInputElement).value)}
-        />
+      {/* Form */}
+      <form class="flex gap-2" onSubmit={handleSubmit}>
+        <div class="relative flex-1 max-w-[200px]">
+          <input
+            type="text"
+            class="input input-bordered input-sm w-full focus:outline-none focus:ring-2 focus:ring-primary transition-all text-sm"
+            placeholder="00000-000"
+            name="postalCode"
+            maxLength={9}
+            value={postalCode}
+            onInput={handleInputChange}
+          />
+        </div>
         <button
           type="submit"
-          class="btn join-item no-animation"
-          disabled={isLoading || !postalCode.trim()}
+          class="btn btn-primary btn-sm px-6 min-w-[100px] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          disabled={isLoading || removeCepMask(postalCode).length !== 8}
         >
-          <span class={isLoading ? "hidden" : "inline"}>Calcular</span>
-          <span class={isLoading ? "inline" : "hidden"}>
-            <span class="loading loading-spinner loading-xs" />
-          </span>
+          {isLoading ? <span class="loading loading-spinner loading-sm" /> : (
+            "Calcular"
+          )}
         </button>
       </form>
 
       {/* Results */}
-      <div>
+      <div class="min-h-[40px] max-w-[350px]">
         {hasError && !methods.length && (
-          <div class="p-2">
-            <span>CEP inválido</span>
+          <div class="bg-error/10 border border-error/20 rounded-lg p-4 animate-in fade-in duration-200">
+            <div class="flex items-center gap-2">
+              <svg
+                class="w-5 h-5 text-error flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span class="text-xs text-error font-medium">
+                CEP não encontrado. Verifique e tente novamente.
+              </span>
+            </div>
           </div>
         )}
+
         {methods.length > 0 && (
-          <ul class="flex flex-col gap-4 p-4 border border-base-400 rounded">
-            {methods.map((method) => (
-              <li class="flex justify-between items-center border-base-200 not-first-child:border-t">
-                <span class="text-button text-center">
-                  Entrega {method.name}
-                </span>
-                <span class="text-button">
-                  até {formatShippingEstimate(method.shippingEstimate)}
-                </span>
-                <span class="text-base font-semibold text-right">
-                  {method.price === 0 ? "Grátis" : (
-                    formatPrice(method.price / 100, "BRL", "pt-BR")
-                  )}
-                </span>
-              </li>
-            ))}
-            <span class="text-xs font-thin">
-              Os prazos de entrega começam a contar a partir da confirmação do
-              pagamento e podem variar de acordo com a quantidade de produtos na
-              sacola.
-            </span>
-          </ul>
+          <div class="bg-base-100 border border-gray-200 rounded-lg p-4 animate-in fade-in slide-in-from-top-2 duration-300">
+            <h4 class="text-sm font-semibold text-gray-900 mb-3">
+              Opções de Entrega
+            </h4>
+            <ul class="flex flex-col gap-3">
+              {methods.map((method, index) => (
+                <li
+                  class={`flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 pb-3 ${
+                    index < methods.length - 1 ? "border-b border-gray-100" : ""
+                  }`}
+                >
+                  <div class="flex flex-col gap-1">
+                    <span class="text-sm font-medium text-gray-900">
+                      {method.name}
+                    </span>
+                    <span class="text-xs text-gray-600">
+                      até {formatShippingEstimate(method.shippingEstimate)}
+                    </span>
+                  </div>
+                  <span class="text-base font-bold text-primary">
+                    {method.price === 0
+                      ? <span class="text-success">Grátis</span>
+                      : (
+                        formatPrice(method.price / 100, "BRL", "pt-BR")
+                      )}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-4 pt-3 border-t border-gray-100">
+              <p class="text-xs text-gray-500 leading-relaxed">
+                Os prazos de entrega começam a contar a partir da confirmação do
+                pagamento e podem variar de acordo com a quantidade de produtos.
+              </p>
+            </div>
+          </div>
         )}
       </div>
     </div>
