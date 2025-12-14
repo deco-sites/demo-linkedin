@@ -58,7 +58,8 @@
     "preview": "deno run -A main.ts",
     "generate-icons": "deno run -A --unstable static/generate-icons.ts",
     "dev": "deno run -A --env --unstable-kv --unstable-hmr dev.ts",
-    "reload": "deno cache -r https://deco.cx/run"
+    "reload": "deno cache -r https://deco.cx/run",
+    "migrate:bun": "deno run -A jsr:@deco/deco/scripts/migrate-to-bun"
   },
   "githooks": { "pre-commit": "check" },
   "exclude": [

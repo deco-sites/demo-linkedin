@@ -14,7 +14,7 @@ interface Context {
 }
 
 const Runtime = withManifest<Manifest>();
-const loading = signal<boolean>(true);
+const loading = signal<boolean>(false);
 const context = {
   cart: signal<Minicart | undefined>(undefined),
   wishlist: signal<Wishlist | null>(null),

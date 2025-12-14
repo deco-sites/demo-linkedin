@@ -6,13 +6,30 @@ import { useId } from "../../sdk/hooks/useId.ts";
 import { usePlatform } from "../../sdk/hooks/usePlatform.tsx";
 
 interface Props {
-  products: Product[];
+  products: Product[] | null;
   itemListName?: string;
 }
 
 function ProductSlider({ products, itemListName }: Props) {
   const id = useId();
   const platform = usePlatform();
+
+  // Handle missing or invalid products data (e.g., unresolved loaders)
+  if (!products || !Array.isArray(products)) {
+    return (
+      <div class="flex items-center justify-center p-8 text-gray-500">
+        <p>Loading products...</p>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div class="flex items-center justify-center p-8 text-gray-500">
+        <p>No products found</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -25,7 +42,7 @@ function ProductSlider({ products, itemListName }: Props) {
       >
         <div class="col-start-1 col-span-3 row-start-1 row-span-1 gap-1">
           <Slider class="carousel carousel-center sm:carousel-end w-full gap-2">
-            {products?.map((product, index) => (
+            {products.map((product, index) => (
               <Slider.Item
                 index={index}
                 class={clx(
