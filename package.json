@@ -1,0 +1,30 @@
+{
+  "name": "demo-linkedin",
+  "version": "1.0.0",
+  "description": "demo-linkedin - Running on Bun with Deco Framework",
+  "main": "server.tsx",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --preload ./preload.ts --hot server.tsx",
+    "start": "bun --preload ./preload.ts server.tsx",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.10.8",
+    "preact": "10.23.1",
+    "preact-render-to-string": "6.4.2",
+    "@preact/signals": "^1.3.2",
+    "@preact/signals-core": "^1.12.1",
+    "colorjs.io": "^0.5.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.4",
+    "@preact/preset-vite": "^2.10.2",
+    "@tailwindcss/vite": "^4.1.17",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1"
+  }
+}

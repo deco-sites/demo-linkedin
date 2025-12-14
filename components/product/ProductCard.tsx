@@ -137,12 +137,12 @@ function ProductCard({
 
       <div class="absolute bottom-0 left-0 w-full flex items-end justify-between p-4">
         <div class="pt-5">
-          <span class="font-medium text-sm text-base-200 line-clamp-3">
+          <span class="font-medium text-sm text-gray-800 line-clamp-3">
             {title}
           </span>
 
           <div class="flex gap-2 pt-1">
-            <span class="text-base-400 text-sm text-base-200">
+            <span class="text-sm text-gray-700">
               {formatPrice(price, offers?.priceCurrency)}
             </span>
           </div>

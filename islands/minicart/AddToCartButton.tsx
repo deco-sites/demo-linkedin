@@ -4,6 +4,7 @@ import type { AnalyticsItem, Product } from "apps/commerce/types.ts";
 import { state as storeState } from "../../sdk/context.ts";
 import { clx } from "../../sdk/clx.ts";
 import { getPlatformCartProps } from "../../sdk/cart/getPlatformCartProps.ts";
+import { island } from "../../sdk/island.tsx";
 
 export interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
   product: Product;
@@ -13,7 +14,7 @@ export interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
   children?: JSX.Element;
 }
 
-export default function AddToCartButton({
+function AddToCartButtonInner({
   product,
   seller,
   item,
@@ -57,3 +58,6 @@ export default function AddToCartButton({
     </button>
   );
 }
+
+// Wrap as an island for hydration
+export default island("islands/minicart/AddToCartButton", AddToCartButtonInner);

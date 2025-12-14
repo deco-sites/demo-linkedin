@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { Component, type ComponentType } from "preact";
-import { toFileUrl } from "std/path/mod.ts";
+import { pathToFileURL } from "node:url";
 import type { AppContext } from "../apps/site.ts";
 import { useSection } from "@deco/deco/hooks";
 import { type SectionProps } from "@deco/deco";
@@ -12,7 +12,7 @@ export type ComponentProps<LoaderFunc, ActionFunc = LoaderFunc> = SectionProps<
   LoaderFunc,
   ActionFunc
 >;
-const ROOT = toFileUrl(Deno.cwd()).href;
+const ROOT = pathToFileURL(process.cwd()).href;
 export class ErrorBoundary extends Component<{
   fallback?: ComponentType<{
     error: Error;

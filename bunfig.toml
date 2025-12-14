@@ -1,0 +1,19 @@
+[install]
+# Use npm registry
+registry = "https://registry.npmjs.org"
+
+# Module resolution
+[resolve]
+# Alias resolution for imports
+[resolve.alias]
+"$fresh/runtime.ts" = "./compat/fresh-runtime.ts"
+"@deco/deco/hooks" = "./compat/deco-hooks.ts"
+"deco/clients/withManifest.ts" = "./compat/deco-manifest.ts"
+"site/" = "./"
+"std/path/mod.ts" = "node:path"
+
+# Preact JSX runtime
+[jsx]
+runtime = "automatic"
+importSource = "preact"
+
