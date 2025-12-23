@@ -3,6 +3,7 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $_app from "./routes/_app.tsx";
+import * as $Chat from "./islands/Chat.tsx";
 import * as $header_AccountButton from "./islands/header/AccountButton.tsx";
 import * as $header_BagButton from "./islands/header/BagButton.tsx";
 import * as $header_Searchbar from "./islands/header/Searchbar.tsx";
@@ -24,6 +25,7 @@ const manifest = {
     "./routes/_app.tsx": $_app,
   },
   islands: {
+    "./islands/Chat.tsx": $Chat,
     "./islands/header/AccountButton.tsx": $header_AccountButton,
     "./islands/header/BagButton.tsx": $header_BagButton,
     "./islands/header/Searchbar.tsx": $header_Searchbar,
