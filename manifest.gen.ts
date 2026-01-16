@@ -2,8 +2,9 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $$$$$$$$$0 from "./actions/minicart/submit.ts";
-import * as $$$$$$$$$1 from "./actions/wishlist/submit.ts";
+import * as $$$$$$$$$0 from "./actions/chat/stream.ts";
+import * as $$$$$$$$$1 from "./actions/minicart/submit.ts";
+import * as $$$$$$$$$2 from "./actions/wishlist/submit.ts";
 import * as $$$$$$$$$$$0 from "./apps/deco/analytics.ts";
 import * as $$$$$$$$$$$1 from "./apps/deco/htmx.ts";
 import * as $$$$$$$$$$$2 from "./apps/deco/vtex.ts";
@@ -14,24 +15,26 @@ import * as $$$2 from "./loaders/minicart.ts";
 import * as $$$3 from "./loaders/user.ts";
 import * as $$$4 from "./loaders/wishlist.ts";
 import * as $$$$$$0 from "./sections/Category/CategoryBanner.tsx";
-import * as $$$$$$1 from "./sections/Component.tsx";
-import * as $$$$$$2 from "./sections/Content/Benefits.tsx";
-import * as $$$$$$3 from "./sections/Footer/Footer.tsx";
-import * as $$$$$$4 from "./sections/Header/Header.tsx";
-import * as $$$$$$5 from "./sections/Images/Banner.tsx";
-import * as $$$$$$6 from "./sections/Images/Carousel.tsx";
-import * as $$$$$$7 from "./sections/Images/ImageGrid.tsx";
-import * as $$$$$$8 from "./sections/Images/SecondaryImageCarousel.tsx";
-import * as $$$$$$9 from "./sections/Minicart.tsx";
-import * as $$$$$$10 from "./sections/Miscellaneous/CampaignTimer.tsx";
-import * as $$$$$$11 from "./sections/Miscellaneous/CookieConsent.tsx";
-import * as $$$$$$12 from "./sections/Newsletter/Newsletter.tsx";
-import * as $$$$$$13 from "./sections/Product/ProductDetails.tsx";
-import * as $$$$$$14 from "./sections/Product/ProductShelf.tsx";
-import * as $$$$$$15 from "./sections/Product/SearchResult.tsx";
-import * as $$$$$$16 from "./sections/Social/InstagramPosts.tsx";
-import * as $$$$$$17 from "./sections/Social/WhatsApp.tsx";
-import * as $$$$$$18 from "./sections/Theme/Theme.tsx";
+import * as $$$$$$1 from "./sections/Chat.tsx";
+import * as $$$$$$2 from "./sections/Chat/ChatExample.tsx";
+import * as $$$$$$3 from "./sections/Component.tsx";
+import * as $$$$$$4 from "./sections/Content/Benefits.tsx";
+import * as $$$$$$5 from "./sections/Footer/Footer.tsx";
+import * as $$$$$$6 from "./sections/Header/Header.tsx";
+import * as $$$$$$7 from "./sections/Images/Banner.tsx";
+import * as $$$$$$8 from "./sections/Images/Carousel.tsx";
+import * as $$$$$$9 from "./sections/Images/ImageGrid.tsx";
+import * as $$$$$$10 from "./sections/Images/SecondaryImageCarousel.tsx";
+import * as $$$$$$11 from "./sections/Minicart.tsx";
+import * as $$$$$$12 from "./sections/Miscellaneous/CampaignTimer.tsx";
+import * as $$$$$$13 from "./sections/Miscellaneous/CookieConsent.tsx";
+import * as $$$$$$14 from "./sections/Newsletter/Newsletter.tsx";
+import * as $$$$$$15 from "./sections/Product/ProductDetails.tsx";
+import * as $$$$$$16 from "./sections/Product/ProductShelf.tsx";
+import * as $$$$$$17 from "./sections/Product/SearchResult.tsx";
+import * as $$$$$$18 from "./sections/Social/InstagramPosts.tsx";
+import * as $$$$$$19 from "./sections/Social/WhatsApp.tsx";
+import * as $$$$$$20 from "./sections/Theme/Theme.tsx";
 
 const manifest = {
   "loaders": {
@@ -43,28 +46,31 @@ const manifest = {
   },
   "sections": {
     "site/sections/Category/CategoryBanner.tsx": $$$$$$0,
-    "site/sections/Component.tsx": $$$$$$1,
-    "site/sections/Content/Benefits.tsx": $$$$$$2,
-    "site/sections/Footer/Footer.tsx": $$$$$$3,
-    "site/sections/Header/Header.tsx": $$$$$$4,
-    "site/sections/Images/Banner.tsx": $$$$$$5,
-    "site/sections/Images/Carousel.tsx": $$$$$$6,
-    "site/sections/Images/ImageGrid.tsx": $$$$$$7,
-    "site/sections/Images/SecondaryImageCarousel.tsx": $$$$$$8,
-    "site/sections/Minicart.tsx": $$$$$$9,
-    "site/sections/Miscellaneous/CampaignTimer.tsx": $$$$$$10,
-    "site/sections/Miscellaneous/CookieConsent.tsx": $$$$$$11,
-    "site/sections/Newsletter/Newsletter.tsx": $$$$$$12,
-    "site/sections/Product/ProductDetails.tsx": $$$$$$13,
-    "site/sections/Product/ProductShelf.tsx": $$$$$$14,
-    "site/sections/Product/SearchResult.tsx": $$$$$$15,
-    "site/sections/Social/InstagramPosts.tsx": $$$$$$16,
-    "site/sections/Social/WhatsApp.tsx": $$$$$$17,
-    "site/sections/Theme/Theme.tsx": $$$$$$18,
+    "site/sections/Chat.tsx": $$$$$$1,
+    "site/sections/Chat/ChatExample.tsx": $$$$$$2,
+    "site/sections/Component.tsx": $$$$$$3,
+    "site/sections/Content/Benefits.tsx": $$$$$$4,
+    "site/sections/Footer/Footer.tsx": $$$$$$5,
+    "site/sections/Header/Header.tsx": $$$$$$6,
+    "site/sections/Images/Banner.tsx": $$$$$$7,
+    "site/sections/Images/Carousel.tsx": $$$$$$8,
+    "site/sections/Images/ImageGrid.tsx": $$$$$$9,
+    "site/sections/Images/SecondaryImageCarousel.tsx": $$$$$$10,
+    "site/sections/Minicart.tsx": $$$$$$11,
+    "site/sections/Miscellaneous/CampaignTimer.tsx": $$$$$$12,
+    "site/sections/Miscellaneous/CookieConsent.tsx": $$$$$$13,
+    "site/sections/Newsletter/Newsletter.tsx": $$$$$$14,
+    "site/sections/Product/ProductDetails.tsx": $$$$$$15,
+    "site/sections/Product/ProductShelf.tsx": $$$$$$16,
+    "site/sections/Product/SearchResult.tsx": $$$$$$17,
+    "site/sections/Social/InstagramPosts.tsx": $$$$$$18,
+    "site/sections/Social/WhatsApp.tsx": $$$$$$19,
+    "site/sections/Theme/Theme.tsx": $$$$$$20,
   },
   "actions": {
-    "site/actions/minicart/submit.ts": $$$$$$$$$0,
-    "site/actions/wishlist/submit.ts": $$$$$$$$$1,
+    "site/actions/chat/stream.ts": $$$$$$$$$0,
+    "site/actions/minicart/submit.ts": $$$$$$$$$1,
+    "site/actions/wishlist/submit.ts": $$$$$$$$$2,
   },
   "apps": {
     "site/apps/deco/analytics.ts": $$$$$$$$$$$0,
