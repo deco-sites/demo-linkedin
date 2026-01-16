@@ -5,9 +5,6 @@
   },
   "sections": [
     {
-      "__resolveType": "Header"
-    },
-    {
       "__resolveType": "site/sections/Images/Carousel.tsx",
       "preload": true,
       "items": [
