@@ -3550,6 +3550,9 @@ details.collapse summary::-webkit-details-marker {
 .pointer-events-none {
   pointer-events: none;
 }
+.visible {
+  visibility: visible;
+}
 .collapse {
   visibility: collapse;
 }
