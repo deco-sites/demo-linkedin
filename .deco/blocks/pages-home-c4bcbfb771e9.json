@@ -8,22 +8,6 @@
       "__resolveType": "Header"
     },
     {
-      "__resolveType": "site/sections/Images/Carousel.tsx",
-      "preload": true,
-      "items": [
-        {
-          "type": "video",
-          "action": {},
-          "video": "https://assets.decocache.com/demo-linkedin/8e6fc51d-c24a-4cc2-82a1-c82f110604cf/Gravacao-de-Tela-2025-08-21-as-15.51.23-(1).mp4",
-          "alt": "Video",
-          "autoplay": true,
-          "poster": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
-          "muted": true,
-          "loop": true
-        }
-      ]
-    },
-    {
       "__resolveType": "site/sections/Content/Benefits.tsx",
       "benefits": [
         {
@@ -60,6 +44,22 @@
           "alt": "Image 2",
           "mobileWidth": 400,
           "mobileHeight": 200
+        }
+      ]
+    },
+    {
+      "__resolveType": "site/sections/Images/Carousel.tsx",
+      "preload": true,
+      "items": [
+        {
+          "type": "video",
+          "action": {},
+          "video": "https://assets.decocache.com/demo-linkedin/8e6fc51d-c24a-4cc2-82a1-c82f110604cf/Gravacao-de-Tela-2025-08-21-as-15.51.23-(1).mp4",
+          "alt": "Video",
+          "autoplay": true,
+          "poster": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
+          "muted": true,
+          "loop": true
         }
       ]
     },
