@@ -32,7 +32,8 @@
           "alt": "Image 1",
           "mobileWidth": 400,
           "mobileHeight": 200,
-          "height": 500
+          "width": 100,
+          "height": 100
         },
         {
           "image": "https://assets.decocache.com/demo-linkedin/e03b7221-75cc-417c-8af3-93931a93c235/f861a8453e5e7e7296125c4c3b2f12906f13f41e.jpg",
